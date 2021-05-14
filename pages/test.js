@@ -1,4 +1,4 @@
-import { AppBar, Box, makeStyles, Toolbar, Typography } from '@material-ui/core'
+import { AppBar, Box, makeStyles, Toolbar, Typography } from '@material-ui/core';
 import React from 'react';
 import BackImg from '../public/Vector 34 (6).svg';
 
@@ -40,7 +40,7 @@ const Test = () => {
                 </Toolbar>
             </AppBar>
         </Box>
-    )
-}
+    );
+};
 
-export default Test
+export default Test;

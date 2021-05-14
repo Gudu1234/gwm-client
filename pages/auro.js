@@ -1,6 +1,6 @@
-import { Box, Container, Grid } from '@material-ui/core'
-import React from 'react'
-import AuroWhyUsSignleItem from '../src/components/auroWhyUsSignleItem'
+import { Box, Container, Grid } from '@material-ui/core';
+import React from 'react';
+import AuroWhyUsSignleItem from '../src/components/auroWhyUsSignleItem';
 
 const Auro = () => {
     return (
@@ -14,7 +14,7 @@ const Auro = () => {
                 </Grid>
             </Container>
         </div>
-    )
-}
+    );
+};
 
-export default Auro 
+export default Auro; 
