@@ -33,9 +33,6 @@ const useStyles = makeStyles({
         backgroundRepeat: 'no-repeat',
         backgroundSize: '100%',
         height: 'calc(100vh-48px)'
-    },
-    fieldText: {
-        color: '#FFFFFF',
     }
 });
 
@@ -124,13 +121,15 @@ const Index = () => {
                             maxWidth={'450px'}
                             borderRadius={'borderRadius'}
                             bgcolor={'#124954'}
+                            // boxShadow={20}
+                            // p={{ xs: 1, sm: 2 }}
                             px={3}
                             py={2}
                             // p={3}
                             style={{boxShadow: '25px 25px 50px rgba(18, 73, 84, 0.4)'}}
                         >
                             <Hidden xsDown>
-                                <Typography variant={'h2'} style={{color: '#FFFFFF'}} >
+                                <Typography variant={'h2'} color={'textSecondary'} >
                                     {'LOGIN'}
                                 </Typography>
                             </Hidden>
@@ -148,9 +147,6 @@ const Index = () => {
                                 required
                                 color={'secondary'}
                                 focused
-                                InputProps={{
-                                    className: classes.fieldText
-                                }}
                             />
                             <Box my={3} />
                             <TextField
@@ -165,7 +161,6 @@ const Index = () => {
                                             </IconButton>
                                         </InputAdornment>
                                     ),
-                                    className: classes.fieldText
                                 }}
                                 label={'Password'}
                                 name={'password'}
@@ -211,9 +206,6 @@ const Index = () => {
                                 focused
                                 color={'secondary'}
                                 required
-                                InputProps={{
-                                    className: classes.fieldText
-                                }}
                             />
                             <Box my={2} />
                             <Button disabled={loading} onClick={() => handleLogin()} variant="contained" color={'secondary'}>

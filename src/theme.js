@@ -22,9 +22,9 @@ let theme = createMuiTheme({
             default: '#ffffff'
         },
         text: {
-            secondary: '#FFFFFF',
-            primary: '#124954'
-        }
+            secondary: '#000000',
+            primary: '#124954',
+        },
     },
     typography: {
         fontFamily: 'montserrat',
@@ -165,7 +165,7 @@ theme = {
                 [theme.breakpoints.down('sm')]: {
                     height: '1px'
                 },
-                color: '#FFFFFF',
+                // color: '#FFFFFF',
             },
         },
         MuiOutlinedInput:{
