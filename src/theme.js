@@ -46,7 +46,20 @@ let theme = createMuiTheme({
         h2: {
             fontSize: 36,
             fontWeight: 'bold',
-            letterSpacing: 0.3
+            letterSpacing: 0.3,
+            '@media (max-width:1050px)': {
+                fontSize: 16,
+                lineHeight: '20px',
+            },
+            '@media (max-width:900px)': {
+                fontSize: 12,
+                lineHeight: '16px',
+                letterSpacing: '0.5px',
+            },
+            '@media (max-width:500px)': {
+                fontSize: 11,
+                lineHeight: '12px',
+            },
         },
         h3: {
             fontSize: 22,
@@ -174,6 +187,11 @@ theme = {
                 borderColor: '#FFFFFF'
             },
         },
+        MuiSelect: {
+            iconOutlined: {
+                color: '#124954'
+            },
+        }
     }
 };
 

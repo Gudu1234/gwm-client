@@ -6,7 +6,7 @@ import React from 'react';
 import {makeStyles} from '@material-ui/styles';
 import {Button, Divider, Grid, Hidden, List, ListItem, TextField, Typography} from '@material-ui/core';
 import Link from '../Link';
-import Gwm from '../../public/Frame 6.svg';
+import Gwm from '../../public/GWMstrLogo.svg';
 
 
 const useStyles = makeStyles(theme => ({

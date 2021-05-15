@@ -19,7 +19,7 @@ import { useRouter } from 'next/router';
 import ClientCaptcha from 'react-client-captcha';
 import Vector from '../../public/Login.svg';
 import Refresh from '../../public/refresh (1).svg';
-import Gwm from '../../public/Frame 6.svg';
+import Gwm from '../../public/GWMstrLogo.svg';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import theme from '../../src/theme';

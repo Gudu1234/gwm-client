@@ -2,11 +2,11 @@ import {
     Box,
     Button,
     CircularProgress,
-    Container,
+    Container, FormControl,
     Grid,
     Hidden, IconButton,
     InputAdornment,
-    makeStyles,
+    makeStyles, MenuItem, Select,
     TextField,
     Typography
 } from '@material-ui/core';
@@ -22,9 +22,9 @@ import Refresh from '../../public/refresh (1).svg';
 import Gwm from '../../public/Frame 6.svg';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import theme from '../../src/theme';
 import Appbar from '../../src/layouts/Appbar';
 import Footer from '../../src/layouts/Footer';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
 const useStyles = makeStyles({
     container: {
@@ -33,6 +33,12 @@ const useStyles = makeStyles({
         backgroundRepeat: 'no-repeat',
         backgroundSize: '100%',
         height: 'calc(100vh-48px)'
+    },
+    formControl: {
+        borderRadius: '2px',
+    },
+    option: {
+        color: '#124954'
     }
 });
 
@@ -46,6 +52,7 @@ const Index = () => {
     const [captchaCode, setCaptchaCode] = useState('');
     const [inputCaptcha, setInputCaptcha] = useState('');
     const [loading, setLoading] = useState(false);
+    const [feedbackType, setFeedBackType] = React.useState(1);
     const { enqueueSnackbar } = useSnackbar();
     const Router = useRouter();
 
@@ -55,6 +62,10 @@ const Index = () => {
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
+    };
+
+    const handleFeedbackTypeChange = (event) => {
+        setFeedBackType(event.target.value);
     };
 
     useEffect(() => {
@@ -95,6 +106,65 @@ const Index = () => {
         <Box className={classes.container}>
             <Appbar />
             <Container maxWidth={'xl'}>
+                <Box
+                    display={'flex'}
+                    flexDirection={'column'}
+                    justifyContent={'center'}
+                    alignItems={'center'}
+                    width={'100%'}
+                    px={{xs: 3, md: 15}}
+                    py={3}
+                >
+                    <Grid container style={{ minHeight: '100vh' }}>
+                        <Grid item container justify={'space-between'} xs={12} sm={6}>
+                            <Box
+                                display={'flex'}
+                                flexDirection={'column'}
+                                width={'90%'}
+                            >
+                                <Typography variant={'h1'} color={'textPrimary'} >
+                                    {'CONTACT US.'}
+                                </Typography>
+                                <Box my={2}/>
+                                <Typography variant={'caption'} color={'textSecondary'}>
+                                    {'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in erat at quam egestas facilisis nec eu risus. Sed lorem sem, pellentesque ac nibh ac, tincidunt fermentum dui. Nunc in pretium est, et pretium leo. Aliquam congue sapien massa, quis accumsan nunc malesuada ac.'}
+                                </Typography>
+                                <Box my={3} />
+                                <Grid container justify={'space-between'}>
+                                    <Grid item container xs={6} sm={6}>
+                                        <Typography variant={'h2'} color={'textPrimary'} >
+                                            {'CHOOSE:'}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item container xs={6} sm={6}>
+                                        <FormControl variant={'outlined'} className={classes.formControl}>
+                                            <Select
+                                                labelId = "demo-simple-select-outlined-label"
+                                                id = "demo-simple-select-outlined"
+                                                autoFocus={true}
+                                                value={feedbackType}
+                                                onChange={handleFeedbackTypeChange}
+                                                IconComponent={KeyboardArrowDownIcon}
+                                                // label="Age"
+                                                // inputProps={{
+                                                //     name: 'contact',
+                                                //     id: 'outlined-age-native-simple',
+                                                // }}
+                                                // className={classes.formControl}
+                                                color={'primary'}
+                                            >
+                                                {/*<option aria-label="None" value="" />*/}
+                                                <MenuItem value = {1} style={{borderBottom: '1px solid #7AE3B1'}}>Feedback</MenuItem>
+                                                <MenuItem value = {2} style={{borderBottom: '1px solid #7AE3B1'}}>Suggestion</MenuItem>
+                                                <MenuItem value = {3} >Complaint</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
+                                </Grid>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                </Box>
                 <Grid container justify={'center'} alignItems={'center'} style={{ minHeight: '100vh' }}>
                     {/*<Hidden smDown>*/}
                     {/*    <Grid item container xs={12} sm={6} justify={'center'} alignItems={'center'}>*/}

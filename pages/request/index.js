@@ -95,14 +95,13 @@ const Index = () => {
         <Box className={classes.container}>
             <Appbar />
             <Container maxWidth={'xl'}>
-                {/*<Box my={3}/>*/}
                 <Box
                     display={'flex'}
                     flexDirection={'column'}
                     justifyContent={'center'}
                     alignItems={'center'}
                     width={'100%'}
-                    px={{xs: 5, md: 15}}
+                    px={{xs: 3, md: 15}}
                     py={3}
                 >
                     <Hidden xsDown>
@@ -127,6 +126,7 @@ const Index = () => {
                             <Box
                                 display={'flex'}
                                 flexDirection={'column'}
+                                width={'90%'}
                             >
                                 <Typography variant={'h3'} color={'textPrimary'} >
                                     {'REQUEST FORM:'}

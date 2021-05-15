@@ -3,7 +3,7 @@
  */
 import {AppBar, Hidden, Toolbar} from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import Gwm from '../../public/Frame 6.svg';
+import Gwm from '../../public/GWMstrLogo.svg';
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Link from '../Link';
