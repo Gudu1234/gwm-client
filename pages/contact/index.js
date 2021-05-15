@@ -25,6 +25,7 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import Appbar from '../../src/layouts/Appbar';
 import Footer from '../../src/layouts/Footer';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import Rating from '@material-ui/lab/Rating';
 
 const useStyles = makeStyles({
     container: {
@@ -39,6 +40,14 @@ const useStyles = makeStyles({
     },
     option: {
         color: '#124954'
+    },
+    root: {
+        color: '#FFFFFF',
+    },
+    select: {
+        iconOutlined: {
+            color: '#FFFFFF'
+        },
     }
 });
 
@@ -53,6 +62,8 @@ const Index = () => {
     const [inputCaptcha, setInputCaptcha] = useState('');
     const [loading, setLoading] = useState(false);
     const [feedbackType, setFeedBackType] = React.useState(1);
+    const [value, setValue] = React.useState(1);
+    const [zoneValue, setZoneValue] = React.useState(0);
     const { enqueueSnackbar } = useSnackbar();
     const Router = useRouter();
 
@@ -67,6 +78,14 @@ const Index = () => {
     const handleFeedbackTypeChange = (event) => {
         setFeedBackType(event.target.value);
     };
+
+    const handleZoneChange = (event) => {
+        setZoneValue(event.target.value);
+    };
+
+    const handleSetValue = (event) => {
+        setValue(event.target.value);
+    }
 
     useEffect(() => {
         if (user && user.role === 2) {
@@ -112,11 +131,11 @@ const Index = () => {
                     justifyContent={'center'}
                     alignItems={'center'}
                     width={'100%'}
-                    px={{xs: 3, md: 15}}
-                    py={3}
+                    px={{xs: 2, md: 12}}
+                    py={{xs: 3, md: 4}}
                 >
                     <Grid container style={{ minHeight: '100vh' }}>
-                        <Grid item container justify={'space-between'} xs={12} sm={6}>
+                        <Grid item container xs={12} sm={6}>
                             <Box
                                 display={'flex'}
                                 flexDirection={'column'}
@@ -129,163 +148,216 @@ const Index = () => {
                                 <Typography variant={'caption'} color={'textSecondary'}>
                                     {'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in erat at quam egestas facilisis nec eu risus. Sed lorem sem, pellentesque ac nibh ac, tincidunt fermentum dui. Nunc in pretium est, et pretium leo. Aliquam congue sapien massa, quis accumsan nunc malesuada ac.'}
                                 </Typography>
-                                <Box my={3} />
-                                <Grid container justify={'space-between'}>
-                                    <Grid item container xs={6} sm={6}>
-                                        <Typography variant={'h2'} color={'textPrimary'} >
-                                            {'CHOOSE:'}
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item container xs={6} sm={6}>
-                                        <FormControl variant={'outlined'} className={classes.formControl}>
-                                            <Select
-                                                labelId = "demo-simple-select-outlined-label"
-                                                id = "demo-simple-select-outlined"
-                                                autoFocus={true}
-                                                value={feedbackType}
-                                                onChange={handleFeedbackTypeChange}
-                                                IconComponent={KeyboardArrowDownIcon}
-                                                // label="Age"
-                                                // inputProps={{
-                                                //     name: 'contact',
-                                                //     id: 'outlined-age-native-simple',
-                                                // }}
-                                                // className={classes.formControl}
-                                                color={'primary'}
-                                            >
-                                                {/*<option aria-label="None" value="" />*/}
-                                                <MenuItem value = {1} style={{borderBottom: '1px solid #7AE3B1'}}>Feedback</MenuItem>
-                                                <MenuItem value = {2} style={{borderBottom: '1px solid #7AE3B1'}}>Suggestion</MenuItem>
-                                                <MenuItem value = {3} >Complaint</MenuItem>
-                                            </Select>
-                                        </FormControl>
-                                    </Grid>
-                                </Grid>
+                                <Box
+                                    display={'flex'}
+                                    py={3}
+                                    justifyContent={'flexStart'}
+                                    alignItems={'center'}
+                                >
+                                    <Typography variant={'h2'} color={'textPrimary'} >
+                                        {'CHOOSE:'}
+                                    </Typography>
+                                    <Box mx={{xs: 1, sm: 3}}/>
+                                    <FormControl variant={'outlined'} >
+                                        <Select
+                                            labelId = "demo-simple-select-outlined-label"
+                                            id = "demo-simple-select-outlined"
+                                            autoFocus={true}
+                                            value={feedbackType}
+                                            onChange={handleFeedbackTypeChange}
+                                            IconComponent={KeyboardArrowDownIcon}
+                                            color={'primary'}
+                                        >
+                                            <MenuItem value = {1} style={{borderBottom: '1px solid #7AE3B1'}}>Feedback</MenuItem>
+                                            <MenuItem value = {2} style={{borderBottom: '1px solid #7AE3B1'}}>Suggestion</MenuItem>
+                                            <MenuItem value = {3} >Complaint</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </Box>
+                            </Box>
+                        </Grid>
+                        <Grid
+                            item
+                            container
+                            xs={12} sm={6}
+                            justify={'center'}
+                            alignItems={'center'}
+                        >
+                            <Box
+                                display={'flex'}
+                                flexDirection={'column'}
+                                justifyContent={'flexStart'}
+                                alignItems={'center'}
+                                width={'100%'}
+                                maxWidth={'450px'}
+                                borderRadius={'borderRadius'}
+                                bgcolor={'#124954'}
+                                px={{xs: 2, md: 4}}
+                                py={2}
+                                style={{boxShadow: '25px 25px 50px rgba(18, 73, 84, 0.4)'}}
+                            >
+                                <Box my={2} />
+                                <TextField
+                                    label={'Name'}
+                                    name={'name'}
+                                    value={email}
+                                    onChange={event => setEmail(event.target.value)}
+                                    variant="outlined"
+                                    fullWidth
+                                    required
+                                    color={'secondary'}
+                                    focused
+                                    InputProps={{
+                                        classes: {
+                                            root: classes.root
+                                        }
+                                    }}
+                                />
+                                <Box my={2} />
+                                <TextField
+                                    label={'Phone Number'}
+                                    name={'phone'}
+                                    value={email}
+                                    onChange={event => setEmail(event.target.value)}
+                                    variant="outlined"
+                                    fullWidth
+                                    required
+                                    color={'secondary'}
+                                    focused
+                                    InputProps={{
+                                        classes: {
+                                            root: classes.root
+                                        }
+                                    }}
+                                />
+                                <Box my={2} />
+                                <TextField
+                                    select
+                                    label="Zone"
+                                    // value={currency}
+                                    // onChange={handleChange}
+                                    variant="outlined"
+                                    focused
+                                    required
+                                    name={'zone'}
+                                    color={'secondary'}
+                                    value={zoneValue}
+                                    onChange={handleZoneChange}
+                                    fullWidth
+                                    InputProps={{
+                                        classes: {
+                                            root: classes.root
+                                        }
+                                    }}
+
+                                >
+                                    {/*{currencies.map((option) => (*/}
+                                    {/*    <MenuItem key={option.value} value={option.value}>*/}
+                                    {/*        {option.label}*/}
+                                    {/*    </MenuItem>*/}
+                                    {/*))}*/}
+                                    <MenuItem value = {1} style={{borderBottom: '1px solid #7AE3B1'}}>Zone 1</MenuItem>
+                                    <MenuItem value = {2} style={{borderBottom: '1px solid #7AE3B1'}}>Zone 2</MenuItem>
+                                    <MenuItem value = {3} >Zone 3</MenuItem>
+                                </TextField>
+                                <Box my={2}/>
+                                {
+                                    feedbackType !== 1 && feedbackType !== 2 ? (
+                                        <React.Fragment>
+                                            <TextField
+                                                label={'Map Link'}
+                                                value={inputCaptcha}
+                                                onChange={event => setInputCaptcha(event.target.value)}
+                                                variant="outlined"
+                                                fullWidth
+                                                focused
+                                                color={'secondary'}
+                                                required
+                                                InputProps={{
+                                                    classes: {
+                                                        root: classes.root
+                                                    }
+                                                }}
+                                            />
+                                            <Box my={2} />
+                                        </React.Fragment>
+                                    ) : null
+                                }
+                                {
+                                    feedbackType === 1 ? (
+                                        <React.Fragment>
+                                            <Typography variant={'subtitle2'} style={{color: '#FFFFFF'}} >
+                                                {'Rate us:'}
+                                            </Typography>
+                                            <Box my={1}/>
+                                            <Rating
+                                                name="simple-controlled"
+                                                value={value}
+                                                onChange={(event, newValue) => {
+                                                    setValue(newValue);
+                                                }}
+                                                size={'large'}
+                                                color={'#FF9A3E'}
+                                            />
+                                            <Box my={2}/>
+                                        </React.Fragment>
+                                    ) : null
+                                }
+                                <TextField
+                                    label={'Message'}
+                                    name={'message'}
+                                    // value={email}
+                                    // onChange={event => setEmail(event.target.value)}
+                                    variant="outlined"
+                                    fullWidth
+                                    required
+                                    multiline={true}
+                                    rows={6}
+                                    focused
+                                    color={'secondary'}
+                                    InputProps={{
+                                        className: classes.root
+                                    }}
+                                />
+                                <Box my={2} />
+                                <Button disabled={loading} onClick={() => handleLogin()} variant="contained" color={'secondary'}>
+                                    {loading ? <CircularProgress
+                                        size={24}
+                                    /> : 'Submit'}
+                                </Button>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                    <Box my={3}/>
+                    <Grid container>
+                        <Grid item container justify={'flex-start'}>
+                            <Box
+                                display={'flex'}
+                                flexDirection={'column'}
+                                justifyContent={'flexStart'}
+                            >
+                                <Typography variant={'h1'} color={'textPrimary'} >
+                                    {'GET IN TOUCH.'}
+                                </Typography>
+                                <Box my={1}/>
+                                <Typography variant={'subtitle1'} color={'textPrimary'}>
+                                    {'gwm@mc.gov.in'}
+                                </Typography>
+                                <Box my={1}/>
+                                <Typography variant={'subtitle1'} color={'textPrimary'}>
+                                    {'+91 9438000000'}
+                                </Typography>
+                                <Box my={1}/>
+                                <Typography variant={'subtitle1'} color={'textPrimary'}>
+                                    {'547, Saheed Nagar'}
+                                </Typography>
+                                <Typography variant={'subtitle1'} color={'textPrimary'}>
+                                    {'Bhubaneswar- 751007'}
+                                </Typography>
                             </Box>
                         </Grid>
                     </Grid>
                 </Box>
-                <Grid container justify={'center'} alignItems={'center'} style={{ minHeight: '100vh' }}>
-                    {/*<Hidden smDown>*/}
-                    {/*    <Grid item container xs={12} sm={6} justify={'center'} alignItems={'center'}>*/}
-                    {/*        <img width={'80%'} src={Vector} alt={'vector'} />*/}
-                    {/*    </Grid>*/}
-                    {/*</Hidden>*/}
-                    {/*<Box my={2} />*/}
-                    <Grid item container xs={12} sm={6} justify={'center'} alignItems={'center'}>
-                        <img width={'80%'} src={Vector} alt={'vector'} />
-                    </Grid>
-                    {/*<Box my={2} />*/}
-                    <Grid
-                        item
-                        container
-                        xs={12} sm={6}
-                        justify={'center'}
-                        alignItems={'center'}>
-                        <Box
-                            display={'flex'}
-                            flexDirection={'column'}
-                            justifyContent={'center'}
-                            alignItems={'center'}
-                            width={'90%'}
-                            maxWidth={'450px'}
-                            borderRadius={'borderRadius'}
-                            bgcolor={'#124954'}
-                            // boxShadow={20}
-                            // p={{ xs: 1, sm: 2 }}
-                            px={3}
-                            py={2}
-                            // p={3}
-                            style={{boxShadow: '25px 25px 50px rgba(18, 73, 84, 0.4)'}}
-                        >
-                            <Hidden xsDown>
-                                <Typography variant={'h2'} color={'textSecondary'} >
-                                    {'LOGIN'}
-                                </Typography>
-                            </Hidden>
-                            <Hidden smUp>
-                                <img width={'40%'} src={Gwm} alt={'vector'} style={{ margin: '15px 0' }}/>
-                            </Hidden>
-                            <Box my={3} />
-                            <TextField
-                                label={'Username'}
-                                name={'username'}
-                                value={email}
-                                onChange={event => setEmail(event.target.value)}
-                                variant="outlined"
-                                fullWidth
-                                required
-                                color={'secondary'}
-                                focused
-                            />
-                            <Box my={3} />
-                            <TextField
-                                fullWidth
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                onClick={handleClickShowPassword}
-                                            >
-                                                {showPassword ? <VisibilityIcon color={'secondary'}/> : <VisibilityOffIcon color={'secondary'}/>}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                                label={'Password'}
-                                name={'password'}
-                                onChange={event => setPassword(event.target.value)}
-                                required
-                                focused
-                                variant="outlined"
-                                type={showPassword ? 'text' : 'password'}
-                                value={password}
-                                color={'secondary'}
-                                // onKeyDown={handleEnter}
-                            />
-                            <Box my={2} />
-                            <Box display={'flex'} alignItems={'center'}
-                                width={'100%'} justifyContent={{xs: 'center', md:'space-between'}}>
-                                <Hidden smDown>
-                                    <Typography variant={'subtitle2'} color={'secondary'}>{'Captcha'}</Typography>
-                                </Hidden>
-
-                                <Box mr={2}>
-                                    <ClientCaptcha
-                                        width={200}
-                                        height={40}
-                                        backgroundColor={'#FF9A3E'}
-                                        fontColor={'#FFFFFF'}
-                                        fontFamily={'Montserrat'}
-                                        retryIconSize={20}
-                                        retryIcon={Refresh}
-                                        captchaCode={code => {
-                                            console.log(code);
-                                            setCaptchaCode(code);
-                                        }}>
-                                    </ClientCaptcha>
-                                </Box>
-                            </Box>
-                            <Box my={2} />
-                            <TextField
-                                label={'Type Captcha Code'}
-                                value={inputCaptcha}
-                                onChange={event => setInputCaptcha(event.target.value)}
-                                variant="outlined"
-                                fullWidth
-                                focused
-                                color={'secondary'}
-                                required
-                            />
-                            <Box my={2} />
-                            <Button disabled={loading} onClick={() => handleLogin()} variant="contained" color={'secondary'}>
-                                {loading ? <CircularProgress
-                                    size={24}
-                                /> : 'Login'}
-                            </Button>
-                        </Box>
-                    </Grid>
-                </Grid >
             </Container>
             <Box my={5}/>
             <Footer />

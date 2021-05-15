@@ -48,17 +48,19 @@ let theme = createMuiTheme({
             fontWeight: 'bold',
             letterSpacing: 0.3,
             '@media (max-width:1050px)': {
-                fontSize: 16,
+                fontSize: 22,
                 lineHeight: '20px',
             },
             '@media (max-width:900px)': {
-                fontSize: 12,
+                fontSize: 18,
                 lineHeight: '16px',
                 letterSpacing: '0.5px',
+                fontWeight: 'bold'
             },
             '@media (max-width:500px)': {
-                fontSize: 11,
+                fontSize: 17,
                 lineHeight: '12px',
+                fontWeight: 'bold'
             },
         },
         h3: {
@@ -181,10 +183,9 @@ theme = {
                 // color: '#FFFFFF',
             },
         },
-        MuiOutlinedInput:{
-            notchedOutline:{
+        MuiOutlinedInput: {
+            notchedOutline: {
                 borderRadius: '10px',
-                borderColor: '#FFFFFF'
             },
         },
         MuiSelect: {

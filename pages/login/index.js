@@ -28,15 +28,20 @@ import Footer from '../../src/layouts/Footer';
 
 const useStyles = makeStyles({
     container: {
-        // backgroundImage: `url(${BackImg})`,
         backgroundPosition: 'bottom center',
         backgroundRepeat: 'no-repeat',
         backgroundSize: '100%',
         height: 'calc(100vh-48px)'
     },
-    fieldText: {
+    root: {
         color: '#FFFFFF',
-    }
+        borderColor: '#FFFFFF',
+        '&$focused$notchedOutline': {
+            borderColor: '#FFFFFF'
+        },
+    },
+    focused: {},
+    notchedOutline: {}
 });
 
 const Index = () => {
@@ -99,16 +104,9 @@ const Index = () => {
             <Appbar />
             <Container maxWidth={'xl'}>
                 <Grid container justify={'center'} alignItems={'center'} style={{ minHeight: '100vh' }}>
-                    {/*<Hidden smDown>*/}
-                    {/*    <Grid item container xs={12} sm={6} justify={'center'} alignItems={'center'}>*/}
-                    {/*        <img width={'80%'} src={Vector} alt={'vector'} />*/}
-                    {/*    </Grid>*/}
-                    {/*</Hidden>*/}
-                    {/*<Box my={2} />*/}
                     <Grid item container xs={12} sm={6} justify={'center'} alignItems={'center'}>
                         <img width={'80%'} src={Vector} alt={'vector'} />
                     </Grid>
-                    {/*<Box my={2} />*/}
                     <Grid
                         item
                         container
@@ -126,7 +124,6 @@ const Index = () => {
                             bgcolor={'#124954'}
                             px={3}
                             py={2}
-                            // p={3}
                             style={{boxShadow: '25px 25px 50px rgba(18, 73, 84, 0.4)'}}
                         >
                             <Hidden xsDown>
@@ -149,7 +146,11 @@ const Index = () => {
                                 color={'secondary'}
                                 focused
                                 InputProps={{
-                                    className: classes.fieldText
+                                    classes: {
+                                        root: classes.root,
+                                        focused: classes.focused,
+                                        notchedOutline: classes.notchedOutline
+                                    }
                                 }}
                             />
                             <Box my={3} />
@@ -165,7 +166,7 @@ const Index = () => {
                                             </IconButton>
                                         </InputAdornment>
                                     ),
-                                    className: classes.fieldText
+                                    className: classes.root
                                 }}
                                 label={'Password'}
                                 name={'password'}
@@ -182,7 +183,7 @@ const Index = () => {
                             <Box display={'flex'} alignItems={'center'}
                                 width={'100%'} justifyContent={{xs: 'center', md:'space-between'}}>
                                 <Hidden smDown>
-                                    <Typography variant={'subtitle2'} color={'secondary'}>{'Captcha'}</Typography>
+                                    <Typography variant={'subtitle2'} style={{color: '#FFFFFF'}} >{'Captcha'}</Typography>
                                 </Hidden>
 
                                 <Box mr={2}>
@@ -212,7 +213,7 @@ const Index = () => {
                                 color={'secondary'}
                                 required
                                 InputProps={{
-                                    className: classes.fieldText
+                                    className: classes.root
                                 }}
                             />
                             <Box my={2} />
