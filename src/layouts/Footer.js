@@ -346,12 +346,12 @@ const Footer = () => {
             <div style={{width: '100%',backgroundColor: '#124954',padding: '10px',display: 'flex', justifyContent: 'center', borderTop: '2px solid #7AE3B1'}}>
                 <Hidden xsDown>
                     <Typography className={classes.captionText} variant={'caption'} style={{color: '#fff'}}>
-                        {'(c) Copyright 2020, Zepmat Technologies pvt. ltd. All rights reserved'}
+                        {'(c) Copyright 2020, GWM Corporation pvt. ltd. All rights reserved'}
                     </Typography>
                 </Hidden>
                 <Hidden smUp>
                     <Typography style={{fontSize: '10px',color: '#fff',textAlign: 'center'}} className={classes.captionText} variant={'caption'}>
-                        {'(c) Copyright 2020, Zepmat Technologies pvt. ltd.'}
+                        {'(c) Copyright 2020, GWM Corporation pvt. ltd.'}
                         <br/>
                         {'All rights reserved'}
                     </Typography>

@@ -4,10 +4,7 @@ import {
     CircularProgress,
     Container, FormControl,
     Grid,
-    Hidden, IconButton,
-    InputAdornment,
     makeStyles, MenuItem, Select,
-    TextField,
     Typography
 } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
@@ -16,64 +13,51 @@ import UserStore from '../../src/store/userStore';
 import { authenticate } from '../../src/apis/authentication';
 import { useSnackbar } from 'notistack';
 import { useRouter } from 'next/router';
-import ClientCaptcha from 'react-client-captcha';
-import Vector from '../../public/Login.svg';
-import Refresh from '../../public/refresh (1).svg';
-import Gwm from '../../public/Frame 6.svg';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import Appbar from '../../src/layouts/Appbar';
 import Footer from '../../src/layouts/Footer';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import Rating from '@material-ui/lab/Rating';
+import WhiteTextField from '../../src/components/WhiteTextField';
 
 const useStyles = makeStyles({
     container: {
-        // backgroundImage: `url(${BackImg})`,
         backgroundPosition: 'bottom center',
         backgroundRepeat: 'no-repeat',
         backgroundSize: '100%',
         height: 'calc(100vh-48px)'
     },
-    formControl: {
-        borderRadius: '2px',
-    },
-    option: {
-        color: '#124954'
-    },
-    root: {
-        color: '#FFFFFF',
-    },
-    select: {
-        iconOutlined: {
+    select2: {
+        '& .MuiSelect-iconOutlined': {
             color: '#FFFFFF'
+        }
+    },
+    menuPaper: {
+        maxHeight: 100,
+        maxWidth: 100,
+        scrollbarWidth: 'none',
+        '&::-webkit-scrollbar': {
+            display: 'none'
         },
     }
 });
 
-const Index = () => {
+const Contact = () => {
 
     const classes = useStyles();
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = React.useState(false);
-    const [captchaCode, setCaptchaCode] = useState('');
-    const [inputCaptcha, setInputCaptcha] = useState('');
-    const [loading, setLoading] = useState(false);
     const [feedbackType, setFeedBackType] = React.useState(1);
-    const [value, setValue] = React.useState(1);
+
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [link, setLink] = useState('');
+    const [message, setMessage] = useState('');
+    const [zones, setZones] = React.useState([{_id: 1, name: 'Zone 1'}, {_id: 2, name: 'Zone 2'}, {_id: 3, name: 'Zone 3'}]);
     const [zoneValue, setZoneValue] = React.useState(0);
+    const [rating, setRating] = React.useState(1);
+
+    const [loading, setLoading] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
     const Router = useRouter();
-
-    const { user } = useStore(UserStore);
-
-    // const [visible, setVisible] = useState(true);
-
-    const handleClickShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
 
     const handleFeedbackTypeChange = (event) => {
         setFeedBackType(event.target.value);
@@ -83,43 +67,24 @@ const Index = () => {
         setZoneValue(event.target.value);
     };
 
-    const handleSetValue = (event) => {
-        setValue(event.target.value);
-    }
 
     useEffect(() => {
-        if (user && user.role === 2) {
-            Router.replace('/admin/dashboard');
-        }else if(user && user.role === 1){
-            Router.replace('/accountDetails');
-        }
+        // if (user && user.role === 2) {
+        //     Router.replace('/admin/dashboard');
+        // }else if(user && user.role === 1){
+        //     Router.replace('/accountDetails');
+        // }
     }, []);
 
 
-
-    const handleLogin = () => {
+    const handleSubmit = () => {
         setLoading(true);
-        authenticate(email, password)
-            .then((response) => {
-                const { accessToken, user } = response;
-                console.log(accessToken, user);
-                localStorage.setItem('feathers-jwt', accessToken);
-                UserStore.set(() => ({ token: accessToken, user }), 'login');
-                enqueueSnackbar('Login successfully', { variant: 'success' });
-                if (user.role === 2) {
-                    Router.replace('/admin/dashboard');
-                }
-                else {
-                    Router.replace('/accountDetails');
-                }
-            })
-            .catch(error => {
-                enqueueSnackbar(error.message && error.message ? error.message : 'Something went wrong!', { variant: 'warning' });
-            }).finally(() => {
-                setLoading(false);
-            });
+        if (!/^[0][1-9]\d{9}$|^[1-9]\d{9}$/.test(phone)) {
+            enqueueSnackbar('Please provide a valid phone number!', { variant: 'warning' });
+            setLoading(false);
+            return ;
+        }
     };
-
 
     return (
         <Box className={classes.container}>
@@ -146,7 +111,8 @@ const Index = () => {
                                 </Typography>
                                 <Box my={2}/>
                                 <Typography variant={'caption'} color={'textSecondary'}>
-                                    {'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in erat at quam egestas facilisis nec eu risus. Sed lorem sem, pellentesque ac nibh ac, tincidunt fermentum dui. Nunc in pretium est, et pretium leo. Aliquam congue sapien massa, quis accumsan nunc malesuada ac.'}
+                                    {'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in erat at quam egestas facilisis nec eu risus. Sed lorem sem, pellentesque ac nibh ac, tincidunt fermentum dui. Nunc in pretium est, et pretium leo. Aliquam congue sapien massa, quis accumsan nunc malesuada ac.' +
+                                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in erat at quam egestas facilisis nec eu risus. Sed lorem sem, pellentesque ac nibh ac, tincidunt fermentum dui. Nunc in pretium est, et pretium leo. Aliquam congue sapien massa, quis accumsan nunc malesuada ac.'}
                                 </Typography>
                                 <Box
                                     display={'flex'}
@@ -167,6 +133,13 @@ const Index = () => {
                                             onChange={handleFeedbackTypeChange}
                                             IconComponent={KeyboardArrowDownIcon}
                                             color={'primary'}
+                                            MenuProps={{
+                                                anchorOrigin: {
+                                                    vertical: "bottom",
+                                                    horizontal: "left"
+                                                },
+                                                getContentAnchorEl: null
+                                            }}
                                         >
                                             <MenuItem value = {1} style={{borderBottom: '1px solid #7AE3B1'}}>Feedback</MenuItem>
                                             <MenuItem value = {2} style={{borderBottom: '1px solid #7AE3B1'}}>Suggestion</MenuItem>
@@ -197,89 +170,70 @@ const Index = () => {
                                 style={{boxShadow: '25px 25px 50px rgba(18, 73, 84, 0.4)'}}
                             >
                                 <Box my={2} />
-                                <TextField
+                                <WhiteTextField
                                     label={'Name'}
                                     name={'name'}
-                                    value={email}
-                                    onChange={event => setEmail(event.target.value)}
-                                    variant="outlined"
-                                    fullWidth
-                                    required
-                                    color={'secondary'}
-                                    focused
-                                    InputProps={{
-                                        classes: {
-                                            root: classes.root
-                                        }
-                                    }}
+                                    value={name}
+                                    onChange={event => setName(event.target.value)}
                                 />
                                 <Box my={2} />
-                                <TextField
+                                <WhiteTextField
                                     label={'Phone Number'}
                                     name={'phone'}
-                                    value={email}
-                                    onChange={event => setEmail(event.target.value)}
-                                    variant="outlined"
-                                    fullWidth
-                                    required
-                                    color={'secondary'}
-                                    focused
-                                    InputProps={{
-                                        classes: {
-                                            root: classes.root
-                                        }
-                                    }}
+                                    value={phone}
+                                    onChange={event => setPhone(event.target.value)}
                                 />
                                 <Box my={2} />
-                                <TextField
-                                    select
-                                    label="Zone"
-                                    // value={currency}
-                                    // onChange={handleChange}
-                                    variant="outlined"
-                                    focused
-                                    required
+                                <WhiteTextField
+                                    label={'Zone'}
                                     name={'zone'}
-                                    color={'secondary'}
+                                    select={true}
                                     value={zoneValue}
                                     onChange={handleZoneChange}
-                                    fullWidth
+                                    SelectProps={{
+                                        MenuProps: {
+                                            anchorOrigin: {
+                                                vertical: "bottom",
+                                                horizontal: "left"
+                                            },
+                                            transformOrigin: {
+                                                vertical: "top",
+                                                horizontal: "left"
+                                            },
+                                            getContentAnchorEl: null,
+                                            classes: {
+                                                paper: classes.menuPaper
+                                            }
+                                        },
+                                        IconComponent: KeyboardArrowDownIcon
+                                    }}
                                     InputProps={{
                                         classes: {
-                                            root: classes.root
+                                            root: classes.select2
                                         }
                                     }}
-
-                                >
-                                    {/*{currencies.map((option) => (*/}
-                                    {/*    <MenuItem key={option.value} value={option.value}>*/}
-                                    {/*        {option.label}*/}
-                                    {/*    </MenuItem>*/}
-                                    {/*))}*/}
-                                    <MenuItem value = {1} style={{borderBottom: '1px solid #7AE3B1'}}>Zone 1</MenuItem>
-                                    <MenuItem value = {2} style={{borderBottom: '1px solid #7AE3B1'}}>Zone 2</MenuItem>
-                                    <MenuItem value = {3} >Zone 3</MenuItem>
-                                </TextField>
+                                    children={
+                                        zones.map((each, i) => (
+                                            <MenuItem
+                                                value={each._id}
+                                                style={i !== zones.length - 1 ? {borderBottom: '1px solid #7AE3B1'} : null}
+                                            >
+                                                {each.name}
+                                            </MenuItem>
+                                        ))
+                                    }
+                                />
                                 <Box my={2}/>
                                 {
-                                    feedbackType !== 1 && feedbackType !== 2 ? (
+                                    feedbackType === 3 ? (
                                         <React.Fragment>
-                                            <TextField
+                                            <WhiteTextField
                                                 label={'Map Link'}
-                                                value={inputCaptcha}
-                                                onChange={event => setInputCaptcha(event.target.value)}
-                                                variant="outlined"
-                                                fullWidth
-                                                focused
-                                                color={'secondary'}
-                                                required
-                                                InputProps={{
-                                                    classes: {
-                                                        root: classes.root
-                                                    }
-                                                }}
+                                                name={'link'}
+                                                value={link}
+                                                onChange={event => setLink(event.target.value)}
                                             />
-                                            <Box my={2} />
+                                            <Box my={2}/>
                                         </React.Fragment>
                                     ) : null
                                 }
@@ -292,9 +246,9 @@ const Index = () => {
                                             <Box my={1}/>
                                             <Rating
                                                 name="simple-controlled"
-                                                value={value}
+                                                value={rating}
                                                 onChange={(event, newValue) => {
-                                                    setValue(newValue);
+                                                    setRating(newValue);
                                                 }}
                                                 size={'large'}
                                                 color={'#FF9A3E'}
@@ -303,21 +257,14 @@ const Index = () => {
                                         </React.Fragment>
                                     ) : null
                                 }
-                                <TextField
+                                <WhiteTextField
                                     label={'Message'}
                                     name={'message'}
-                                    // value={email}
-                                    // onChange={event => setEmail(event.target.value)}
-                                    variant="outlined"
-                                    fullWidth
-                                    required
+                                    value={message}
+                                    onChange={event => setMessage(event.target.value)}
                                     multiline={true}
                                     rows={6}
-                                    focused
-                                    color={'secondary'}
-                                    InputProps={{
-                                        className: classes.root
-                                    }}
+                                    rowsMax={8}
                                 />
                                 <Box my={2} />
                                 <Button disabled={loading} onClick={() => handleLogin()} variant="contained" color={'secondary'}>
@@ -365,4 +312,4 @@ const Index = () => {
     );
 };
 
-export default Index;
+export default Contact;

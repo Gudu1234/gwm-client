@@ -4,58 +4,72 @@ import {
     CircularProgress,
     Container,
     Grid,
-    Hidden, IconButton,
-    InputAdornment,
-    makeStyles,
-    TextField,
+    Hidden,
+    makeStyles, MenuItem,
     Typography
 } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useStore } from 'laco-react';
 import UserStore from '../../src/store/userStore';
-import { authenticate } from '../../src/apis/authentication';
 import { useSnackbar } from 'notistack';
 import { useRouter } from 'next/router';
 import Arrow from '../../public/Arrow.svg';
-import Request from '../../public/Request.svg';
+import RequestIcon from '../../public/Request.svg';
 import Collection from '../../public/Collection.svg';
 import Disposal from '../../public/Disposal.svg';
 import Appbar from '../../src/layouts/Appbar';
 import Footer from '../../src/layouts/Footer';
+import GreenTextField from '../../src/components/GreenTextField';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
 const useStyles = makeStyles({
     container: {
-        // backgroundImage: `url(${BackImg})`,
         backgroundPosition: 'bottom center',
         backgroundRepeat: 'no-repeat',
         backgroundSize: '100%',
         height: 'calc(100vh-48px)'
     },
-    fieldText: {
-        color: '#000000',
+    select2: {
+        '& .MuiSelect-iconOutlined': {
+            color: '#124954'
+        }
+    },
+    menuPaper: {
+        maxHeight: 100,
+        maxWidth: 100,
+        scrollbarWidth: 'none',
+        '&::-webkit-scrollbar': {
+            display: 'none'
+        },
     }
 });
 
-const Index = () => {
+const Request = () => {
 
     const classes = useStyles();
 
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = React.useState(false);
-    const [captchaCode, setCaptchaCode] = useState('');
-    const [inputCaptcha, setInputCaptcha] = useState('');
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [link, setLink] = useState('');
+    const [address, setAddress] = useState('');
+    const [street, setStreet] = useState('');
+    const [landmark, setLandmark] = useState('');
+    const [pin, setPin] = useState('');
+    const [message, setMessage] = useState('');
+    const [zones, setZones] = React.useState([{_id: 1, name: 'Zone 1'}, {_id: 2, name: 'Zone 2'}, {_id: 3, name: 'Zone 3'}, {_id: 3, name: 'Zone 3'}, {_id: 3, name: 'Zone 3'}]);
+    const [zoneValue, setZoneValue] = React.useState(0);
+
     const [loading, setLoading] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
     const Router = useRouter();
 
     const { user } = useStore(UserStore);
 
-    // const [visible, setVisible] = useState(true);
-
-    const handleClickShowPassword = () => {
-        setShowPassword(!showPassword);
+    const handleZoneChange = (event) => {
+        setZoneValue(event.target.value);
     };
+
 
     useEffect(() => {
         if (user && user.role === 2) {
@@ -66,30 +80,22 @@ const Index = () => {
     }, []);
 
 
-
-    const handleLogin = () => {
+    const handleSubmit = () => {
         setLoading(true);
-        authenticate(email, password)
-            .then((response) => {
-                const { accessToken, user } = response;
-                console.log(accessToken, user);
-                localStorage.setItem('feathers-jwt', accessToken);
-                UserStore.set(() => ({ token: accessToken, user }), 'login');
-                enqueueSnackbar('Login successfully', { variant: 'success' });
-                if (user.role === 2) {
-                    Router.replace('/admin/dashboard');
-                }
-                else {
-                    Router.replace('/accountDetails');
-                }
-            })
-            .catch(error => {
-                enqueueSnackbar(error.message && error.message ? error.message : 'Something went wrong!', { variant: 'warning' });
-            }).finally(() => {
-                setLoading(false);
-            });
+        if (!/^[0][1-9]\d{9}$|^[1-9]\d{9}$/.test(phone)) {
+            enqueueSnackbar('Please provide a valid phone number!', { variant: 'warning' });
+            setLoading(false);
+            return ;
+        }
+        if (
+            !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+                email,
+            )
+        ) {
+            enqueueSnackbar('Please provide a valid email!', { variant: 'warning' });
+            setLoading(false);
+        }
     };
-
 
     return (
         <Box className={classes.container}>
@@ -101,11 +107,11 @@ const Index = () => {
                     justifyContent={'center'}
                     alignItems={'center'}
                     width={'100%'}
-                    px={{xs: 3, md: 15}}
+                    px={{xs: 2, md: 12}}
                     py={3}
                 >
                     <Hidden xsDown>
-                        <Typography variant={'h2'} color={'textPrimary'} >
+                        <Typography variant={'h1'} color={'textPrimary'} >
                             {'REQUEST BIN'}
                         </Typography>
                     </Hidden>
@@ -132,167 +138,128 @@ const Index = () => {
                                     {'REQUEST FORM:'}
                                 </Typography>
                                 <Box my={2}/>
-                                <TextField
+                                <GreenTextField
                                     label={'Name:'}
                                     name={'name'}
-                                    // value={email}
-                                    // onChange={event => setEmail(event.target.value)}
-                                    variant="outlined"
-                                    fullWidth
-                                    required
-                                    focused
-                                    InputProps={{
-                                        className: classes.fieldText
-                                    }}
+                                    value={name}
+                                    onChange={event => setName(event.target.value)}
                                 />
                                 <Box my={2}/>
-                                <TextField
-                                    label={'Name:'}
-                                    name={'name'}
-                                    // value={email}
-                                    // onChange={event => setEmail(event.target.value)}
-                                    variant="outlined"
-                                    fullWidth
-                                    required
-                                    focused
-                                    InputProps={{
-                                        className: classes.fieldText
-                                    }}
+                                <GreenTextField
+                                    label={'Phone Number:'}
+                                    name={'phone'}
+                                    value={phone}
+                                    onChange={event => setPhone(event.target.value)}
                                 />
                                 <Box my={2}/>
-                                <TextField
-                                    label={'Name:'}
-                                    name={'name'}
-                                    // value={email}
-                                    // onChange={event => setEmail(event.target.value)}
-                                    variant="outlined"
-                                    fullWidth
-                                    required
-                                    focused
-                                    InputProps={{
-                                        className: classes.fieldText
-                                    }}
+                                <GreenTextField
+                                    label={'Email:'}
+                                    name={'email'}
+                                    value={email}
+                                    onChange={event => setEmail(event.target.value)}
                                 />
                                 <Box my={2}/>
-                                <TextField
-                                    label={'Name:'}
-                                    name={'name'}
-                                    // value={email}
-                                    // onChange={event => setEmail(event.target.value)}
-                                    variant="outlined"
-                                    fullWidth
-                                    required
-                                    focused
-                                    InputProps={{
-                                        className: classes.fieldText
-                                    }}
+                                <GreenTextField
+                                    label={'Municipal Corporation:'}
+                                    name={'mc'}
+                                    value={'Bhubaneswar Municipal Corporation'}
+                                    onChange={() => {return null;}}
                                 />
                                 <Box my={2}/>
-                                <TextField
-                                    label={'Name:'}
-                                    name={'name'}
-                                    // value={email}
-                                    // onChange={event => setEmail(event.target.value)}
-                                    variant="outlined"
-                                    fullWidth
-                                    required
-                                    focused
-                                    InputProps={{
-                                        className: classes.fieldText
-                                    }}
+                                <GreenTextField
+                                    label={'Map Link:'}
+                                    name={'map'}
+                                    value={link}
+                                    onChange={event => setLink(event.target.value)}
                                 />
                                 <Box my={2}/>
-                                <TextField
-                                    label={'Name:'}
-                                    name={'name'}
-                                    // value={email}
-                                    // onChange={event => setEmail(event.target.value)}
-                                    variant="outlined"
-                                    fullWidth
-                                    required
-                                    focused
-                                    InputProps={{
-                                        className: classes.fieldText
-                                    }}
+                                <GreenTextField
+                                    label={'Address:'}
+                                    name={'address'}
+                                    value={address}
+                                    onChange={event => setAddress(event.target.value)}
                                 />
                                 <Box my={2}/>
-                                <TextField
-                                    label={'Name:'}
-                                    name={'name'}
-                                    // value={email}
-                                    // onChange={event => setEmail(event.target.value)}
-                                    variant="outlined"
-                                    fullWidth
-                                    required
-                                    focused
-                                    InputProps={{
-                                        className: classes.fieldText
-                                    }}
+                                <GreenTextField
+                                    label={'Street:'}
+                                    name={'street'}
+                                    value={street}
+                                    onChange={event => setStreet(event.target.value)}
                                 />
                                 <Box my={2}/>
-                                <TextField
-                                    label={'Name:'}
-                                    name={'name'}
-                                    // value={email}
-                                    // onChange={event => setEmail(event.target.value)}
-                                    variant="outlined"
-                                    fullWidth
-                                    required
-                                    focused
-                                    InputProps={{
-                                        className: classes.fieldText
-                                    }}
+                                <GreenTextField
+                                    label={'Landmark:'}
+                                    name={'landmark'}
+                                    value={landmark}
+                                    onChange={event => setLandmark(event.target.value)}
                                 />
                                 <Box my={2}/>
-                                <TextField
-                                    label={'Name:'}
-                                    name={'name'}
-                                    // value={email}
-                                    // onChange={event => setEmail(event.target.value)}
-                                    variant="outlined"
-                                    fullWidth
-                                    required
-                                    focused
-                                    InputProps={{
-                                        className: classes.fieldText
-                                    }}
+                                <GreenTextField
+                                    label={'Pin-Code:'}
+                                    name={'pin'}
+                                    value={pin}
+                                    onChange={event => setPin(event.target.value)}
                                 />
                                 <Box my={2}/>
-                                <TextField
-                                    label={'Name:'}
-                                    name={'name'}
-                                    // value={email}
-                                    // onChange={event => setEmail(event.target.value)}
-                                    variant="outlined"
-                                    fullWidth
-                                    required
-                                    focused
-                                    InputProps={{
-                                        className: classes.fieldText
+                                <GreenTextField
+                                    label={'Zone'}
+                                    name={'zone'}
+                                    select={true}
+                                    value={zoneValue}
+                                    onChange={handleZoneChange}
+                                    SelectProps={{
+                                        MenuProps: {
+                                            anchorOrigin: {
+                                                vertical: "bottom",
+                                                horizontal: "left"
+                                            },
+                                            transformOrigin: {
+                                                vertical: "top",
+                                                horizontal: "left"
+                                            },
+                                            getContentAnchorEl: null,
+                                            classes: {
+                                                paper: classes.menuPaper
+                                            }
+                                        },
+                                        IconComponent: KeyboardArrowDownIcon
                                     }}
+                                    InputProps={{
+                                        classes: {
+                                            root: classes.select2
+                                        }
+                                    }}
+                                    children={
+                                        zones.map((each, i) => (
+                                            <MenuItem
+                                                value={each._id}
+                                                style={i !== zones.length - 1 ? {borderBottom: '1px solid #7AE3B1'} : null}
+                                            >
+                                                {each.name}
+                                            </MenuItem>
+                                        ))
+                                    }
                                 />
                                 <Box my={2}/>
-                                <TextField
-                                    label={'Name:'}
-                                    name={'name'}
-                                    // value={email}
-                                    // onChange={event => setEmail(event.target.value)}
-                                    variant="outlined"
-                                    fullWidth
-                                    required
+                                <GreenTextField
+                                    label={'Message:'}
+                                    name={'message'}
+                                    value={message}
+                                    onChange={event => setMessage(event.target.value)}
                                     multiline={true}
                                     rows={6}
-                                    focused
-                                    InputProps={{
-                                        className: classes.fieldText
-                                    }}
+                                    rowsMax={8}
                                 />
                                 <Box my={2}/>
-                                <Button disabled={loading} onClick={() => handleLogin()} variant="contained" color={'secondary'}>
-                                    {loading ? <CircularProgress
-                                        size={24}
-                                    /> : 'Submit'}
-                                </Button>
+                                <Grid container>
+                                    <Grid item container justify={'center'} alignItems={'center'}>
+                                        <Button disabled={loading} onClick={() => handleSubmit()} variant="contained" color={'secondary'} size={'large'}>
+                                            {loading ? <CircularProgress
+                                                size={24}
+                                            /> : 'Submit'}
+                                        </Button>
+                                    </Grid>
+                                </Grid>
                             </Box>
                         </Grid>
                         <Hidden xsDown>
@@ -303,7 +270,7 @@ const Index = () => {
                                     justifyContent={'center'}
                                     alignItems={'center'}
                                 >
-                                    <img width={'60%'} src={Request} alt={'vector'} />
+                                    <img width={'60%'} src={RequestIcon} alt={'vector'} />
                                     <Box my={3}/>
                                     <img width={'10%'} src={Arrow} alt={'vector'}/>
                                     <Box my={3}/>
@@ -324,4 +291,4 @@ const Index = () => {
     );
 };
 
-export default Index;
+export default Request;

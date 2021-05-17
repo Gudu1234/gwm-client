@@ -35,7 +35,7 @@ const Appbar = () => {
         window.onscroll = function () {
             //console.log('----->>',window.pageXOffset, window.pageYOffset);
 
-            if (window.pageYOffset > 120) {
+            if (window.pageYOffset > 90) {
                 setOnTop(false);
             } else {
                 if ( window.innerWidth < 450 && window.pageYOffset > 5) {
@@ -79,9 +79,9 @@ const Appbar = () => {
                     {/*<MenuIcon color={'primary'}/>*/}
                     {
                         onTop ? (
-                            <img width={'8%'} src={Drawer1} alt={'Drawer'}/>
+                            <img width={'6%'} src={Drawer1} alt={'Drawer'}/>
                         ) : (
-                            <img width={'8%'} src={Drawer2} alt={'Drawer'}/>
+                            <img width={'6%'} src={Drawer2} alt={'Drawer'}/>
                         )
                     }
                 </Hidden>
