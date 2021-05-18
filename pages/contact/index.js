@@ -18,6 +18,8 @@ import Footer from '../../src/layouts/Footer';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import Rating from '@material-ui/lab/Rating';
 import WhiteTextField from '../../src/components/WhiteTextField';
+import {getAllZones} from '../../src/apis/all_zone';
+import {createContact} from '../../src/apis/contact';
 
 const useStyles = makeStyles({
     container: {
@@ -32,8 +34,8 @@ const useStyles = makeStyles({
         }
     },
     menuPaper: {
-        maxHeight: 100,
-        maxWidth: 100,
+        maxHeight: 150,
+        maxWidth: 50,
         scrollbarWidth: 'none',
         '&::-webkit-scrollbar': {
             display: 'none'
@@ -49,10 +51,11 @@ const Contact = () => {
 
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
-    const [link, setLink] = useState('');
+    const [link, setLink] = useState(null);
     const [message, setMessage] = useState('');
-    const [zones, setZones] = React.useState([{_id: 1, name: 'Zone 1'}, {_id: 2, name: 'Zone 2'}, {_id: 3, name: 'Zone 3'}]);
-    const [zoneValue, setZoneValue] = React.useState(0);
+    const [pins, setPins] = React.useState([]);
+    const [pin, setPin] = React.useState(0);
+    const [binCode, setBinCode] = React.useState(null);
     const [rating, setRating] = React.useState(1);
 
     const [loading, setLoading] = useState(false);
@@ -63,17 +66,23 @@ const Contact = () => {
         setFeedBackType(event.target.value);
     };
 
-    const handleZoneChange = (event) => {
-        setZoneValue(event.target.value);
+    const handlePinChange = (event) => {
+        setPin(event.target.value);
     };
 
 
-    useEffect(() => {
-        // if (user && user.role === 2) {
-        //     Router.replace('/admin/dashboard');
-        // }else if(user && user.role === 1){
-        //     Router.replace('/accountDetails');
-        // }
+    useEffect(async () => {
+        await getAllZones().then(
+            res => {
+                // console.log(res);
+                res.forEach(each => {
+                    each.pinCodes.forEach(e => {
+                        console.log(e);
+                        pins.push(e);
+                    })
+                })
+            }
+        )
     }, []);
 
 
@@ -84,6 +93,41 @@ const Contact = () => {
             setLoading(false);
             return ;
         }
+        const contactData = {
+            name,
+            phone,
+            pinCode: pin,
+            message,
+            feedbackType
+        };
+        if (feedbackType === 1) {
+            contactData.ratings = rating;
+        } else if (feedbackType === 3) {
+            if (!binCode && !link) {
+                enqueueSnackbar('Please give the bin code or map link!', { variant: 'warning' });
+                setLoading(false);
+                return ;
+            }
+            contactData.binCode = binCode ? binCode : null;
+            contactData.mapLink = link ? link : null;
+        }
+        createContact(contactData)
+            .then((res) => {
+                const { feedbackType: type } = res;
+                enqueueSnackbar(
+                    type === 1
+                        ? 'Thanks for your feedback.'
+                        : (type === 2
+                        ? 'Thanks for your suggestion.'
+                        : 'We\'ll connect you shortly.'), { variant: 'success' }
+                );
+            })
+            .catch(error => {
+                enqueueSnackbar(error && error.message ? error.message : 'Something went wrong!', { variant: 'warning' });
+            })
+            .finally(() => {
+            setLoading(false);
+        });
     };
 
     return (
@@ -185,11 +229,11 @@ const Contact = () => {
                                 />
                                 <Box my={2} />
                                 <WhiteTextField
-                                    label={'Zone'}
-                                    name={'zone'}
+                                    label={'Pin-Code'}
+                                    name={'pin'}
                                     select={true}
-                                    value={zoneValue}
-                                    onChange={handleZoneChange}
+                                    value={pin}
+                                    onChange={handlePinChange}
                                     SelectProps={{
                                         MenuProps: {
                                             anchorOrigin: {
@@ -213,12 +257,12 @@ const Contact = () => {
                                         }
                                     }}
                                     children={
-                                        zones.map((each, i) => (
+                                        pins.map((each, i) => (
                                             <MenuItem
-                                                value={each._id}
-                                                style={i !== zones.length - 1 ? {borderBottom: '1px solid #7AE3B1'} : null}
+                                                value={each}
+                                                style={i !== pins.length - 1 ? {borderBottom: '1px solid #7AE3B1'} : null}
                                             >
-                                                {each.name}
+                                                {each}
                                             </MenuItem>
                                         ))
                                     }
@@ -232,6 +276,15 @@ const Contact = () => {
                                                 name={'link'}
                                                 value={link}
                                                 onChange={event => setLink(event.target.value)}
+                                                required={false}
+                                            />
+                                            <Box my={2}/>
+                                            <WhiteTextField
+                                                label={'Bin Code'}
+                                                name={'binCode'}
+                                                value={binCode}
+                                                onChange={event => setBinCode(event.target.value)}
+                                                required={false}
                                             />
                                             <Box my={2}/>
                                         </React.Fragment>
@@ -267,7 +320,7 @@ const Contact = () => {
                                     rowsMax={8}
                                 />
                                 <Box my={2} />
-                                <Button disabled={loading} onClick={() => handleLogin()} variant="contained" color={'secondary'}>
+                                <Button disabled={loading} onClick={() => handleSubmit()} variant="contained" color={'secondary'}>
                                     {loading ? <CircularProgress
                                         size={24}
                                     /> : 'Submit'}

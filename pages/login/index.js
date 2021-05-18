@@ -65,7 +65,7 @@ const Login = () => {
 
     const handleLogin = () => {
         setLoading(true);
-        console.log(1, username, password);
+        // console.log(1, username, password);
         if (inputCaptcha.trim() !== captchaCode) {
             enqueueSnackbar('Invalid captcha code.', { variant: 'error' });
             setLoading(false);

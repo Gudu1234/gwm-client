@@ -1,7 +1,7 @@
 import app from './index';
 
 export const authenticate = (username, password) => app.authenticate({
-    strategy: 'username',
+    strategy: 'local',
     username,
     password
 });

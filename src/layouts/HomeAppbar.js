@@ -74,7 +74,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const Appbar = () => {
+const HomeAppbar = () => {
 
     const Router = useRouter();
 
@@ -113,35 +113,9 @@ const Appbar = () => {
                     <img width={'100%'} src={Gwm} alt={'vector'}/>
                 </Box>
                 <Box flex={1}/>
-                <Hidden smDown>
-                    <Box display={'flex'} width={'45%'} justifyContent={'space-around'}>
-                        <Typography component={Link} href={'/'} as={'/'} style={{textDecoration: 'none', color: Router.pathname === '/' ? '#FF9A3E' : (onTop ? '#124954' : '#FFFFFF')}}>
-                            {'Home'}
-                        </Typography>
-                        <Typography component={Link} href={'/about'} as={'/about'} style={{textDecoration: 'none', color: Router.pathname === '/about' ? '#FF9A3E' : (onTop ? '#124954' : '#FFFFFF')}}>
-                            {'About'}
-                        </Typography>
-                        <Typography component={Link} href={'/request'} as={'/request'} style={{textDecoration: 'none', color: Router.pathname === '/request' ? '#FF9A3E' : (onTop ? '#124954' : '#FFFFFF')}}>
-                            {'Request'}
-                        </Typography>
-                        <Typography component={Link} href={'/contact'} as={'/contact'} style={{textDecoration: 'none', color: Router.pathname === '/contact' ? '#FF9A3E' : (onTop ? '#124954' : '#FFFFFF')}}>
-                            {'Contact'}
-                        </Typography>
-                        <Typography component={Link} href={'/login'} as={'/login'} style={{textDecoration: 'none', color: Router.pathname === '/login' ? '#FF9A3E' : (onTop ? '#124954' : '#FFFFFF')}}>
-                            {'Login'}
-                        </Typography>
-                    </Box>
-                </Hidden>
                 <Hidden mdUp>
-                    {/*<MenuIcon color={'primary'}/>*/}
                     <IconButton onClick={() => setOpen(true)}>
-                        {
-                            onTop ? (
-                                <img width={'100%'} src={Drawer1} alt={'Drawer'}/>
-                            ) : (
-                                <img width={'100%'} src={Drawer2} alt={'Drawer'}/>
-                            )
-                        }
+                        <img width={'100%'} src={Drawer2} alt={'Drawer'}/>
                     </IconButton>
                     <Drawer
                         variant="persistent"
@@ -216,4 +190,4 @@ const Appbar = () => {
 
 };
 
-export default Appbar;
+export default HomeAppbar;

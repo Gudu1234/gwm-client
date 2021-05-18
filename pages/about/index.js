@@ -1,7 +1,7 @@
 import {Box, Button, Container, Grid, makeStyles, Typography} from '@material-ui/core';
 import Appbar from '../../src/layouts/Appbar';
 import Footer from '../../src/layouts/Footer';
-import AboutIcon from '../../public/Collection.svg';
+import AboutIcon from '../../public/About.svg';
 import {useRouter} from 'next/router';
 
 const useStyles = makeStyles({

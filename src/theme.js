@@ -93,6 +93,27 @@ let theme = createMuiTheme({
             fontSize: 26,
             letterSpacing: 0.7,
         },
+        h6: {
+            fontSize: 50,
+            fontWeight: '700',
+            letterSpacing: 'normal',
+            lineHeight: '70px',
+            fontStyle: 'normal',
+            '@media (max-width:1050px)': {
+                fontSize: 16,
+                lineHeight: '20px',
+            },
+            '@media (max-width:900px)': {
+                fontSize: 40,
+                lineHeight: '65px',
+                letterSpacing: '0.7px',
+            },
+            '@media (max-width:500px)': {
+                fontSize: 28,
+                lineHeight: '50px',
+            },
+            'text-shadow': '-3px -3px 0 #fff, 3px -3px 0 #fff, -3px 3px 0 #fff, 3px 3px 0 #fff',
+        },
         body1: {
             fontSize: 16,
             fontWeight: 'bold',

@@ -21,6 +21,8 @@ import Appbar from '../../src/layouts/Appbar';
 import Footer from '../../src/layouts/Footer';
 import GreenTextField from '../../src/components/GreenTextField';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import {getAllZones} from '../../src/apis/all_zone';
+import {createRequest} from '../../src/apis/request';
 
 const useStyles = makeStyles({
     container: {
@@ -35,8 +37,8 @@ const useStyles = makeStyles({
         }
     },
     menuPaper: {
-        maxHeight: 100,
-        maxWidth: 100,
+        maxHeight: 150,
+        maxWidth: 50,
         scrollbarWidth: 'none',
         '&::-webkit-scrollbar': {
             display: 'none'
@@ -51,14 +53,13 @@ const Request = () => {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
-    const [link, setLink] = useState('');
+    const [link, setLink] = useState(null);
     const [address, setAddress] = useState('');
     const [street, setStreet] = useState('');
     const [landmark, setLandmark] = useState('');
-    const [pin, setPin] = useState('');
     const [message, setMessage] = useState('');
-    const [zones, setZones] = React.useState([{_id: 1, name: 'Zone 1'}, {_id: 2, name: 'Zone 2'}, {_id: 3, name: 'Zone 3'}, {_id: 3, name: 'Zone 3'}, {_id: 3, name: 'Zone 3'}]);
-    const [zoneValue, setZoneValue] = React.useState(0);
+    const [pins, setPins] = React.useState([]);
+    const [pin, setPin] = React.useState(0);
 
     const [loading, setLoading] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
@@ -66,17 +67,23 @@ const Request = () => {
 
     const { user } = useStore(UserStore);
 
-    const handleZoneChange = (event) => {
-        setZoneValue(event.target.value);
+    const handlePinChange = (event) => {
+        setPin(event.target.value);
     };
 
 
-    useEffect(() => {
-        if (user && user.role === 2) {
-            Router.replace('/admin/dashboard');
-        }else if(user && user.role === 1){
-            Router.replace('/accountDetails');
-        }
+    useEffect(async () => {
+        await getAllZones().then(
+            res => {
+                // console.log(res);
+                res.forEach(each => {
+                    each.pinCodes.forEach(e => {
+                        console.log(e);
+                        pins.push(e);
+                    })
+                })
+            }
+        )
     }, []);
 
 
@@ -94,7 +101,32 @@ const Request = () => {
         ) {
             enqueueSnackbar('Please provide a valid email!', { variant: 'warning' });
             setLoading(false);
+            return;
         }
+
+        const requestData = {
+            name,
+            phone,
+            pinCode: pin,
+            message,
+            email,
+            link,
+            address,
+            street,
+            landmark,
+            mc: 'Bhubaneswar Municipal Corporation'
+        };
+
+        createRequest(requestData)
+            .then(() => {
+                enqueueSnackbar('Our team will contact you shortly.', { variant: 'success' });
+            })
+            .catch((e) => {
+                enqueueSnackbar(e && e.message ? e.message : 'Something went wrong!', { variant: 'warning' });
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
     return (
@@ -111,12 +143,12 @@ const Request = () => {
                     py={3}
                 >
                     <Hidden xsDown>
-                        <Typography variant={'h1'} color={'textPrimary'} >
+                        <Typography variant={'h1'} color={'textPrimary'} align={'center'}>
                             {'REQUEST BIN'}
                         </Typography>
                     </Hidden>
                     <Hidden smUp>
-                        <Typography variant={'h1'} color={'textPrimary'} >
+                        <Typography variant={'h1'} color={'textPrimary'} align={'center'}>
                             {'REQUEST BIN'}
                         </Typography>
                     </Hidden>
@@ -127,12 +159,12 @@ const Request = () => {
                         }
                     </Typography>
                     <Box my={2}/>
-                    <Grid container style={{ minHeight: '100vh' }}>
+                    <Grid container>
                         <Grid item container justify={'space-between'} xs={12} sm={6}>
                             <Box
                                 display={'flex'}
                                 flexDirection={'column'}
-                                width={'90%'}
+                                width={'100%'}
                             >
                                 <Typography variant={'h3'} color={'textPrimary'} >
                                     {'REQUEST FORM:'}
@@ -171,6 +203,7 @@ const Request = () => {
                                     name={'map'}
                                     value={link}
                                     onChange={event => setLink(event.target.value)}
+                                    required={false}
                                 />
                                 <Box my={2}/>
                                 <GreenTextField
@@ -195,18 +228,11 @@ const Request = () => {
                                 />
                                 <Box my={2}/>
                                 <GreenTextField
-                                    label={'Pin-Code:'}
+                                    label={'Pin-Code'}
                                     name={'pin'}
-                                    value={pin}
-                                    onChange={event => setPin(event.target.value)}
-                                />
-                                <Box my={2}/>
-                                <GreenTextField
-                                    label={'Zone'}
-                                    name={'zone'}
                                     select={true}
-                                    value={zoneValue}
-                                    onChange={handleZoneChange}
+                                    value={pin}
+                                    onChange={handlePinChange}
                                     SelectProps={{
                                         MenuProps: {
                                             anchorOrigin: {
@@ -230,12 +256,12 @@ const Request = () => {
                                         }
                                     }}
                                     children={
-                                        zones.map((each, i) => (
+                                        pins.map((each, i) => (
                                             <MenuItem
-                                                value={each._id}
-                                                style={i !== zones.length - 1 ? {borderBottom: '1px solid #7AE3B1'} : null}
+                                                value={each}
+                                                style={i !== pins.length - 1 ? {borderBottom: '1px solid #7AE3B1'} : null}
                                             >
-                                                {each.name}
+                                                {each}
                                             </MenuItem>
                                         ))
                                     }

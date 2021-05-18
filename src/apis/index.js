@@ -8,9 +8,13 @@ export const cookieStorage = new CookieStorage();
 
 const restClient = rest('http://localhost:3030');
 
+const serverClient = rest('https://gwm-backend.herokuapp.com');
+
 const app = feathers();
 
-app.configure(restClient.axios(Axios));
+// app.configure(restClient.axios(Axios));
+
+app.configure(serverClient.axios(Axios));
 
 app.configure(auth({
     path: '/authentication',
