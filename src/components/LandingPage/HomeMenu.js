@@ -37,7 +37,7 @@ const HomeMenu = () => {
                     aria-labelledby="nested-list-subheader"
                 >
                     <Divider className={classes.divider} />
-                    <ListItem button component={Link} href="/request">
+                    <ListItem button component={Link} href="/request" style={{textDecoration: 'none'}}>
                         <ListItemText>
                             <Typography className={classes.drawerTitle} >
                                 {'REQUEST BIN'}
@@ -45,7 +45,7 @@ const HomeMenu = () => {
                         </ListItemText>
                     </ListItem>
                     <Divider className={classes.divider} />
-                    <ListItem button component={Link} href="/contact">
+                    <ListItem button component={Link} href="/contact" style={{textDecoration: 'none'}}>
                         <ListItemText>
                             <Typography className={classes.drawerTitle}>
                                 {'CONTACT'}
@@ -53,7 +53,7 @@ const HomeMenu = () => {
                         </ListItemText>
                     </ListItem>
                     <Divider className={classes.divider} />
-                    <ListItem button component={Link} href="/about">
+                    <ListItem button component={Link} href="/about" style={{textDecoration: 'none'}}>
                         <ListItemText>
                             <Typography className={classes.drawerTitle}>
                                 {'ABOUT'}
@@ -61,7 +61,7 @@ const HomeMenu = () => {
                         </ListItemText>
                     </ListItem>
                     <Divider className={classes.divider} />
-                    <ListItem button component={Link} href="/login">
+                    <ListItem button component={Link} href="/login" style={{textDecoration: 'none'}}>
                         <ListItemText>
                             <Typography className={classes.drawerTitle}>
                                 {'LOGIN'}
