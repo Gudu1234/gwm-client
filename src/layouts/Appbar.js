@@ -167,7 +167,7 @@ const Appbar = () => {
                                     </div>
                                     <Box mb={3} />
                                 </div>
-                                <ListItem button component={Link} href="/" onClick={handleClickAction}>
+                                <ListItem button component={Link} href="/" onClick={handleClickAction} style={{textDecoration: 'none'}}>
                                     <ListItemText>
                                         <Typography className={classes.drawerTitle} align={'center'}>
                                             {'HOME'}
@@ -175,7 +175,7 @@ const Appbar = () => {
                                     </ListItemText>
                                 </ListItem>
                                 <Divider className={classes.divider} />
-                                <ListItem button component={Link} href="/request" onClick={handleClickAction}>
+                                <ListItem button component={Link} href="/request" onClick={handleClickAction} style={{textDecoration: 'none'}}>
                                     <ListItemText>
                                         <Typography className={classes.drawerTitle} align={'center'}>
                                             {'REQUEST BIN'}
@@ -183,7 +183,7 @@ const Appbar = () => {
                                     </ListItemText>
                                 </ListItem>
                                 <Divider className={classes.divider} />
-                                <ListItem button component={Link} href="/contact" onClick={handleClickAction}>
+                                <ListItem button component={Link} href="/contact" onClick={handleClickAction} style={{textDecoration: 'none'}}>
                                     <ListItemText>
                                         <Typography className={classes.drawerTitle} align={'center'}>
                                             {'CONTACT'}
@@ -191,7 +191,7 @@ const Appbar = () => {
                                     </ListItemText>
                                 </ListItem>
                                 <Divider className={classes.divider} />
-                                <ListItem button component={Link} href="/about" onClick={handleClickAction}>
+                                <ListItem button component={Link} href="/about" onClick={handleClickAction} style={{textDecoration: 'none'}}>
                                     <ListItemText>
                                         <Typography className={classes.drawerTitle} align={'center'}>
                                             {'ABOUT'}
@@ -199,7 +199,7 @@ const Appbar = () => {
                                     </ListItemText>
                                 </ListItem>
                                 <Divider className={classes.divider} />
-                                <ListItem button component={Link} href="/login" onClick={handleClickAction}>
+                                <ListItem button component={Link} href="/login" onClick={handleClickAction} style={{textDecoration: 'none'}}>
                                     <ListItemText>
                                         <Typography className={classes.drawerTitle} align={'center'}>
                                             {'LOGIN'}
