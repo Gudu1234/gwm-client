@@ -16,7 +16,8 @@ const useStyles = makeStyles(theme => ({
         lineHeight: '120px',
         letterSpacing: 1,
         'text-shadow': '-3px -3px 0 #fff, 3px -3px 0 #fff, -3px 3px 0 #fff, 3px 3px 0 #fff',
-        marginLeft: '50px'
+        marginLeft: '50px',
+        textDecoration: 'none',
     },
     divider: {
         border: '1px solid #7AE3B1'
