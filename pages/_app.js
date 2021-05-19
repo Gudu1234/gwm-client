@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import Loader from '../src/components/Loader';
 import app, { cookieStorage } from '../src/apis/index';
 import {SnackbarProvider} from 'notistack';
+import AppLoader from '../src/components/loaders/AppLoader';
 
 
 export default function MyApp(props) {
@@ -77,7 +78,7 @@ export default function MyApp(props) {
                     <CssBaseline />
                     {
                         loading ?
-                            <Loader /> :
+                            <AppLoader /> :
                             <Component {...pageProps} />
                     }
                 </SnackbarProvider>

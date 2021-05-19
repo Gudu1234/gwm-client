@@ -107,7 +107,7 @@ const HomeAppbar = () => {
     });
 
     return (
-        <AppBar color={'transparent'} elevation={3} position={'sticky'} className={onTop ? classes.topAppbar : classes.appbar}>
+        <AppBar color={'transparent'} elevation={0} position={'sticky'} className={onTop ? classes.topAppbar : classes.appbar}>
             <Toolbar component={Box} px={3} variant={'dense'}>
                 <Box width={'100px'}>
                     <img width={'100%'} src={Gwm} alt={'vector'}/>
