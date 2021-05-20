@@ -143,7 +143,7 @@ const Contact = () => {
                     px={{xs: 2, md: 12}}
                     py={{xs: 3, md: 4}}
                 >
-                    <Grid container style={{ minHeight: '100vh' }}>
+                    <Grid container>
                         <Grid item container xs={12} sm={6}>
                             <Box
                                 display={'flex'}
