@@ -4,4 +4,4 @@
 
 import { zoneService } from '../config/endpoints';
 
-export const getAllZones = async () => await zoneService.find();
+export const getAllZones = () => zoneService.find();

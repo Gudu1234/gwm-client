@@ -71,8 +71,8 @@ const Contact = () => {
     };
 
 
-    useEffect(async () => {
-        await getAllZones().then(
+    useEffect(() => {
+        getAllZones().then(
             res => {
                 // console.log(res);
                 res.forEach(each => {
