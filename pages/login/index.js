@@ -186,9 +186,9 @@ const Login = () => {
                                 name={'captcha'}
                             />
                             <Box my={2} />
-                            <Button disabled={loading} onClick={() => handleLogin()} variant="contained" color={'secondary'} type={'submit'}>
+                            <Button disabled={loading} onClick={() => handleLogin()} variant="contained" color={'secondary'} style={{width: '100px'}}>
                                 {loading ? <CircularProgress
-                                    size={24}
+                                    size={24} color={'secondary'}
                                 /> : 'Login'}
                             </Button>
                         </Box>

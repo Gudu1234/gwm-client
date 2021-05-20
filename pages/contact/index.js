@@ -59,6 +59,7 @@ const Contact = () => {
     const [rating, setRating] = React.useState(1);
 
     const [loading, setLoading] = useState(false);
+    const [selectMenuLoading, setSelectMenuLoading] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
     const Router = useRouter();
 
@@ -72,6 +73,7 @@ const Contact = () => {
 
 
     useEffect(() => {
+        setSelectMenuLoading(true);
         getAllZones().then(
             res => {
                 // console.log(res);
@@ -79,7 +81,8 @@ const Contact = () => {
                     each.pinCodes.forEach(e => {
                         console.log(e);
                         pins.push(e);
-                    })
+                    });
+                    setSelectMenuLoading(false);
                 })
             }
         )
@@ -257,7 +260,9 @@ const Contact = () => {
                                         }
                                     }}
                                     children={
-                                        pins.map((each, i) => (
+                                        selectMenuLoading ? <div style={{display: "flex", justifyContent: 'center', alignItems: 'center'}}>
+                                            <CircularProgress size={24} color={'primary'} />
+                                        </div> : pins.map((each, i) => (
                                             <MenuItem
                                                 value={each}
                                                 style={i !== pins.length - 1 ? {borderBottom: '1px solid #7AE3B1'} : null}
@@ -320,9 +325,9 @@ const Contact = () => {
                                     rowsMax={8}
                                 />
                                 <Box my={2} />
-                                <Button disabled={loading} onClick={() => handleSubmit()} variant="contained" color={'secondary'}>
+                                <Button disabled={loading} onClick={() => handleSubmit()} variant="contained" color={'secondary'} style={{width: '100px'}}>
                                     {loading ? <CircularProgress
-                                        size={24}
+                                        size={24} color={'secondary'}
                                     /> : 'Submit'}
                                 </Button>
                             </Box>

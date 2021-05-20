@@ -13,7 +13,10 @@ const useStyles = makeStyles({
         },
         "& .MuiOutlinedInput-input": {
             color: "#fff",
-            fontSize: '13px'
+            fontSize: '13px',
+            '&:-webkit-autofill': {
+                WebkitTextFillColor: '#fff',
+            },
         },
         "& .MuiInputLabel-outlined.Mui-focused": {
             color: "#fff"

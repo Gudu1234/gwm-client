@@ -72,6 +72,22 @@ const useStyles = makeStyles(theme => ({
     divider: {
         border: '1px solid #7AE3B1'
     },
+    marginToolbar: {
+        marginLeft: '100px',
+        marginRight: '50px',
+        '@media (max-width:1050px)': {
+            marginLeft: '40px',
+            marginRight: '35px',
+        },
+        '@media (max-width:900px)': {
+            marginLeft: '30px',
+            marginRight: '25px',
+        },
+        '@media (max-width:500px)': {
+            marginLeft: '15px',
+            marginRight: '10px',
+        },
+    }
 }));
 
 const HomeAppbar = () => {
@@ -108,7 +124,7 @@ const HomeAppbar = () => {
 
     return (
         <AppBar color={'transparent'} elevation={0} position={'sticky'} className={onTop ? classes.topAppbar : classes.appbar}>
-            <Toolbar component={Box} px={3} variant={'dense'}>
+            <Toolbar component={Box} px={3} variant={'dense'} className={classes.marginToolbar}>
                 <Box width={'100px'}>
                     <img width={'100%'} src={Gwm} alt={'vector'}/>
                 </Box>

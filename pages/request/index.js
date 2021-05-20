@@ -189,6 +189,7 @@ const Request = () => {
                                     name={'email'}
                                     value={email}
                                     onChange={event => setEmail(event.target.value)}
+                                    type={'email'}
                                 />
                                 <Box my={2}/>
                                 <GreenTextField
@@ -279,9 +280,9 @@ const Request = () => {
                                 <Box my={2}/>
                                 <Grid container>
                                     <Grid item container justify={'center'} alignItems={'center'}>
-                                        <Button disabled={loading} onClick={() => handleSubmit()} variant="contained" color={'secondary'} size={'large'}>
+                                        <Button disabled={loading} onClick={() => handleSubmit()} variant="contained" color={'secondary'} style={{width: '200px'}}>
                                             {loading ? <CircularProgress
-                                                size={24}
+                                                size={24} color={'secondary'}
                                             /> : 'Submit'}
                                         </Button>
                                     </Grid>
