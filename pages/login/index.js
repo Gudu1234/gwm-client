@@ -54,10 +54,9 @@ const Login = () => {
     };
 
     useEffect(() => {
-        if (user && user.role === 2) {
-            Router.replace('/admin/dashboard');
-        }else if(user && user.role === 1){
-            Router.replace('/accountDetails');
+        if (user && user.role === 3) {
+            console.log(user);
+            Router.push('/admin/dashboard');
         }
     }, []);
 
@@ -78,12 +77,12 @@ const Login = () => {
                 localStorage.setItem('feathers-jwt', accessToken);
                 UserStore.set(() => ({ token: accessToken, user }), 'login');
                 enqueueSnackbar('Login successful', { variant: 'success' });
-                // if (user.role === 2) {
-                //     Router.replace('/admin/dashboard');
-                // }
-                // else {
-                //     Router.replace('/accountDetails');
-                // }
+                if (user.role === 3) {
+                    Router.replace('/admin/dashboard');
+                }
+                else {
+                    Router.replace('/');
+                }
             })
             .catch(error => {
                 enqueueSnackbar(error && error.message ? error.message : 'Something went wrong!', { variant: 'warning' });

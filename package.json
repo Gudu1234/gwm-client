@@ -18,6 +18,9 @@
     "@material-ui/styles": "^4.11.4",
     "@material-ui/system": "^4.11.3",
     "axios": "^0.19.2",
+    "chart.js": "^3.2.1",
+    "chartist": "^0.11.4",
+    "classnames": "^2.3.1",
     "clsx": "latest",
     "cookie-storage": "^6.0.0",
     "eslint": "^7.7.0",
@@ -32,6 +35,8 @@
     "notistack": "^1.0.7",
     "prop-types": "^15.7.2",
     "react": "17.0.2",
+    "react-chartist": "^0.14.4",
+    "react-chartjs-2": "^3.0.3",
     "react-client-captcha": "^1.0.3",
     "react-dom": "17.0.2"
   }
