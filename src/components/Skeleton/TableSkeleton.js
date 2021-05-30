@@ -13,10 +13,10 @@ const useStyle = makeStyles(() => ({
     },
 }));
 
-const TableSkeleton = () => {
+const TableSkeleton = ({length}) => {
     const classes = useStyle();
 
-    const data = new Array(6).fill(0); //[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }];
+    const data = new Array(length).fill(0); //[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }];
 
     return (
         <Grid container spacing={1}>

@@ -8,7 +8,7 @@ import {Pagination} from '@material-ui/lab';
 import Card from '../../../src/components/Card/Card';
 import {useSnackbar} from 'notistack';
 import styles from '../../../public/assets/jss/views/dashboardStyle';
-import {getAllRequests} from '../../../src/apis/request';
+import {getAllComplaints} from '../../../src/apis/contact';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import moment from 'moment';
 
@@ -16,47 +16,35 @@ const columns = [
     {
         id: 'date',
         label: 'Date',
-        minWidth: 150,
-        align: 'left',
-    },
-    {
-        id: 'reqId',
-        label: 'RequestId',
-        minWidth: 150,
+        minWidth: 170,
         align: 'left',
     },
     {
         id: 'name',
         label: 'Name of Sender',
-        minWidth: 150,
+        minWidth: 170,
         align: 'left',
     },
     {
         id: 'phone',
         label: 'Phone',
-        minWidth: 150,
+        minWidth: 170,
         align: 'left',
     },
     {
         id: 'pinCode',
         label: 'PIN',
-        minWidth: 150,
+        minWidth: 170,
         align: 'left',
     },
-    {
-        id: 'street',
-        label: 'Locality',
-        minWidth: 150,
-        align: 'left'
-    }
 ];
 
-const BinRequest = () => {
+const Mail = () => {
 
     const [page, setPage] = React.useState(1);
     const [totalPages, setTotalPages] = React.useState(20);
     const [rowsPerPage] = React.useState(10);
-    const [requests, setRequests] = React.useState([]);
+    const [complaints, setComplaints] = React.useState([]);
     const [total, setTotal] = React.useState(0);
     const [rows, setRows] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
@@ -71,20 +59,20 @@ const BinRequest = () => {
         setStatus(event.target.value);
     };
 
-    const loadRequests = (skip) => {
+    const loadComplaints = (skip) => {
         setLoading(true);
-        getAllRequests(skip, rowsPerPage, search, status)
+        getAllComplaints(skip, rowsPerPage, search, status)
             .then((res) => {
                 if (res.data) {
-                    let _allRequests = res.data.map(each => {
+                    let _allComplaints = res.data.map(each => {
                         return {
                             ...each,
                             date: moment(each.createdAt).format('DD-MM-YYYY'),
                             // status: each.status === 1 ? 'Feedback' : 'Suggestion'
                         }
                     })
-                    setRows(_allRequests);
-                    setRequests([...requests, _allRequests]);
+                    setRows(_allComplaints);
+                    setComplaints([...complaints, _allComplaints]);
                 }
             })
             .catch((e) => {
@@ -97,33 +85,33 @@ const BinRequest = () => {
 
     const handleChangePage = (event, value) => {
         setPage(value);
-        if (value * rowsPerPage > requests.length) {
+        if (value * rowsPerPage > complaints.length) {
             setRows([]);
-            if (requests.length === total) {
-                setRows(requests.slice((value - 1) * rowsPerPage, total));
+            if (complaints.length === total) {
+                setRows(complaints.slice((value - 1) * rowsPerPage, total));
             } else {
-                loadRequests((value - 1) * rowsPerPage);
+                loadComplaints((value - 1) * rowsPerPage);
             }
         } else {
             setRows([]);
-            setRows(requests.slice((value - 1) * rowsPerPage, value * rowsPerPage));
+            setRows(complaints.slice((value - 1) * rowsPerPage, value * rowsPerPage));
         }
     };
 
     useEffect(() => {
         setLoading(true);
-        getAllRequests(0, rowsPerPage, search, status)
+        getAllComplaints(0, rowsPerPage, search, status)
             .then((res) => {
                 setTotal(res.total);
-                let _allRequests = res.data.map(each => {
+                let _allComplaints = res.data.map(each => {
                     return {
                         ...each,
                         date: moment(each.createdAt).format('DD-MM-YYYY'),
                         // status: each.status === 1 ? 'Feedback' : 'Suggestion'
                     }
                 })
-                setRequests(_allRequests);
-                setRows(_allRequests);
+                setComplaints(_allComplaints);
+                setRows(_allComplaints);
                 setTotalPages(Math.ceil(res.total / rowsPerPage));
                 setPage(1);
             })
@@ -144,7 +132,7 @@ const BinRequest = () => {
                             <CardHeader color="primary">
                                 <Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
                                     <Box display={'flex'} flexDirection={'column'}>
-                                        <h4 className={headerClasses.cardTitleWhite}>Bin Requests</h4>
+                                        <h4 className={headerClasses.cardTitleWhite}>Complaints</h4>
                                         <p className={headerClasses.cardCategoryWhite}>
                                             from your zone
                                         </p>
@@ -162,7 +150,7 @@ const BinRequest = () => {
                                                 background: '#fff',
                                                 border: 'none',
                                                 borderRadius: '10px',
-                                                height: '40px',
+                                                height: '40px'
                                             }}
                                             MenuProps={{
                                                 anchorOrigin: {
@@ -172,9 +160,8 @@ const BinRequest = () => {
                                                 getContentAnchorEl: null
                                             }}
                                         >
-                                            <MenuItem value = {1} style={{borderBottom: '1px solid #7AE3B1'}}>Requested</MenuItem>
-                                            <MenuItem value = {2} style={{borderBottom: '1px solid #7AE3B1'}}>Inspected</MenuItem>
-                                            <MenuItem value = {3}>Completed</MenuItem>
+                                            <MenuItem value = {1} style={{borderBottom: '1px solid #7AE3B1'}}>Active</MenuItem>
+                                            <MenuItem value = {2}>Resolved</MenuItem>
                                         </Select>
                                     </FormControl>
                                     <Box flex={1} />
@@ -193,7 +180,7 @@ const BinRequest = () => {
                                     columns={columns}
                                     rows={rows}
                                     loading={loading}
-                                    notFound={'No requests Found'}
+                                    notFound={'No complaints Found'}
                                     pageLimit={rowsPerPage}
                                 />
                                 <Box display="flex" justifyContent="flex-end" m={3}>
@@ -214,4 +201,4 @@ const BinRequest = () => {
     );
 };
 
-export default BinRequest;
+export default Mail;

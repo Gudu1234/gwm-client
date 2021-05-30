@@ -131,6 +131,12 @@ function Navigator(props) {
             role: 3,
         },
         {
+            id: 'Complaints',
+            icon: MailIcon,
+            href: '/admin/complaint',
+            role: 3,
+        },
+        {
             id: 'Settings',
             icon: SettingsIcon,
             href: '/admin/settings',

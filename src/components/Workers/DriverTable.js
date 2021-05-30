@@ -9,6 +9,7 @@ import CardBody from '../Card/CardBody';
 import Card from '../Card/Card';
 import styles from '../../../public/assets/jss/views/dashboardStyle';
 import SearchField from '../SearchField';
+import TableComponent from '../TableComponent';
 
 const columns = [
     {
@@ -37,15 +38,6 @@ const columns = [
     },
 ];
 
-const useStyles = makeStyles({
-    tableCell: {
-        fontWeight: '700',
-        fontSize: '14px',
-        color: '#3A8899',
-        cursor: 'pointer'
-    },
-});
-
 const DriverTable = () => {
 
     const [page, setPage] = React.useState(1);
@@ -58,8 +50,6 @@ const DriverTable = () => {
     const [search, setSearch] = React.useState('');
     const { enqueueSnackbar } = useSnackbar();
 
-    const classes = useStyles();
-
     const headerStyles = makeStyles(styles);
     const headerClasses = headerStyles();
 
@@ -68,8 +58,14 @@ const DriverTable = () => {
         getAllDrivers(skip, rowsPerPage, search)
             .then((res) => {
                 if (res.data) {
-                    setRows(res.data);
-                    setDrivers([...drivers, ...res.data]);
+                    let _allDrivers = res.data.map(each => {
+                        return {
+                            ...each,
+                            locality: each.address.street
+                        }
+                    });
+                    setRows(_allDrivers);
+                    setDrivers([...drivers, _allDrivers]);
                 }
             })
             .catch((e) => {
@@ -100,8 +96,14 @@ const DriverTable = () => {
         getAllDrivers(0, rowsPerPage, search)
             .then((res) => {
                 setTotal(res.total);
-                setDrivers(res.data);
-                setRows(res.data);
+                let _allDrivers = res.data.map(each => {
+                    return {
+                        ...each,
+                        locality: each.address.street
+                    }
+                });
+                setDrivers(_allDrivers);
+                setRows(_allDrivers);
                 setTotalPages(Math.ceil(res.total / rowsPerPage));
                 setPage(1);
             })
@@ -135,66 +137,13 @@ const DriverTable = () => {
                 </Box>
             </CardHeader>
             <CardBody>
-                <TableContainer>
-                    <Table stickyHeader aria-label="sticky table">
-                        <TableHead>
-                            <TableRow>
-                                {columns.map((column) => (
-                                    <TableCell
-                                        key={column.id}
-                                        align={column.align}
-                                        style={{ minWidth: column.minWidth, fontWeight: 'bold', fontSize: '14px' }}
-                                    >
-                                        {column.label}
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {rows.length > 0 ? (
-                                rows.map((row) => {
-                                    return (
-                                        <TableRow hover role="button" tabIndex={-1} key={row.code}>
-                                            {columns.map((column) => {
-                                                let value = row[column.id];
-                                                if (column.id === 'locality') {
-                                                    value = row.address.street;
-                                                }
-                                                return (
-                                                    <TableCell
-                                                        key={column.id}
-                                                        align={column.align}
-                                                        className={classes.tableCell}
-                                                    >
-                                                        {
-                                                            column.format && typeof value === 'number'
-                                                                ? column.format(value)
-                                                                : value
-                                                        }
-                                                    </TableCell>
-                                                );
-                                            })}
-                                        </TableRow>
-                                    );
-                                })
-                            ) : !loading ? (
-                                <TableRow>
-                                    <TableCell align="center" colSpan={4}>
-                                        <Typography>
-                                            {'No drivers found.'}
-                                        </Typography>
-                                    </TableCell>
-                                </TableRow>
-                            ) : (
-                                <TableRow>
-                                    <TableCell align="center" colSpan={4}>
-                                        <TableSkeleton />
-                                    </TableCell>
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <TableComponent
+                    columns={columns}
+                    rows={rows}
+                    loading={loading}
+                    notFound={'No Drivers Found'}
+                    pageLimit={rowsPerPage}
+                />
                 <Box display="flex" justifyContent="flex-end" m={3}>
                     <Pagination
                         color="primary"

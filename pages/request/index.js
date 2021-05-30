@@ -121,8 +121,9 @@ const Request = () => {
         };
 
         createRequest(requestData)
-            .then(() => {
+            .then((each) => {
                 enqueueSnackbar('Our team will contact you shortly.', { variant: 'success' });
+                alert(`Your Request ID is: ${each.reqId}. Store it for future reference.`);
             })
             .catch((e) => {
                 enqueueSnackbar(e && e.message ? e.message : 'Something went wrong!', { variant: 'warning' });
