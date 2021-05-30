@@ -8,10 +8,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { useRouter } from 'next/router';
-import Logo from '../../public/GWMstrLogo.svg';
+import Logo from '../../public/DashboardLogo.svg';
 import {Box} from '@material-ui/core';
-// import {useStore} from 'laco-react';
-// import UserStore from '../store/UserStore';
+import {useStore} from 'laco-react';
+import UserStore from '../store/userStore';
 
 import DashboardIcon from '../../public/NavAssets/Dashboard.svg';
 import AddBinIcon from '../../public/NavAssets/Add bin white.svg';
@@ -89,45 +89,52 @@ function Navigator(props) {
 
     const Router = useRouter();
 
-    // const { user } = useStore(UserStore);
-    //
-    // const { role } = user ;
+    const { user } = useStore(UserStore);
+
+    const { role: userRole, zone } = user ;
 
     const categories = [
         {
             id: 'Dashboard',
             icon: DashboardIcon,
-            href: '/admin/dashboard'
+            href: '/admin/dashboard',
+            role: 3,
         },
         {
             id: 'Add Bin',
             icon: AddBinIcon,
-            href: '/admin/addBin'
+            href: '/admin/addBin',
+            role: 3,
         },
         {
             id: 'Workers',
             icon: WorkerIcon,
-            href: '/admin/worker'
+            href: '/admin/worker',
+            role: 3,
         },
         {
             id: 'Bin Requests',
             icon: RequestBinIcon,
-            href: '/admin/binRequest'
+            href: '/admin/binRequest',
+            role: 3,
         },
         {
             id: 'Manage Bin',
             icon: ManageBinIcon,
-            href: '/admin/manageBin'
+            href: '/admin/manageBin',
+            role: 3,
         },
         {
             id: 'Mails',
             icon: MailIcon,
-            href: '/admin/mail'
+            href: '/admin/mail',
+            role: 3,
         },
         {
             id: 'Settings',
             icon: SettingsIcon,
-            href: '/admin/settings'
+            href: '/admin/settings',
+            role: 3,
         },
     ];
 
@@ -137,7 +144,9 @@ function Navigator(props) {
                 <div className={classes.main}>
                     <img className={classes.image} src={Logo}  alt="Logo" onClick={()=>Router.push('/')} />
                 </div>
-                {categories.map(({ id, icon, href }) => {
+                {categories.map(({ id, icon, href, role }) => {
+
+                    if (userRole !== role) return ;
 
                     const [open, setOpen] = React.useState(true);
 

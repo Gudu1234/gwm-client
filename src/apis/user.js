@@ -8,6 +8,12 @@ export const getAllCleaners = ($skip, $limit, $search) => userService.find({
         role: 1,
         $skip,
         $limit,
+        $or: [
+            { name: { $search } },
+            { username: { $search } },
+            { phone: { $search } },
+            { 'address.street': { $search } }
+        ]
         // $search
     }
 });
