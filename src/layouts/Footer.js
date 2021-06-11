@@ -4,7 +4,7 @@
 
 import React from 'react';
 import {makeStyles} from '@material-ui/styles';
-import {Button, Divider, Grid, Hidden, List, ListItem, TextField, Typography} from '@material-ui/core';
+import {Box, Button, Divider, Grid, Hidden, List, ListItem, TextField, Typography} from '@material-ui/core';
 import Link from '../Link';
 import Gwm from '../../public/GWMstrLogo.svg';
 
@@ -32,16 +32,16 @@ const useStyles = makeStyles(theme => ({
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            marginTop: '50px'
+            marginTop: '20px'
         }
     },
     divider:{
-        margin: '30px 0',
+        margin: '20px 0',
         color: '#8f8f8f',
         backgroundColor: '#8f8f8f'
     },
     heading:{
-        color: '#8f8f8f',
+        color: '#fff',
         fontSize: '26px',
         fontWeight: 'normal',
         lineHeight: '30px',
@@ -64,11 +64,11 @@ const useStyles = makeStyles(theme => ({
     listItem:{
         color: '#fff',
         padding: '0',
-        marginBottom: '8px',
-
+        width: '80%',
+        marginBottom: '2px',
     },
     phone:{
-        marginTop: '45px',
+        marginTop: '20px',
         marginBottom: '13px',
         [theme.breakpoints.down('xs')]:{
             marginTop: '10px',
@@ -111,7 +111,7 @@ const useStyles = makeStyles(theme => ({
     logoDiv:{
         height: '46px',
         [theme.breakpoints.down('sm')]:{
-            marginBottom: '40px',
+            marginBottom: '10px',
         }
     },
     terms:{
@@ -140,9 +140,6 @@ const useStyles = makeStyles(theme => ({
             lineHeight: '15px',
         },
     },
-
-
-
     inputDiv:{
         width: '100%',
         maxWidth: '500px',
@@ -192,156 +189,86 @@ const Footer = () => {
             <Grid container className={classes.footerContainer} justify={'center'}>
                 <Grid item xs={12} sm={12} md={10}>
                     <Grid container>
-                        <Grid item xs={12} md={3} className={classes.gridItem} style={{marginTop: 0}}>
-                            <div className={classes.logoDiv}>
-                                <img height={'46px'} src={Gwm} alt="GWM"/>
-                            </div>
-                            <Hidden smDown>
-                                <Divider className={classes.divider} light />
-                            </Hidden>
-                            <div className={classes.description}>
+                        <Grid item xs={12} md={4} className={classes.gridItem} style={{marginTop: 0}}>
+                            <Box display={'flex'} flexDirection={'column'} justifyContent={'flexStart'} width={'80%'}>
+                                <Hidden smDown>
+                                    <div className={classes.logoDiv} align={'left'}>
+                                        <img height={'80%'} src={Gwm} alt="GWM"/>
+                                    </div>
+                                </Hidden>
+                                <Hidden mdUp>
+                                    <div className={classes.logoDiv} align={'center'}>
+                                        <img height={'80%'} src={Gwm} alt="GWM"/>
+                                    </div>
+                                </Hidden>
+                                <Box my={1} />
                                 <Typography className={classes.captionText} variant={'caption'}>
                                     {'Give your users a unique & simplified experience with our platform and witness the growth of your business.'}
                                 </Typography>
-                            </div>
+                            </Box>
                         </Grid>
-                        <Grid item xs={12} md={3} className={classes.gridItem}>
-                            <div style={{height: '46px'}}>
+                        <Grid item xs={12} md={4} className={classes.gridItem}>
+                            <Box display={'flex'} flexDirection={'column'} justifyContent={'flexStart'} width={'80%'}>
                                 <Typography className={classes.heading}>{'Quick Links'}</Typography>
-                            </div>
-                            <Hidden smDown>
-                                <Divider className={classes.divider} light />
-                            </Hidden>
-                            <List>
-                                <ListItem className={classes.listItem}>
-                                    <Button style={{color: '#fff'}} component={Link} href={'/about'}>
-                                        <Typography className={classes.captionText} variant={'caption'}>
-                                            {'About Us'}
-                                        </Typography>
-                                    </Button>
-                                </ListItem>
-                                <ListItem className={classes.listItem}>
-                                    <Button style={{color: '#fff'}} component={Link} href={'/team'}>
-                                        <Typography className={classes.captionText} variant={'caption'}>
-                                            {'Our Team'}
-                                        </Typography>
-                                    </Button>
-                                </ListItem>
-                                <ListItem className={classes.listItem}>
-                                    <Button style={{color: '#fff'}} component={Link} href={'/customers'}>
-                                        <Typography className={classes.captionText} variant={'caption'}>
-                                            {'Customers'}
-                                        </Typography>
-                                    </Button>
-                                </ListItem>
-                                <ListItem className={classes.listItem}>
-                                    <Button style={{color: '#fff'}} component={Link} href={'/contact-us'}>
-                                        <Typography className={classes.captionText} variant={'caption'}>
-                                            {'Contact Us'}
-                                        </Typography>
-                                    </Button>
-                                </ListItem>
-                            </List>
+                                <Box my={1} />
+                                <List>
+                                    <ListItem className={classes.listItem}>
+                                        <Button style={{color: '#fff'}} component={Link} href={'/'}>
+                                            <Typography className={classes.captionText} variant={'caption'}>
+                                                {'Home'}
+                                            </Typography>
+                                        </Button>
+                                    </ListItem>
+                                    <ListItem className={classes.listItem}>
+                                        <Button style={{color: '#fff'}} component={Link} href={'/request'}>
+                                            <Typography className={classes.captionText} variant={'caption'}>
+                                                {'Request Us'}
+                                            </Typography>
+                                        </Button>
+                                    </ListItem>
+                                    <ListItem className={classes.listItem}>
+                                        <Button style={{color: '#fff'}} component={Link} href={'/about'}>
+                                            <Typography className={classes.captionText} variant={'caption'}>
+                                                {'About Us'}
+                                            </Typography>
+                                        </Button>
+                                    </ListItem>
+                                    <ListItem className={classes.listItem}>
+                                        <Button style={{color: '#fff'}} component={Link} href={'/contact'}>
+                                            <Typography className={classes.captionText} variant={'caption'}>
+                                                {'Contact Us'}
+                                            </Typography>
+                                        </Button>
+                                    </ListItem>
+                                    <ListItem className={classes.listItem}>
+                                        <Button style={{color: '#fff'}} component={Link} href={'/login'}>
+                                            <Typography className={classes.captionText} variant={'caption'}>
+                                                {'Login'}
+                                            </Typography>
+                                        </Button>
+                                    </ListItem>
+                                </List>
+                            </Box>
                         </Grid>
-                        <Grid item xs={12} md={3} className={classes.gridItem}>
-                            <div style={{height:'46px'}}>
+                        <Grid item xs={12} md={4} className={classes.gridItem}>
+                            <Box display={'flex'} flexDirection={'column'} justifyContent={'flexStart'} width={'80%'}>
                                 <Typography className={classes.heading}>{'Office'}</Typography>
-                            </div>
-                            <Hidden smDown>
-                                <Divider className={classes.divider} light />
-                            </Hidden>
-                            <div className={classes.description}>
+                                <Box my={1} />
                                 <Typography className={classes.captionText} variant={'caption'}>
-                                    {'Address: Janpatha, JS-818, Bhubaneswar, Khurda'}
+                                    {'Address: 547, Saheed Nagar, Bhubaneswar, Khurda, 751007'}
                                 </Typography>
-                            </div>
-                            <div className={classes.phone}>
+                                <Box my={1} />
                                 <Typography className={classes.captionText} variant={'caption'}>
-                                    {'Phone: 9556266575'}
+                                    {'Phone: 9438000000'}
                                 </Typography>
-                            </div>
-                            <div>
+                                <Box my={1} />
                                 <Typography className={classes.captionText} variant={'caption'}>
-                                    {'Email: zepmat@gmail.com'}
+                                    {'Email: gwm@mc.gov.in'}
                                 </Typography>
-                            </div>
-                        </Grid>
-                        <Grid item xs={12} md={3} className={classes.gridItem}>
-                            <div style={{height:'46px'}}>
-                                <Typography className={classes.heading}>{'Subscribe to our newsletter'}</Typography>
-                            </div>
-                            <Hidden smDown>
-                                <Divider className={classes.divider} light />
-                            </Hidden>
-                            <Hidden smDown>
-                                <div className={classes.inputDiv} >
-                                    <TextField className={classes.inputField}
-                                               placeholder={'example@gmail.com'}
-                                               size={'small'}
-                                               fullWidth
-                                               InputProps={{
-                                                   disableUnderline: true,
-                                                   className: classes.fieldText
-                                               }}
-                                    />
-                                </div>
-                            </Hidden>
-                            <Hidden mdUp>
-                                {/*<TextField*/}
-                                {/*    variant={'outlined'}*/}
-                                {/*    fullWidth*/}
-                                {/*    size={'small'}*/}
-                                {/*    style={{padding: '20px 10px'}}*/}
-                                {/*    placeholder={'zepmat@gmail.com'}*/}
-                                {/*    inputProps={{*/}
-                                {/*        className: classes.textFeld*/}
-                                {/*    }}*/}
-                                {/*/>*/}
-                                <div className={classes.inputDiv} >
-                                    <TextField className={classes.inputField}
-                                               placeholder={'example@gmail.com'}
-                                               size={'small'}
-                                               fullWidth
-                                               InputProps={{
-                                                   disableUnderline: true,
-                                                   className: classes.fieldText
-                                               }}
-                                    />
-                                </div>
-                            </Hidden>
-                            <div className={classes.btnDiv}>
-                                <Button className={classes.button} variant={'contained'} color={'primary'} >
-                                    {'Submit'}
-                                </Button>
-                            </div>
+                            </Box>
                         </Grid>
                     </Grid>
                 </Grid>
-                {/*<Grid container xs={12} sm={10} className={classes.terms}>*/}
-                {/*    <Grid item xs={12} sm={3} md={3} className={classes.gridItem} style={{marginTop: '10px'}}>*/}
-                {/*        <Button style={{color: '#fff'}}>*/}
-                {/*            <Typography style={{fontWeight: '400'}} className={classes.captionText} variant={'caption'}>*/}
-                {/*                {'Terms & conditions'}*/}
-                {/*            </Typography>*/}
-                {/*        </Button>*/}
-                {/*    </Grid>*/}
-                {/*    <Grid item xs={12} sm={3} md={3} className={classes.gridItem} style={{marginTop: '10px'}}>*/}
-                {/*        <Button style={{color: '#fff'}}>*/}
-                {/*            <Typography style={{fontWeight: '400'}} className={classes.captionText} variant={'caption'}>*/}
-                {/*                {'Privacy Policy'}*/}
-                {/*            </Typography>*/}
-                {/*        </Button>*/}
-                {/*    </Grid>*/}
-                {/*    <Grid item xs={0} sm={3}>*/}
-                {/*    </Grid>*/}
-                {/*    /!*<Grid item xs={12} sm={3} md={3} className={classes.gridItem}>*!/*/}
-                {/*    /!*    <div className={classes.logos}>*!/*/}
-                {/*    /!*        <img style={{margin: '0 9px'}} src={FacebookLogo} alt=""/>*!/*/}
-                {/*    /!*        <img style={{margin: '0 9px'}} src={GoogleLogo} alt=""/>*!/*/}
-                {/*    /!*        <img style={{margin: '0 9px'}} src={InstaLogo} alt=""/>*!/*/}
-                {/*    /!*    </div>*!/*/}
-                {/*    /!*</Grid>*!/*/}
-                {/*</Grid>*/}
             </Grid>
             <div style={{width: '100%',backgroundColor: '#124954',padding: '10px',display: 'flex', justifyContent: 'center', borderTop: '2px solid #7AE3B1'}}>
                 <Hidden xsDown>
