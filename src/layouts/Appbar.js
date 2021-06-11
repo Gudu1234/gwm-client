@@ -75,6 +75,8 @@ const useStyles = makeStyles(theme => ({
     marginToolbar: {
         marginLeft: '100px',
         marginRight: '50px',
+        paddingTop: '20px',
+        paddingBottom: '20px',
         '@media (max-width:1050px)': {
             marginLeft: '40px',
             marginRight: '35px',
@@ -114,7 +116,7 @@ const Appbar = () => {
                 if ( window.innerWidth < 450 && window.pageYOffset > 5) {
                     setOnTop(false);
                 } else {
-                    console.log(window.pageYOffset);
+                    // console.log(window.pageYOffset);
                     setOnTop(true);
                 }
             }
@@ -123,7 +125,7 @@ const Appbar = () => {
     });
 
     return (
-        <AppBar color={'transparent'} elevation={3} position={'sticky'} className={onTop ? classes.topAppbar : classes.appbar}>
+        <AppBar color={'transparent'} elevation={0} position={'sticky'} className={onTop ? classes.topAppbar : classes.appbar}>
             <Toolbar component={Box} variant={'dense'} className={classes.marginToolbar}>
                 <Box width={'100px'}>
                     <img width={'100%'} src={Gwm} alt={'vector'}/>

@@ -97,55 +97,63 @@ function Navigator(props) {
         {
             id: 'Dashboard',
             icon: DashboardIcon,
+            active: Router.asPath === '/admin/dashboard',
             href: '/admin/dashboard',
             role: 3,
         },
         {
             id: 'Add Bin',
             icon: AddBinIcon,
+            active: Router.asPath === '/admin/addBin',
             href: '/admin/addBin',
             role: 3,
         },
         {
             id: 'Workers',
             icon: WorkerIcon,
+            active: Router.asPath === '/admin/worker',
             href: '/admin/worker',
             role: 3,
         },
         {
             id: 'Bin Requests',
             icon: RequestBinIcon,
+            active: Router.asPath === '/admin/binRequest',
             href: '/admin/binRequest',
             role: 3,
         },
         {
             id: 'Manage Bin',
             icon: ManageBinIcon,
+            active: Router.asPath === '/admin/manageBin',
             href: '/admin/manageBin',
             role: 3,
         },
         {
             id: 'Mails',
             icon: MailIcon,
+            active: Router.asPath === '/admin/mail',
             href: '/admin/mail',
             role: 3,
         },
         {
             id: 'Complaints',
             icon: MailIcon,
+            active: Router.asPath === '/admin/complaint',
             href: '/admin/complaint',
             role: 3,
         },
         {
             id: 'Settings',
             icon: SettingsIcon,
+            active: Router.asPath === '/admin/settings',
             href: '/admin/settings',
             role: 3,
         },
     ];
 
     return (
-        <Drawer variant="permanent" {...other} >
+        <Drawer variant="permanent" {...other}>
             <List disablePadding style={{backgroundColor: '#124954'}}>
                 <div className={classes.main}>
                     <img className={classes.image} src={Logo}  alt="Logo" onClick={()=>Router.push('/')} />
@@ -158,7 +166,10 @@ function Navigator(props) {
 
                     const handleClick = () => {
                         setOpen(!open);
+                        console.log(href);
                         Router.push(href);
+                        console.log(Router.pathname);
+                        console.log(href === Router.pathname);
                     };
 
                     return (<React.Fragment key={id}>
