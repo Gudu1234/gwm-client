@@ -7,6 +7,7 @@ import {makeStyles, TextField} from '@material-ui/core';
 const useStyles = makeStyles({
     focused: {
         color: '#FFFFFF',
+
         '& .MuiOutlinedInput-colorSecondary.Mui-focused .MuiOutlinedInput-notchedOutline': {
             borderColor: '#FFFFFF',
             color: '#FFFFFF'
@@ -17,10 +18,13 @@ const useStyles = makeStyles({
             '&:-webkit-autofill': {
                 WebkitTextFillColor: '#fff',
             },
+            '&:-internal-autofill-selected': {
+                backgroundColor: '#124954'
+            }
         },
         "& .MuiInputLabel-outlined.Mui-focused": {
             color: "#fff"
-        }
+        },
     },
 });
 

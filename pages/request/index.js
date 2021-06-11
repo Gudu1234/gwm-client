@@ -62,6 +62,7 @@ const Request = () => {
     const [pin, setPin] = React.useState(0);
 
     const [loading, setLoading] = useState(false);
+    const [selectMenuLoading, setSelectMenuLoading] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
     const Router = useRouter();
 
@@ -72,15 +73,17 @@ const Request = () => {
     };
 
 
-    useEffect(async () => {
-        await getAllZones().then(
+    useEffect(() => {
+        setSelectMenuLoading(true);
+        getAllZones().then(
             res => {
                 // console.log(res);
                 res.forEach(each => {
                     each.pinCodes.forEach(e => {
                         console.log(e);
                         pins.push(e);
-                    })
+                    });
+                    setSelectMenuLoading(false);
                 })
             }
         )
@@ -118,8 +121,9 @@ const Request = () => {
         };
 
         createRequest(requestData)
-            .then(() => {
+            .then((each) => {
                 enqueueSnackbar('Our team will contact you shortly.', { variant: 'success' });
+                alert(`Your Request ID is: ${each.reqId}. Store it for future reference.`);
             })
             .catch((e) => {
                 enqueueSnackbar(e && e.message ? e.message : 'Something went wrong!', { variant: 'warning' });
@@ -257,7 +261,9 @@ const Request = () => {
                                         }
                                     }}
                                     children={
-                                        pins.map((each, i) => (
+                                        selectMenuLoading ? <div style={{display: "flex", justifyContent: 'center', alignItems: 'center'}}>
+                                            <CircularProgress size={24} color={'primary'} />
+                                        </div> : pins.map((each, i) => (
                                             <MenuItem
                                                 value={each}
                                                 style={i !== pins.length - 1 ? {borderBottom: '1px solid #7AE3B1'} : null}

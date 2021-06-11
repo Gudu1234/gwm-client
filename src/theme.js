@@ -5,7 +5,7 @@ let theme = createMuiTheme({
         primary: {
             light: '#7AE3B1',
             main: '#124954',
-            dark: '#6157Ff',
+            dark: '#26DF86',
         },
         secondary: {
             light: '#FF9A3E',
@@ -213,7 +213,7 @@ theme = {
             iconOutlined: {
                 color: '#124954'
             },
-        }
+        },
     }
 };
 

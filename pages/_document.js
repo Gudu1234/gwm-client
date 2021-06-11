@@ -11,6 +11,11 @@ export default class MyDocument extends Document {
                     {/* PWA primary color */}
                     <meta name="theme-color" content={theme.palette.primary.main} />
                     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet"/>
+                    <link
+                        rel="stylesheet"
+                        href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css"
+                    />
+                    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
                 </Head>
                 <body>
                     <Main />

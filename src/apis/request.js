@@ -5,3 +5,19 @@
 import {requestService} from '../config/endpoints';
 
 export const createRequest = (data) => requestService.create(data);
+
+export const getAllRequests = ($skip, $limit, $search, status) => requestService.find({
+    query: {
+        $skip,
+        $limit,
+        status,
+        $sort: { createdAt: status === 1 ? 1 : -1 },
+        $or: [
+            { name: { $search } },
+            { pinCode: { $search } },
+            { phone: { $search } },
+            { street: { $search } },
+            { reqId: { $search } }
+        ]
+    }
+})

@@ -9,6 +9,8 @@ import Loader from '../src/components/Loader';
 import app, { cookieStorage } from '../src/apis/index';
 import {SnackbarProvider} from 'notistack';
 import AppLoader from '../src/components/loaders/AppLoader';
+import Layout from '../src/layouts/Layout';
+import UserStore from '../src/store/userStore';
 
 
 export default function MyApp(props) {
@@ -38,15 +40,23 @@ export default function MyApp(props) {
                     console.log('app accesstoken',accessToken, user);
                     localStorage.setItem('feathers-jwt', accessToken);
                     UserStore.set(() => ({ token: accessToken, user }), 'login');
-                    if (Router.pathname === '/login') {
-                        Router.replace('/').then(() => {
+                    // if (Router.pathname === '/login') {
+                    //     if (user.role === 3) {
+                    //         Router.replace('/admin/dashboard').then(() => {
+                    //             setLoading(false);
+                    //         });
+                    //     }
+                    // } else {
+                    //     setLoading(false);
+                    // }
+                    if (user.role === 3) {
+                        Router.replace('/admin/dashboard').then(() => {
                             setLoading(false);
                         });
-                    } else {
-                        setLoading(false);
                     }
                 })
-                .catch(() => {
+                .catch((e) => {
+                    console.log(e);
                     console.log('catch method called');
                     // app.logout();
                     // localStorage.removeItem('feathers-jwt');
@@ -62,7 +72,11 @@ export default function MyApp(props) {
             // } else {
             //     setLoading(false);
             // }
-            setLoading(false);
+            if (Router.pathname.startsWith('/admin')) {
+                Router.replace('/').then(() => setLoading(false));
+            } else {
+                setLoading(false);
+            }
         }
     }, []);
 
@@ -79,7 +93,13 @@ export default function MyApp(props) {
                     {
                         loading ?
                             <AppLoader /> :
-                            <Component {...pageProps} />
+                            (
+                                Router.pathname.startsWith('/admin') ?
+                                    <Layout title={Component.title ? Component.title : ''}>
+                                        <Component {...pageProps} />
+                                    </Layout>
+                                    : <Component {...pageProps} />
+                            )
                     }
                 </SnackbarProvider>
             </ThemeProvider>
