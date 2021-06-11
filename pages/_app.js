@@ -53,6 +53,7 @@ export default function MyApp(props) {
                         Router.replace('/admin/dashboard').then(() => {
                             setLoading(false);
                         });
+                        // setLoading(false);
                     }
                 })
                 .catch((e) => {

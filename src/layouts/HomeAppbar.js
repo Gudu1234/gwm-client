@@ -75,6 +75,8 @@ const useStyles = makeStyles(theme => ({
     marginToolbar: {
         marginLeft: '100px',
         marginRight: '50px',
+        paddingTop: '20px',
+        paddingBottom: '20px',
         '@media (max-width:1050px)': {
             marginLeft: '40px',
             marginRight: '35px',
@@ -124,7 +126,7 @@ const HomeAppbar = () => {
 
     return (
         <AppBar color={'transparent'} elevation={0} position={'sticky'} className={onTop ? classes.topAppbar : classes.appbar}>
-            <Toolbar component={Box} px={3} variant={'dense'} className={classes.marginToolbar}>
+            <Toolbar component={Box} px={3} variant={'dense'} className={classes.marginToolbar} py={1}>
                 <Box width={'100px'}>
                     <img width={'100%'} src={Gwm} alt={'vector'}/>
                 </Box>
