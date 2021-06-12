@@ -76,7 +76,7 @@ const useStyles = makeStyles(theme => ({
         marginLeft: '100px',
         marginRight: '50px',
         paddingTop: '20px',
-        paddingBottom: '20px',
+        paddingBottom: '15px',
         '@media (max-width:1050px)': {
             marginLeft: '40px',
             marginRight: '35px',

@@ -11,15 +11,15 @@ const useStyles = makeStyles({
             borderColor: '#124954',
             color: '#FFFFFF'
         },
-        "& .MuiOutlinedInput-input": {
-            color: "#124954",
+        '& .MuiOutlinedInput-input': {
+            color: '#124954',
             fontSize: '13px',
             '&:-webkit-autofill': {
                 WebkitTextFillColor: '#124954',
             },
         },
-        "& .MuiInputLabel-outlined.Mui-focused": {
-            color: "#124954"
+        '& .MuiInputLabel-outlined.Mui-focused': {
+            color: '#124954'
         },
     },
 });
@@ -66,7 +66,7 @@ const GreenTextField = (
         >
             {children}
         </TextField>
-    )
+    );
 };
 
 export default GreenTextField;

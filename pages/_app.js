@@ -40,29 +40,24 @@ export default function MyApp(props) {
                     console.log('app accesstoken',accessToken, user);
                     localStorage.setItem('feathers-jwt', accessToken);
                     UserStore.set(() => ({ token: accessToken, user }), 'login');
-                    // if (Router.pathname === '/login') {
-                    //     if (user.role === 3) {
-                    //         Router.replace('/admin/dashboard').then(() => {
-                    //             setLoading(false);
-                    //         });
-                    //     }
-                    // } else {
-                    //     setLoading(false);
-                    // }
                     if (user.role === 3) {
-                        Router.replace('/admin/dashboard').then(() => {
-                            setLoading(false);
-                        });
-                        // setLoading(false);
+                        // Router.replace('/admin/dashboard').then(() => {
+                        //     setLoading(false);
+                        // });
+                        setLoading(false);
                     }
                 })
                 .catch((e) => {
                     console.log(e);
                     console.log('catch method called');
+                    app.logout();
+                    Router.push('/login');
+                    setTimeout(() => {
+                        setLoading(false);
+                    }, 1000);
                     // app.logout();
                     // localStorage.removeItem('feathers-jwt');
                     // Router.replace('/').then(() => {
-                    setLoading(false);
                     // });
                 });
         } else {

@@ -15,6 +15,7 @@ export default class MyDocument extends Document {
                         rel="stylesheet"
                         href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css"
                     />
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
                     <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
                 </Head>
                 <body>
