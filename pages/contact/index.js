@@ -83,9 +83,9 @@ const Contact = () => {
                         pins.push(e);
                     });
                     setSelectMenuLoading(false);
-                })
+                });
             }
-        )
+        );
     }, []);
 
 
@@ -121,16 +121,16 @@ const Contact = () => {
                     type === 1
                         ? 'Thanks for your feedback.'
                         : (type === 2
-                        ? 'Thanks for your suggestion.'
-                        : 'We\'ll connect you shortly.'), { variant: 'success' }
+                            ? 'Thanks for your suggestion.'
+                            : 'We\'ll connect you shortly.'), { variant: 'success' }
                 );
             })
             .catch(error => {
                 enqueueSnackbar(error && error.message ? error.message : 'Something went wrong!', { variant: 'warning' });
             })
             .finally(() => {
-            setLoading(false);
-        });
+                setLoading(false);
+            });
     };
 
     return (
@@ -182,8 +182,8 @@ const Contact = () => {
                                             color={'primary'}
                                             MenuProps={{
                                                 anchorOrigin: {
-                                                    vertical: "bottom",
-                                                    horizontal: "left"
+                                                    vertical: 'bottom',
+                                                    horizontal: 'left'
                                                 },
                                                 getContentAnchorEl: null
                                             }}
@@ -210,7 +210,7 @@ const Contact = () => {
                                 alignItems={'center'}
                                 width={'100%'}
                                 maxWidth={'450px'}
-                                borderRadius={'borderRadius'}
+                                borderRadius={'30px'}
                                 bgcolor={'#124954'}
                                 px={{xs: 2, md: 4}}
                                 py={2}
@@ -240,12 +240,12 @@ const Contact = () => {
                                     SelectProps={{
                                         MenuProps: {
                                             anchorOrigin: {
-                                                vertical: "bottom",
-                                                horizontal: "left"
+                                                vertical: 'bottom',
+                                                horizontal: 'left'
                                             },
                                             transformOrigin: {
-                                                vertical: "top",
-                                                horizontal: "left"
+                                                vertical: 'top',
+                                                horizontal: 'left'
                                             },
                                             getContentAnchorEl: null,
                                             classes: {
@@ -260,7 +260,7 @@ const Contact = () => {
                                         }
                                     }}
                                     children={
-                                        selectMenuLoading ? <div style={{display: "flex", justifyContent: 'center', alignItems: 'center'}}>
+                                        selectMenuLoading ? <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                                             <CircularProgress size={24} color={'primary'} />
                                         </div> : pins.map((each, i) => (
                                             <MenuItem

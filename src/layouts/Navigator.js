@@ -28,12 +28,14 @@ const styles = (theme) => ({
         borderRadius: '10px',
         backgroundColor: '#124954',
         '&:hover': {
-            backgroundColor: '#124954',
+            backgroundColor: '#26DF86',
         },
         '&:focus': {
             backgroundColor: '#26DF86',
-            borderRadius: '10px'
         },
+    },
+    itemActiveItem: {
+        backgroundColor: '#26DF86',
     },
     categoryHeaderPrimary: {
         color: '#fff',
@@ -61,9 +63,6 @@ const styles = (theme) => ({
     firebase: {
         fontSize: 24,
         color: theme.palette.common.white,
-    },
-    itemActiveItem: {
-        color: '#26DF86',
     },
     boxActiveItem: {
         paddingLeft: theme.spacing(2),
@@ -99,13 +98,6 @@ function Navigator(props) {
             icon: DashboardIcon,
             active: Router.asPath === '/admin/dashboard',
             href: '/admin/dashboard',
-            role: 3,
-        },
-        {
-            id: 'Add Bin',
-            icon: AddBinIcon,
-            active: Router.asPath === '/admin/addBin',
-            href: '/admin/addBin',
             role: 3,
         },
         {
@@ -178,7 +170,7 @@ function Navigator(props) {
                                 button
                                 className={clsx(classes.categoryHeader, href === Router.pathname && classes.itemActiveItem)}
                                 onClick={() => handleClick()}
-                                autoFocus={href === Router.pathname}
+                                // autoFocus={href === Router.pathname}
                             >
                                 <ListItemIcon className={clsx(classes.itemIcon)}>
                                     <img width={'100%'} src={icon} alt={'image'}/>
