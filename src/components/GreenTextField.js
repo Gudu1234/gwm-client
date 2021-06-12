@@ -30,6 +30,7 @@ const GreenTextField = (
         name,
         value,
         onChange = null,
+        onKeyDown = null,
         required= true,
         multiline = false,
         rows = 1,
@@ -56,6 +57,7 @@ const GreenTextField = (
             name={name}
             value={value}
             onChange={(e) => onChange(e)}
+            onKeyDown={(e) => onKeyDown(e)}
             required={!!required}
             multiline={!!multiline}
             rows={rows}

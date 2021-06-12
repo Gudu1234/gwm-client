@@ -27,9 +27,6 @@ const styles = (theme) => ({
         marginBottom: theme.spacing(1),
         borderRadius: '10px',
         backgroundColor: '#124954',
-        '&:hover': {
-            backgroundColor: '#26DF86',
-        },
         '&:focus': {
             backgroundColor: '#26DF86',
         },
@@ -39,7 +36,10 @@ const styles = (theme) => ({
     },
     categoryHeaderPrimary: {
         color: '#fff',
-        fontWeight: '500'
+        fontWeight: '500',
+        '&:hover': {
+            color: '#E5E5E5',
+        },
     },
     main: {
         width: '100%',

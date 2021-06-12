@@ -26,6 +26,7 @@ import Footer from '../../src/layouts/Footer';
 import WhiteTextField from '../../src/components/WhiteTextField';
 import { Animated } from 'react-animated-css';
 import GreenTextField from "../../src/components/GreenTextField";
+import Link from '../../src/Link';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -44,6 +45,16 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down('xs')]: {
             padding: theme.spacing(1, 2),
         },
+    },
+    forgetPassword: {
+        fontStyle: 'normal',
+        fontWeight: 'normal',
+        fontSize: '14px',
+        lineHeight: '17px',
+        '&:hover': {
+            cursor: 'pointer',
+            fontWeight: 'bold'
+        }
     },
 }));
 
@@ -79,6 +90,19 @@ const Login = () => {
     const handleLogin = () => {
         setLoading(true);
         // console.log(1, username, password);
+
+        if (username.trim() === '') {
+            enqueueSnackbar('Username is required.', { variant: 'warning' });
+            setLoading(false);
+            return;
+        }
+
+        if (password.trim() === '') {
+            enqueueSnackbar('Password is required.', { variant: 'warning' });
+            setLoading(false);
+            return;
+        }
+
         authenticate(username, password)
             .then((response) => {
                 const { accessToken, user } = response;
@@ -95,19 +119,23 @@ const Login = () => {
                 }
             })
             .catch(error => {
-                enqueueSnackbar(error && error.message ? error.message : 'Something went wrong!', { variant: 'warning' });
+                enqueueSnackbar(error && error.message ? 'Invalid username or password.' : 'Something went wrong!', { variant: 'warning' });
             }).finally(() => {
                 setLoading(false);
             });
     };
 
+    const handleEnter = (event) => {
+        if (event.keyCode === 13)
+            handleLogin();
+    }
 
     return (
         <Box className={classes.container}>
             <Appbar />
             <Container maxWidth={'xl'} style={{padding: '0px 0px'}}>
                 <Grid container justify={'center'} alignItems={'center'} style={{ minHeight: '100vh' }}>
-                    <Grid item container xs={12} sm={6} justify={'center'} alignItems={'center'}>
+                    <Grid item container xs={12} sm={6} justify={'flex-start'} alignItems={'center'}>
                         <Animated
                             animationIn='slideInLeft'
                             animationInDelay={100}
@@ -115,7 +143,7 @@ const Login = () => {
                             animationOutDelay={400}
                             isVisible={visible}
                         >
-                            <img width={'100%'} src={Vector} alt={'vector'} />
+                            <img width={'116%'} src={Vector} alt={'vector'} />
                         </Animated>
                     </Grid>
                     <Grid
@@ -135,7 +163,7 @@ const Login = () => {
                             px={3}
                         >
                             <Hidden xsDown>
-                                <Typography variant={'h2'} style={{color: '#124954'}} align={'center'}>
+                                <Typography variant={'h1'} style={{color: '#124954'}} align={'center'}>
                                     <Animated
                                         animationIn="zoomIn"
                                         animationInDelay={100}
@@ -160,6 +188,7 @@ const Login = () => {
                                     name={'username'}
                                     value={username}
                                     onChange={event => setUserName(event.target.value)}
+                                    onKeyDown={handleEnter}
                                 />
                             </Animated>
                             <Box my={2} />
@@ -187,9 +216,10 @@ const Login = () => {
                                             </InputAdornment>
                                         ),
                                     }}
+                                    onKeyDown={handleEnter}
                                 />
                             </Animated>
-                            <Box my={2} />
+                            <Box my={3} />
                             <Animated
                                 animationIn="zoomIn"
                                 animationInDelay={400}
@@ -205,7 +235,7 @@ const Login = () => {
                                         size="small"
                                         variant="contained"
                                         // fullWidth
-                                        style={{width: '100px'}}
+                                        style={{width: '120px'}}
                                     >
                                         {loading ? (
                                             <CircularProgress size={24} color={'secondary'}/>
@@ -213,6 +243,20 @@ const Login = () => {
                                             'Login'
                                         )}
                                     </Button>
+                                </div>
+                            </Animated>
+                            <Box my={1} />
+                            <Animated
+                                animationIn="zoomIn"
+                                animationInDelay={400}
+                                animationOut="zoomOut"
+                                animationOutDelay={100}
+                                isVisible={visible}
+                            >
+                                <div>
+                                    <Typography align={'center'} className={classes.forgetPassword}>
+                                        {'Forgot Password ?'}
+                                    </Typography>
                                 </div>
                             </Animated>
                             <Box my={4} />
