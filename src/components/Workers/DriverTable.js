@@ -1,14 +1,13 @@
 import React, {useEffect} from 'react';
-import {Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, makeStyles} from '@material-ui/core';
+import {Box, makeStyles} from '@material-ui/core';
 import {Pagination} from '@material-ui/lab';
-import TableSkeleton from '../Skeleton/TableSkeleton';
 import {getAllDrivers} from '../../apis/user';
 import {useSnackbar} from 'notistack';
 import CardHeader from '../Card/CardHeader';
 import CardBody from '../Card/CardBody';
 import Card from '../Card/Card';
 import styles from '../../../public/assets/jss/views/dashboardStyle';
-import SearchField from '../SearchField';
+import GreenSearchField from '../GreenSearchField';
 import TableComponent from '../TableComponent';
 
 const columns = [
@@ -38,7 +37,7 @@ const columns = [
     },
 ];
 
-const DriverTable = () => {
+const DriverTable = ({newDriverAdded, newDriver}) => {
 
     const [page, setPage] = React.useState(1);
     const [totalPages, setTotalPages] = React.useState(20);
@@ -62,7 +61,7 @@ const DriverTable = () => {
                         return {
                             ...each,
                             locality: each.address.street
-                        }
+                        };
                     });
                     setRows(_allDrivers);
                     setDrivers([...drivers, _allDrivers]);
@@ -113,7 +112,7 @@ const DriverTable = () => {
             .finally(() => {
                 setLoading(false);
             });
-    }, [search]);
+    }, [search, newDriverAdded]);
 
     return (
         <Card table>
@@ -126,7 +125,7 @@ const DriverTable = () => {
                         </p>
                     </Box>
                     <Box flex={1}/>
-                    <SearchField
+                    <GreenSearchField
                         placeholder={'Search'}
                         searchValue={search}
                         onChange={(val) => {

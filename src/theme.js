@@ -20,6 +20,9 @@ let theme = createMuiTheme({
         },
         background: {
             default: '#ffffff',
+            stepper: '#124954',
+            dialogActiveStepper: '#26DF86',
+            dialogInActiveStepper: 'gray'
         },
         text: {
             secondary: '#000000',

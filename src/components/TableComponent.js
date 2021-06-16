@@ -2,6 +2,7 @@
  * Created by Soumya (soumya@smarttersstudio.com) on 30/05/21 at 9:04 PM.
  */
 import {
+    Divider,
     makeStyles,
     Table,
     TableBody,
@@ -13,6 +14,7 @@ import {
 } from '@material-ui/core';
 import TableSkeleton from './Skeleton/TableSkeleton';
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles({
     tableCell: {
@@ -44,6 +46,7 @@ const TableComponent = ({columns, rows, notFound, loading, pageLimit}) => {
                             ))}
                         </TableRow>
                     </TableHead>
+                    <Divider style={{border: '1px solid #124954', width: `${columns.length * 100}%`}}/>
                     <TableBody>
                         {rows.length > 0 ? (
                             rows.map((row) => {
@@ -87,7 +90,15 @@ const TableComponent = ({columns, rows, notFound, loading, pageLimit}) => {
                 </Table>
             </TableContainer>
         </div>
-    )
+    );
+};
+
+TableComponent.propTypes = {
+    columns: PropTypes.array,
+    rows: PropTypes.array,
+    notFound: PropTypes.string,
+    loading: PropTypes.bool,
+    pageLimit: PropTypes.number,
 };
 
 export default TableComponent;

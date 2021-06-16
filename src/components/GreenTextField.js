@@ -40,6 +40,7 @@ const GreenTextField = (
         type = 'text',
         select = false,
         children = null,
+        size = 'large'
     }
 ) => {
 
@@ -57,13 +58,14 @@ const GreenTextField = (
             name={name}
             value={value}
             onChange={(e) => onChange(e)}
-            onKeyDown={(e) => onKeyDown(e)}
+            onKeyDown={(e) => onKeyDown ? onKeyDown(e) : null}
             required={!!required}
             multiline={!!multiline}
             rows={rows}
             rowsMax={rowsMax}
             InputProps={InputProps ? InputProps : null}
             select={!!select}
+            size={size}
             SelectProps={SelectProps ? SelectProps : null}
         >
             {children}

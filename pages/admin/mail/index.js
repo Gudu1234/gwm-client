@@ -1,7 +1,18 @@
-import React, {useEffect} from 'react';
-import {Box, FormControl, Grid, makeStyles, MenuItem, Select} from '@material-ui/core';
+import React, {useEffect, useState} from 'react';
+import {
+    Box,
+    // Card,
+    CardContent,
+    // CardHeader,
+    Divider,
+    FormControl,
+    Grid,
+    makeStyles,
+    MenuItem,
+    Select
+} from '@material-ui/core';
 import CardHeader from '../../../src/components/Card/CardHeader';
-import SearchField from '../../../src/components/SearchField';
+import GreenSearchField from '../../../src/components/GreenSearchField';
 import CardBody from '../../../src/components/Card/CardBody';
 import TableComponent from '../../../src/components/TableComponent';
 import {Pagination} from '@material-ui/lab';
@@ -11,6 +22,10 @@ import styles from '../../../public/assets/jss/views/dashboardStyle';
 import {getAllFeedbacks} from '../../../src/apis/contact';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import moment from 'moment';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import {withStyles} from '@material-ui/styles';
+import WhiteSearchField from '../../../src/components/WhiteSearchField';
 
 const columns = [
     {
@@ -39,6 +54,32 @@ const columns = [
     },
 ];
 
+const AntTabs = withStyles((theme) => ({
+    indicator: {
+        backgroundColor: theme.palette.primary.dark,
+        color: '#fff'
+    },
+}))(Tabs);
+
+const AntTab = withStyles((theme) => ({
+    root: {
+        background: theme.palette.background.stepper,
+        borderRadius: '5px 5px 0px 0px',
+        color: '#FFFFFF',
+        fontStyle: 'normal',
+        fontWeight: 600,
+        fontSize: '16px',
+        lineHeight: '140.1%',
+        letterSpacing: '0.06em',
+        textTransform: 'none'
+    },
+    selected: {
+        color: '#fff',
+        background: theme.palette.primary.dark,
+    },
+}))((props) => <Tab disableRipple {...props} />);
+
+
 const Mail = () => {
 
     const [page, setPage] = React.useState(1);
@@ -51,12 +92,13 @@ const Mail = () => {
     const [search, setSearch] = React.useState('');
     const [feedbackType, setFeedBackType] = React.useState(1);
     const { enqueueSnackbar } = useSnackbar();
-
-    const headerStyles = makeStyles(styles);
-    const headerClasses = headerStyles();
-
-    const handleFeedbackTypeChange = (event) => {
-        setFeedBackType(event.target.value);
+    
+    const [dialogValue, setDialogValue] = useState(0);
+    
+    const handleChangeDialogValue = (e, newValue) => {
+        setDialogValue(newValue);
+        setFeedBackType(newValue + 1);
+        setRows([]);
     };
 
     const loadFeedbacks = (skip) => {
@@ -69,8 +111,8 @@ const Mail = () => {
                             ...each,
                             date: moment(each.createdAt).format('DD-MM-YYYY'),
                             // feedbackType: each.feedbackType === 1 ? 'Feedback' : 'Suggestion'
-                        }
-                    })
+                        };
+                    });
                     setRows(_allFeedbacks);
                     setFeedbacks([...feedbacks, _allFeedbacks]);
                 }
@@ -108,8 +150,8 @@ const Mail = () => {
                         ...each,
                         date: moment(each.createdAt).format('DD-MM-YYYY'),
                         // feedbackType: each.feedbackType === 1 ? 'Feedback' : 'Suggestion'
-                    }
-                })
+                    };
+                });
                 setFeedbacks(_allFeedbacks);
                 setRows(_allFeedbacks);
                 setTotalPages(Math.ceil(res.total / rowsPerPage));
@@ -123,64 +165,47 @@ const Mail = () => {
             });
     }, [search, feedbackType]);
 
+    function a11yProps(index) {
+        return {
+            id: `scrollable-auto-tab-${index}`,
+            'aria-controls': `scrollable-auto-tabpanel-${index}`,
+        };
+    }
+    
     return (
         <div>
             <Box>
+                <WhiteSearchField
+                    placeholder={'Search'}
+                    searchValue={search}
+                    onChange={(val) => {
+                        setRows([]);
+                        setSearch(val);
+                    }}
+                />
                 <Grid container>
                     <Grid item container xs={12} sm={12} md={12}>
                         <Card table>
-                            <CardHeader color="primary">
-                                <Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
-                                    <Box display={'flex'} flexDirection={'column'}>
-                                        <h4 className={headerClasses.cardTitleWhite}>Feedbacks & Suggestions</h4>
-                                        <p className={headerClasses.cardCategoryWhite}>
-                                            from your zone
-                                        </p>
-                                    </Box>
-                                    <Box flex={1}/>
-                                    <FormControl variant={'outlined'} >
-                                        <Select
-                                            labelId = "demo-simple-select-outlined-label"
-                                            id = "demo-simple-select-outlined"
-                                            autoFocus={true}
-                                            value={feedbackType}
-                                            onChange={handleFeedbackTypeChange}
-                                            IconComponent={KeyboardArrowDownIcon}
-                                            style={{
-                                                background: '#fff',
-                                                border: 'none',
-                                                borderRadius: '10px',
-                                                height: '40px'
-                                            }}
-                                            MenuProps={{
-                                                anchorOrigin: {
-                                                    vertical: "bottom",
-                                                    horizontal: "left"
-                                                },
-                                                getContentAnchorEl: null
-                                            }}
-                                        >
-                                            <MenuItem value = {1} style={{borderBottom: '1px solid #7AE3B1'}}>Feedback</MenuItem>
-                                            <MenuItem value = {2}>Suggestion</MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                    <Box flex={1} />
-                                    <SearchField
-                                        placeholder={'Search'}
-                                        searchValue={search}
-                                        onChange={(val) => {
-                                            setRows([]);
-                                            setSearch(val);
-                                        }}
-                                    />
-                                </Box>
-                            </CardHeader>
+                            <div style={{background: '#124954', borderRadius: '10px 10px 0px 0px'}}>
+                                <AntTabs aria-label="disabled tabs example" onChange={handleChangeDialogValue} value={dialogValue}>
+                                    <AntTab label="Feedbacks" {...a11yProps(0)} />
+                                    <AntTab label="Suggestions" {...a11yProps(1)} />
+                                    <AntTab label="Complaints" {...a11yProps(2)} />
+                                </AntTabs>
+                            </div>
+                            <Divider style={{border: '3px solid #26DF86'}}/>
                             <CardBody>
                                 <TableComponent
                                     columns={columns}
                                     rows={rows}
                                     loading={loading}
-                                    notFound={'No feedbacks Found'}
+                                    notFound={
+                                        feedbackType === 1 ?
+                                            'No feedbacks Found' :
+                                            feedbackType === 2 ?
+                                                'No suggestions Found' :
+                                                'No complaints Found'
+                                    }
                                     pageLimit={rowsPerPage}
                                 />
                                 <Box display="flex" justifyContent="flex-end" m={3}>

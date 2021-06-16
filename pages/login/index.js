@@ -6,7 +6,7 @@ import {
     Grid,
     Hidden, IconButton,
     InputAdornment,
-    makeStyles, Paper, TextField,
+    makeStyles,
     Typography
 } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
@@ -15,18 +15,14 @@ import UserStore from '../../src/store/userStore';
 import { authenticate } from '../../src/apis/authentication';
 import { useSnackbar } from 'notistack';
 import { useRouter } from 'next/router';
-import ClientCaptcha from 'react-client-captcha';
+// import ClientCaptcha from 'react-client-captcha';
 import Vector from '../../public/Login.svg';
-import Refresh from '../../public/refresh (1).svg';
-import Gwm from '../../public/GWMstrLogo.svg';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import Appbar from '../../src/layouts/Appbar';
 import Footer from '../../src/layouts/Footer';
-import WhiteTextField from '../../src/components/WhiteTextField';
 import { Animated } from 'react-animated-css';
-import GreenTextField from "../../src/components/GreenTextField";
-import Link from '../../src/Link';
+import GreenTextField from '../../src/components/GreenTextField';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -62,11 +58,11 @@ const Login = () => {
 
     const classes = useStyles();
 
-    const [username, setUserName] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = React.useState(false);
-    const [captchaCode, setCaptchaCode] = useState('');
-    const [inputCaptcha, setInputCaptcha] = useState('');
+    // const [captchaCode, setCaptchaCode] = useState('');
+    // const [inputCaptcha, setInputCaptcha] = useState('');
     const [loading, setLoading] = useState(false);
     const [visible, setVisible] = useState(true);
     const { enqueueSnackbar } = useSnackbar();
@@ -80,7 +76,7 @@ const Login = () => {
 
     useEffect(() => {
         if (user && user.role === 3) {
-            console.log(user);
+            // console.log(user);
             Router.push('/admin/dashboard');
         }
     }, []);
@@ -91,8 +87,8 @@ const Login = () => {
         setLoading(true);
         // console.log(1, username, password);
 
-        if (username.trim() === '') {
-            enqueueSnackbar('Username is required.', { variant: 'warning' });
+        if (email.trim() === '') {
+            enqueueSnackbar('Email is required.', { variant: 'warning' });
             setLoading(false);
             return;
         }
@@ -103,7 +99,7 @@ const Login = () => {
             return;
         }
 
-        authenticate(username, password)
+        authenticate(email, password)
             .then((response) => {
                 const { accessToken, user } = response;
                 // console.log(accessToken, user);
@@ -128,7 +124,7 @@ const Login = () => {
     const handleEnter = (event) => {
         if (event.keyCode === 13)
             handleLogin();
-    }
+    };
 
     return (
         <Box className={classes.container}>
@@ -184,10 +180,11 @@ const Login = () => {
                                 isVisible={visible}
                             >
                                 <GreenTextField
-                                    label={'Username'}
-                                    name={'username'}
-                                    value={username}
-                                    onChange={event => setUserName(event.target.value)}
+                                    label={'Email'}
+                                    name={'email'}
+                                    value={email}
+                                    type={'email'}
+                                    onChange={event => setEmail(event.target.value)}
                                     onKeyDown={handleEnter}
                                 />
                             </Animated>

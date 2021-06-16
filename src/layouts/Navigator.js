@@ -129,13 +129,6 @@ function Navigator(props) {
             role: 3,
         },
         {
-            id: 'Complaints',
-            icon: MailIcon,
-            active: Router.asPath === '/admin/complaint',
-            href: '/admin/complaint',
-            role: 3,
-        },
-        {
             id: 'Settings',
             icon: SettingsIcon,
             active: Router.asPath === '/admin/settings',

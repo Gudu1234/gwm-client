@@ -7,6 +7,9 @@ import {makeStyles} from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import React from 'react';
+import {IconButton, InputAdornment} from "@material-ui/core";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
 const useStyles = makeStyles((theme) => ({
     search: {
@@ -15,10 +18,12 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         // marginTop:5,
         height: 40,
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: '#E8F5F8',
+        // borderRadius: theme.shape.borderRadius,
+        borderBottom: '1px solid #fff',
+        border: 'none',
+        backgroundColor: '#124954',
         '&:hover': {
-            backgroundColor: '#E8F5F8',
+            backgroundColor: '#124954',
         },
         width: 260,
     },
@@ -34,17 +39,22 @@ const useStyles = makeStyles((theme) => ({
         float: 'right'
     },
     inputRoot: {
-        color: '#124954',
+        color: '#fff',
         width: '100%',
+        float: 'left',
+        textAlign: 'right'
     },
     inputInput: {
-        padding: theme.spacing(1, 2 , 1, 4),
+        padding: theme.spacing(1, 1 , 1, 4),
         fontSize: 13,
         width: '100%',
+        '&::placeholder': {
+            textAlign: 'right'
+        }
     },
 }));
 
-const SearchField = (props) => {
+const GreenSearchField = (props) => {
 
     const { placeholder, searchValue, onChange } = props;
 
@@ -62,18 +72,20 @@ const SearchField = (props) => {
                     root: classes.inputRoot,
                     input: classes.inputInput,
                 }}
+                endAdornment={
+                    <InputAdornment position="end">
+                        <SearchIcon style={{color: '#fff', fontSize: 30, float: 'right', marginRight: '10px'}}/>
+                    </InputAdornment>
+                }
                 inputProps={{ 'aria-label': 'search' }}
             />
-            <div className={classes.searchIcon}>
-                <SearchIcon style={{color: '#124954', fontSize: 19}}/>
-            </div>
         </div>
     );
 };
 
-export default SearchField;
+export default GreenSearchField;
 
-SearchField.propTypes = {
+GreenSearchField.propTypes = {
     onChange: PropTypes.func,
     placeholder: PropTypes.string,
     searchValue: PropTypes.string
