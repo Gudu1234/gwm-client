@@ -20,6 +20,7 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import {useSnackbar} from 'notistack';
 import {createWorker} from '../../apis/user';
+import ImageUploadDialog from '../ImageUploadDialog';
 
 const useStyles = makeStyles((theme) => ({
     dialog: {
@@ -65,6 +66,9 @@ const WorkerAddDialog = ({
     const [role, setRole] = useState(0);
 
     const [gender, setGender] = useState(0);
+
+    const [avatar, setAvatar] = useState('');
+    const [dialogOpen, setDialogOpen] = useState(false);
 
     const { enqueueSnackbar } = useSnackbar();
     const [loading, setLoading] = useState(false);
@@ -164,34 +168,40 @@ const WorkerAddDialog = ({
                 landmark,
                 pinCode
             };
-            createWorker(
-                name,
-                email,
-                password,
-                phone,
-                addressOfWorker,
-                role,
-                gender,
-                1
-            ).then((res) => {
-                enqueueSnackbar('Worker created successfully.', { variant: 'success' });
-                updateWorker(res, true);
-                setOpen(false);
-                setName('');
-                setEmail('');
-                setPassword('');
-                setPhone('');
-                setAddress('');
-                setStreet('');
-                setLandmark('');
-                setPinCode('');
-                setRole(0);
-                setGender(0);
-            }).catch((e) => {
-                enqueueSnackbar(e.message ? e.message : 'Worker can not be created', { variant: 'error' });
-            }).finally(() => {
+            if (avatar !== '') {
+                createWorker(
+                    name,
+                    email,
+                    password,
+                    phone,
+                    addressOfWorker,
+                    role,
+                    gender,
+                    1,
+                    avatar,
+                ).then((res) => {
+                    enqueueSnackbar('Worker created successfully.', { variant: 'success' });
+                    updateWorker(res, true);
+                    setOpen(false);
+                    setName('');
+                    setEmail('');
+                    setPassword('');
+                    setPhone('');
+                    setAddress('');
+                    setStreet('');
+                    setLandmark('');
+                    setPinCode('');
+                    setRole(0);
+                    setGender(0);
+                }).catch((e) => {
+                    enqueueSnackbar(e.message ? e.message : 'Worker can not be created', { variant: 'error' });
+                }).finally(() => {
+                    setLoading(false);
+                });
+            } else {
                 setLoading(false);
-            });
+                setDialogOpen(true);
+            }
         }
     };
 
@@ -371,13 +381,14 @@ const WorkerAddDialog = ({
                                 loading ? (
                                     <CircularProgress size={24} color={'secondary'}/>
                                 ) : (
-                                    'Next'
+                                    avatar === '' ? 'Upload Image' : 'Create'
                                 )
                             }
                         </Button>
                     </Box>
                 </DialogContent>
             </Dialog>
+            <ImageUploadDialog setOpenDialog={setDialogOpen} openDialog={dialogOpen} setAvatar={setAvatar}/>
         </>
     );
 };

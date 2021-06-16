@@ -7,6 +7,7 @@ import CleanerTable from '../../../src/components/Workers/CleanerTable';
 import DriverTable from '../../../src/components/Workers/DriverTable';
 import {makeStyles} from '@material-ui/core/styles';
 import WorkerAddDialog from '../../../src/components/Dialog/WorkerAddDialog';
+import ImageUploadDialog from '../../../src/components/ImageUploadDialog';
 
 const useStyles = makeStyles((theme) => ({
     addButton: {
@@ -64,6 +65,7 @@ const Worker = () => {
                     </Grid>
                 </Grid>
                 <WorkerAddDialog setOpen={setOpen} open={open} updateWorker={updateWorker}/>
+                {/*<ImageUploadDialog setOpenDialog={setOpen} openDialog={open}/>*/}
             </Box>
         </div>
     );

@@ -40,7 +40,8 @@ export const createWorker = (
     address,
     role,
     gender,
-    userWorkType
+    userWorkType,
+    avatar
 ) => userService.create({
     name,
     email,
@@ -50,5 +51,5 @@ export const createWorker = (
     role,
     gender,
     userWorkType,
-    avatar: 'https://drive.google.com/uc?export=view&id=1VRK8P1oKHPSCJITSWfKKcaWsYy3BSx9n'
+    avatar
 });
