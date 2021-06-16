@@ -46,7 +46,7 @@ const TableComponent = ({columns, rows, notFound, loading, pageLimit}) => {
                             ))}
                         </TableRow>
                     </TableHead>
-                    <Divider style={{border: '1px solid #124954', width: `${columns.length * 100}%`}}/>
+                    <Divider style={{border: '1px solid #124954', fill: '1px solid #124954', width: `${columns.length * 100}%`}}/>
                     <TableBody>
                         {rows.length > 0 ? (
                             rows.map((row) => {
