@@ -11,6 +11,7 @@ export const getAllFeedbacks = ($skip, $limit, $search, feedbackType) => contact
         $skip,
         $limit,
         feedbackType,
+        status: 1,
         $sort: { createdAt: -1 },
         $or: [
             { name: { $search } },

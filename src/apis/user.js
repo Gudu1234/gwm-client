@@ -23,6 +23,33 @@ export const getAllDrivers = ($skip, $limit, $search) => userService.find({
         role: 2,
         $skip,
         $limit,
-        // $search
+        $or: [
+            { name: { $search } },
+            { username: { $search } },
+            { phone: { $search } },
+            { 'address.street': { $search } }
+        ]
     }
+});
+
+export const createWorker = (
+    name,
+    email,
+    password,
+    phone,
+    address,
+    role,
+    gender,
+    userWorkType,
+    avatar
+) => userService.create({
+    name,
+    email,
+    password,
+    phone,
+    address,
+    role,
+    gender,
+    userWorkType,
+    avatar
 });

@@ -11,6 +11,7 @@ import {SnackbarProvider} from 'notistack';
 import AppLoader from '../src/components/loaders/AppLoader';
 import Layout from '../src/layouts/Layout';
 import UserStore from '../src/store/userStore';
+import 'cropperjs/dist/cropper.css';
 
 
 export default function MyApp(props) {

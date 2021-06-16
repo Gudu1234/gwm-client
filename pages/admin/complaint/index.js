@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {Box, FormControl, Grid, makeStyles, MenuItem, Select} from '@material-ui/core';
 import CardHeader from '../../../src/components/Card/CardHeader';
-import SearchField from '../../../src/components/SearchField';
+import GreenSearchField from '../../../src/components/GreenSearchField';
 import CardBody from '../../../src/components/Card/CardBody';
 import TableComponent from '../../../src/components/TableComponent';
 import {Pagination} from '@material-ui/lab';
@@ -165,7 +165,7 @@ const Mail = () => {
                                         </Select>
                                     </FormControl>
                                     <Box flex={1} />
-                                    <SearchField
+                                    <GreenSearchField
                                         placeholder={'Search'}
                                         searchValue={search}
                                         onChange={(val) => {

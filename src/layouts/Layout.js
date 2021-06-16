@@ -45,7 +45,7 @@ const useStyle = makeStyles(theme => ({
     },
     main: {
         flex: 1,
-        padding: theme.spacing(6, 4),
+        padding: theme.spacing(2, 4),
         background: '#E8F5F8'
         // background: '#124954',
     },

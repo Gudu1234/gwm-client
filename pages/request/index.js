@@ -84,9 +84,9 @@ const Request = () => {
                         pins.push(e);
                     });
                     setSelectMenuLoading(false);
-                })
+                });
             }
-        )
+        );
     }, []);
 
 
@@ -241,12 +241,12 @@ const Request = () => {
                                     SelectProps={{
                                         MenuProps: {
                                             anchorOrigin: {
-                                                vertical: "bottom",
-                                                horizontal: "left"
+                                                vertical: 'bottom',
+                                                horizontal: 'left'
                                             },
                                             transformOrigin: {
-                                                vertical: "top",
-                                                horizontal: "left"
+                                                vertical: 'top',
+                                                horizontal: 'left'
                                             },
                                             getContentAnchorEl: null,
                                             classes: {
@@ -261,7 +261,7 @@ const Request = () => {
                                         }
                                     }}
                                     children={
-                                        selectMenuLoading ? <div style={{display: "flex", justifyContent: 'center', alignItems: 'center'}}>
+                                        selectMenuLoading ? <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                                             <CircularProgress size={24} color={'primary'} />
                                         </div> : pins.map((each, i) => (
                                             <MenuItem
