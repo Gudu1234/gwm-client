@@ -205,7 +205,7 @@ const BinRequest = () => {
                                     <AntTab label="Completed" {...a11yProps(2)} />
                                 </AntTabs>
                             </div>
-                            <Divider style={{border: '3px solid #26DF86'}}/>
+                            <Divider style={{border: '3px solid #26DF86', fill: '3px solid #124954'}}/>
                             <CardBody>
                                 <TableComponent
                                     columns={columns}
