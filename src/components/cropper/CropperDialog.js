@@ -77,9 +77,9 @@ function CropperDialog({
                                 aspectRatio={isSquare ? 1 : aspectRatio ? aspectRatio : 12 / 16}
                                 guides={true}
                                 preview=".img-preview"
-                                // ref={(c) => {
-                                //     setCropper(c);
-                                // }}
+                                ref={(c) => {
+                                    setCropper(c);
+                                }}
                                 onInitialized={(instance) => {
                                     setCropper(instance);
                                 }}
