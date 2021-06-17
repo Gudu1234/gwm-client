@@ -19,7 +19,7 @@ import WorkerIcon from '../../public/NavAssets/worker white.svg';
 import RequestBinIcon from '../../public/NavAssets/Request bin white.svg';
 import ManageBinIcon from '../../public/NavAssets/Manage bin.svg';
 import MailIcon from '../../public/NavAssets/Mail white.svg';
-import SettingsIcon from '../../public/NavAssets/Settings white.svg';
+import ProfileIcon from '../../public/NavAssets/Profile.svg';
 
 const styles = (theme) => ({
     categoryHeader: {
@@ -129,16 +129,16 @@ function Navigator(props) {
             role: 3,
         },
         {
-            id: 'Settings',
-            icon: SettingsIcon,
-            active: Router.asPath === '/admin/settings',
-            href: '/admin/settings',
+            id: 'Profile',
+            icon: ProfileIcon,
+            active: Router.asPath === '/admin/profile',
+            href: '/admin/profile',
             role: 3,
         },
     ];
 
     return (
-        <Drawer variant="permanent" {...other}>
+        <Drawer variant="permanent" {...other} >
             <List disablePadding style={{backgroundColor: '#124954'}}>
                 <div className={classes.main}>
                     <img className={classes.image} src={Logo}  alt="Logo" onClick={()=>Router.push('/')} />

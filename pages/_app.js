@@ -35,6 +35,10 @@ export default function MyApp(props) {
                 .authenticate({
                     strategy: 'jwt',
                     accessToken: token
+                }, {
+                    query: {
+                        $populate: 'zone'
+                    }
                 })
                 .then(response => {
                     const { accessToken, user } = response;

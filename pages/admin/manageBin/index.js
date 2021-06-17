@@ -13,6 +13,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import {makeStyles} from '@material-ui/core/styles';
 import BinAddDialog from '../../../src/components/bin-components/BinAddDialog';
+import GreenSearchField from '../../../src/components/GreenSearchField';
 
 const columns = [
     {
@@ -64,7 +65,8 @@ const AntTab = withStyles((theme) => ({
         fontSize: '16px',
         lineHeight: '140.1%',
         letterSpacing: '0.06em',
-        textTransform: 'none'
+        textTransform: 'none',
+        height: '60px'
     },
     selected: {
         color: '#fff',
@@ -78,6 +80,16 @@ const useStyles = makeStyles((theme) => ({
         // float: 'right',
         letterSpacing: '0.1em',
         marginLeft: '40px'
+    },
+    headerDiv: {
+        background: '#124954',
+        borderRadius: '10px 10px 0px 0px',
+        display: 'flex',
+        height: '60px',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingRight: '20px'
     }
 }));
 
@@ -190,14 +202,6 @@ const ManageBin = () => {
         <div>
             <Box>
                 <Box display={'flex'} flexDirection={'row'}>
-                    <WhiteSearchField
-                        placeholder={'Search'}
-                        searchValue={search}
-                        onChange={(val) => {
-                            setRows([]);
-                            setSearch(val);
-                        }}
-                    />
                     <Box flex={1} />
                     <Button
                         color="secondary"
@@ -213,11 +217,20 @@ const ManageBin = () => {
                 <Grid container>
                     <Grid item container xs={12} sm={12} md={12}>
                         <Card table>
-                            <div style={{background: '#124954', borderRadius: '10px 10px 0px 0px'}}>
+                            <div className={classes.headerDiv}>
                                 <AntTabs aria-label="disabled tabs example" onChange={handleChangeDialogValue} value={dialogValue}>
                                     <AntTab label="Assigned" {...a11yProps(0)} />
                                     <AntTab label="Unassigned" {...a11yProps(1)} />
                                 </AntTabs>
+                                <Box flex={1} />
+                                <GreenSearchField
+                                    placeholder={'Search'}
+                                    searchValue={search}
+                                    onChange={(val) => {
+                                        setRows([]);
+                                        setSearch(val);
+                                    }}
+                                />
                             </div>
                             <Divider style={{border: '3px solid #26DF86', fill: '3px solid #124954'}}/>
                             <CardBody>

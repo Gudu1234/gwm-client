@@ -7,6 +7,9 @@ let theme = createMuiTheme({
             main: '#124954',
             dark: '#26DF86',
         },
+        common: {
+            drawer: 'rgba(59, 196, 131, 0.3)'
+        },
         secondary: {
             light: '#FF9A3E',
             main: '#FF9A3E',

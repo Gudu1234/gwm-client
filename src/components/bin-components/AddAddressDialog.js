@@ -97,7 +97,7 @@ const AddAddressDialog = ({ setActiveStep, setBinData }) => {
         getAllZones()
             .then(res => {
                 if (user && user.role === 3) {
-                    const zoneId = res[res.findIndex(each => each._id.toString() === user.zone.toString())];
+                    const zoneId = res[res.findIndex(each => each._id.toString() === user.zone._id.toString())];
                     console.log(zoneId);
                     // setZone(zoneId);
                     setZones(res.map(each => {

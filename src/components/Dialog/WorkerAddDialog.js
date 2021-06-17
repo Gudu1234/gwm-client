@@ -61,7 +61,7 @@ const WorkerAddDialog = ({
 
     const [landmark, setLandmark] = useState('');
 
-    const [pinCode, setPinCode] = useState('');
+    const [pinCode, setPinCode] = useState(null);
 
     const [role, setRole] = useState(0);
 
@@ -166,7 +166,7 @@ const WorkerAddDialog = ({
                 addressLine: address,
                 street,
                 landmark,
-                pinCode
+                pinCode: pinCode.toString()
             };
             if (avatar !== '') {
                 createWorker(
@@ -180,9 +180,9 @@ const WorkerAddDialog = ({
                     1,
                     avatar,
                 ).then((res) => {
+                    setOpen(false);
                     enqueueSnackbar('Worker created successfully.', { variant: 'success' });
                     updateWorker(res, true);
-                    setOpen(false);
                     setName('');
                     setEmail('');
                     setPassword('');
@@ -286,6 +286,7 @@ const WorkerAddDialog = ({
                             name={'pinCode'}
                             value={pinCode}
                             onChange={(e) => setPinCode(e.target.value)}
+                            type={'number'}
                         />
                         <Box my={2} />
                         <GreenTextField

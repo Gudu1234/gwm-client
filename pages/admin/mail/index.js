@@ -71,7 +71,8 @@ const AntTab = withStyles((theme) => ({
         fontSize: '16px',
         lineHeight: '140.1%',
         letterSpacing: '0.06em',
-        textTransform: 'none'
+        textTransform: 'none',
+        height: '60px'
     },
     selected: {
         color: '#fff',
@@ -79,6 +80,18 @@ const AntTab = withStyles((theme) => ({
     },
 }))((props) => <Tab disableRipple {...props} />);
 
+const useStyles = makeStyles((theme) => ({
+    headerDiv: {
+        background: '#124954',
+        borderRadius: '10px 10px 0px 0px',
+        display: 'flex',
+        height: '60px',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingRight: '20px'
+    }
+}));
 
 const Mail = () => {
 
@@ -94,6 +107,8 @@ const Mail = () => {
     const { enqueueSnackbar } = useSnackbar();
     
     const [dialogValue, setDialogValue] = useState(0);
+
+    const classes = useStyles();
     
     const handleChangeDialogValue = (e, newValue) => {
         setDialogValue(newValue);
@@ -175,23 +190,24 @@ const Mail = () => {
     return (
         <div>
             <Box>
-                <WhiteSearchField
-                    placeholder={'Search'}
-                    searchValue={search}
-                    onChange={(val) => {
-                        setRows([]);
-                        setSearch(val);
-                    }}
-                />
                 <Grid container>
                     <Grid item container xs={12} sm={12} md={12}>
                         <Card table>
-                            <div style={{background: '#124954', borderRadius: '10px 10px 0px 0px'}}>
+                            <div className={classes.headerDiv}>
                                 <AntTabs aria-label="disabled tabs example" onChange={handleChangeDialogValue} value={dialogValue}>
                                     <AntTab label="Feedbacks" {...a11yProps(0)} />
                                     <AntTab label="Suggestions" {...a11yProps(1)} />
                                     <AntTab label="Complaints" {...a11yProps(2)} />
                                 </AntTabs>
+                                <Box flex={1} />
+                                <GreenSearchField
+                                    placeholder={'Search'}
+                                    searchValue={search}
+                                    onChange={(val) => {
+                                        setRows([]);
+                                        setSearch(val);
+                                    }}
+                                />
                             </div>
                             <Divider style={{border: '3px solid #26DF86', fill: '3px solid #124954'}}/>
                             <CardBody>

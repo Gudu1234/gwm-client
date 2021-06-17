@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ImageUploadDialog = ({openDialog, setOpenDialog, setAvatar}) => {
+const ImageUploadDialog = ({openDialog, setOpenDialog, setAvatar, setAvatarEdited}) => {
 
     const [image, setImage] = useState('');
     const [imageFile, setImageFile] = useState('');
@@ -114,6 +114,7 @@ const ImageUploadDialog = ({openDialog, setOpenDialog, setAvatar}) => {
             }).finally(() => {
                 setLoading(false);
                 setOpenDialog(false);
+                setAvatarEdited(true);
             });
         }
     };

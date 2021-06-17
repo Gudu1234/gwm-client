@@ -53,3 +53,13 @@ export const createWorker = (
     userWorkType,
     avatar
 });
+
+export const editDetails = (id, data) => userService.patch(
+    id,
+    data,
+    {
+        query: {
+            $populate: 'zone'
+        }
+    }
+);

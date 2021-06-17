@@ -4,7 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import MenuIcon from '../../public/NavAssets/MenuIcon.svg';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
@@ -18,6 +18,7 @@ import {logout} from '../apis/authentication';
 import {AccountCircle} from '@material-ui/icons';
 import MaleAvatar from '../../public/MaleAvatar.svg';
 import FemaleAvatar from '../../public/FemaleAvatar.svg';
+import DashboardLogo from '../../public/DashboardLogo.svg';
 // import { logout } from '../api_services/authentication';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
@@ -27,7 +28,7 @@ const styles = (theme) => ({
         zIndex: 0,
     },
     menuButton: {
-        marginLeft: -theme.spacing(1),
+        marginLeft: theme.spacing(1),
     },
     link: {
         textDecoration: 'none',
@@ -45,8 +46,12 @@ const styles = (theme) => ({
         height: theme.spacing(6),
     },
     toolbarMargin: {
-        marginTop: theme.spacing(2),
-        marginBottom: theme.spacing(2),
+        // marginTop: theme.spacing(0),
+        // marginBottom: theme.spacing(0),
+        // marginLeft: theme.spacing(0),
+        // marginRight: theme.spacing(0),
+        margin: 0,
+        padding: 0,
     },
     profile: {
         background: '#E8F5F8',
@@ -62,17 +67,25 @@ const styles = (theme) => ({
     },
     profileButton: {
         '&:hover': {
-            background: theme.palette.common.white,
+            background: 'rgba(59, 196, 131, 0.3)',
         },
     },
+    gridStyle: {
+        backgroundColor: '#E8F5F8',
+        '@media (max-width:600px)': {
+            backgroundColor: '#124954',
+            marginTop: theme.spacing(1),
+            marginBottom: theme.spacing(1),
+        },
+    }
 });
 
 const rippleStyles = (theme) => ({
-    child: {
-        backgroundColor: '#fff'
-    },
+    // child: {
+    //     backgroundColor: '#fff'
+    // },
     rippleVisible: {
-        opacity: 0.1,
+        // opacity: 0.1,
         animation: `$enter 550ms ${theme.transitions.easing.easeInOut}`
     },
     "@keyframes enter": {
@@ -149,9 +162,9 @@ function Header(props) {
                     {title ? title + ' | GWM' : 'GWM'}
                 </title>
             </Head>
-            <AppBar position="sticky" elevation={0} style={{backgroundColor: '#E8F5F8'}}>
+            <AppBar position="sticky" elevation={0}>
                 <Toolbar className={classes.toolbarMargin}>
-                    <Grid container spacing={1} alignItems="center">
+                    <Grid container justify={'space-between'} alignItems="center" className={classes.gridStyle}>
                         <Hidden smUp>
                             <Grid item>
                                 <IconButton
@@ -160,8 +173,14 @@ function Header(props) {
                                     onClick={onDrawerToggle}
                                     className={classes.menuButton}
                                 >
-                                    <MenuIcon color={'primary'}/>
+                                    <img src={MenuIcon} alt={'MenuIcon'} />
                                 </IconButton>
+                            </Grid>
+                        </Hidden>
+                        <Grid item xs />
+                        <Hidden smUp>
+                            <Grid item>
+                                <img src={DashboardLogo} alt={'DashboardLogo'} width={'100%'} />
                             </Grid>
                         </Hidden>
                         <Grid item xs />

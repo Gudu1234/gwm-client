@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Divider, FormControl, Grid, makeStyles, MenuItem, Select} from '@material-ui/core';
+import {Box, Chip, Divider, FormControl, Grid, makeStyles, MenuItem, Select} from '@material-ui/core';
 import CardHeader from '../../../src/components/Card/CardHeader';
 import GreenSearchField from '../../../src/components/GreenSearchField';
 import CardBody from '../../../src/components/Card/CardBody';
@@ -41,15 +41,15 @@ const columns = [
         minWidth: 150,
         align: 'left',
     },
+    // {
+    //     id: 'pinCode',
+    //     label: 'PIN',
+    //     minWidth: 150,
+    //     align: 'left',
+    // },
     {
-        id: 'pinCode',
-        label: 'PIN',
-        minWidth: 150,
-        align: 'left',
-    },
-    {
-        id: 'street',
-        label: 'Locality',
+        id: 'status',
+        label: 'Status',
         minWidth: 150,
         align: 'left'
     }
@@ -91,7 +91,7 @@ const BinRequest = () => {
     const [rows, setRows] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
     const [search, setSearch] = React.useState('');
-    const [status, setStatus] = React.useState(1);
+    const [status, setStatus] = React.useState({ $in: [1, 2, 3] });
     const { enqueueSnackbar } = useSnackbar();
 
     const headerStyles = makeStyles(styles);
@@ -118,7 +118,7 @@ const BinRequest = () => {
                         return {
                             ...each,
                             date: moment(each.createdAt).format('DD-MM-YYYY'),
-                            // status: each.status === 1 ? 'Feedback' : 'Suggestion'
+                            status: statusComponent(each.status),
                         };
                     });
                     setRows(_allRequests);
@@ -148,6 +148,27 @@ const BinRequest = () => {
         }
     };
 
+    const statusComponent = (status) => {
+        let label = status === 1 ? 'Requested' : (status === 2) ? 'Inspected' : 'Completed';
+        console.log(status);
+        let color = status === 1 ?
+            'rgba(59, 196, 131, 0.3)' :
+            status === 2 ?
+                'rgba(153, 152, 226, 0.25)' :
+                'rgba(255, 154, 62, 0.3)';
+        return (
+            <Chip
+                label={label}
+                style={{
+                    background: color,
+                    color: '#3A8899',
+                    fontWeight: '700',
+                    fontSize: '14px',
+                }}
+            />
+        );
+    };
+
     useEffect(() => {
         setLoading(true);
         getAllRequests(0, rowsPerPage, search, status)
@@ -157,7 +178,7 @@ const BinRequest = () => {
                     return {
                         ...each,
                         date: moment(each.createdAt).format('DD-MM-YYYY'),
-                        // status: each.status === 1 ? 'Feedback' : 'Suggestion'
+                        status: statusComponent(each.status),
                     };
                 });
                 setRequests(_allRequests);
@@ -183,41 +204,52 @@ const BinRequest = () => {
     return (
         <div>
             <Box>
-                <WhiteSearchField
-                    placeholder={'Search'}
-                    searchValue={search}
-                    onChange={(val) => {
-                        setRows([]);
-                        setSearch(val);
-                    }}
-                />
                 <Grid container>
                     <Grid item container xs={12} sm={12} md={12}>
                         <Card table>
-                            <div style={{background: '#124954', borderRadius: '10px 10px 0px 0px'}}>
-                                <AntTabs
-                                    aria-label="disabled tabs example"
-                                    onChange={handleChangeDialogValue}
-                                    value={dialogValue}
-                                >
-                                    <AntTab label="Requests" {...a11yProps(0)} />
-                                    <AntTab label="Inspections" {...a11yProps(1)} />
-                                    <AntTab label="Completed" {...a11yProps(2)} />
-                                </AntTabs>
+                            <div
+                                style={{
+                                    background: '#124954',
+                                    borderRadius: '10px 10px 0px 0px',
+                                    height: '65px',
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    paddingLeft: '20px',
+                                    paddingRight: '20px',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                {/*<AntTabs*/}
+                                {/*    aria-label="disabled tabs example"*/}
+                                {/*    onChange={handleChangeDialogValue}*/}
+                                {/*    value={dialogValue}*/}
+                                {/*>*/}
+                                {/*    <AntTab label="Requests" {...a11yProps(0)} />*/}
+                                {/*    <AntTab label="Inspections" {...a11yProps(1)} />*/}
+                                {/*    <AntTab label="Completed" {...a11yProps(2)} />*/}
+                                {/*</AntTabs>*/}
+                                <Box display={'flex'} flexDirection={'column'}>
+                                    <h4 className={headerClasses.cardTitleWhite}>Bin Requests</h4>
+                                    <p className={headerClasses.cardCategoryWhite}>
+                                        Of your zone
+                                    </p>
+                                </Box>
+                                <Box flex={1} />
+                                <GreenSearchField
+                                    placeholder={'Search'}
+                                    searchValue={search}
+                                    onChange={(val) => {
+                                        setRows([]);
+                                        setSearch(val);
+                                    }}
+                                />
                             </div>
-                            <Divider style={{border: '3px solid #26DF86', fill: '3px solid #124954'}}/>
                             <CardBody>
                                 <TableComponent
                                     columns={columns}
                                     rows={rows}
                                     loading={loading}
-                                    notFound={
-                                        status === 1 ?
-                                            'No requests Found' :
-                                            status === 2 ?
-                                                'No inspected requests Found' :
-                                                'No completed requests Found'
-                                    }
+                                    notFound={'No data found'}
                                     pageLimit={rowsPerPage}
                                 />
                                 <Box display="flex" justifyContent="flex-end" m={3}>

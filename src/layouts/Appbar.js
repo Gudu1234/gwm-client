@@ -20,8 +20,8 @@ import Typography from '@material-ui/core/Typography';
 import Link from '../Link';
 import {useRouter} from 'next/router';
 import MenuIcon from '@material-ui/icons/Menu';
-import Drawer1 from '../../public/Drawer.svg';
-import Drawer2 from '../../public/Drawer2.svg';
+import Drawer2 from '../../public/NavAssets/MenuIcon.svg';
+import Drawer1 from '../../public/NavAssets/MenuGreenIcon.svg';
 import {makeStyles} from '@material-ui/styles';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -155,9 +155,9 @@ const Appbar = () => {
                     <IconButton onClick={() => setOpen(true)}>
                         {
                             onTop ? (
-                                <img width={'100%'} src={Drawer1} alt={'Drawer'}/>
+                                <img width={'120%'} src={Drawer1} alt={'Drawer'}/>
                             ) : (
-                                <img width={'100%'} src={Drawer2} alt={'Drawer'}/>
+                                <img width={'120%'} src={Drawer2} alt={'Drawer'}/>
                             )
                         }
                     </IconButton>
