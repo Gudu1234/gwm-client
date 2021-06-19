@@ -20,7 +20,10 @@ const useStyles = makeStyles(theme => ({
         textDecoration: 'none',
     },
     divider: {
-        border: '1px solid #7AE3B1'
+        border: '1px solid #7AE3B1',
+        '& .MuiDivider-root': {
+            backgroundColor: '#7AE3B1'
+        }
     },
 }));
 

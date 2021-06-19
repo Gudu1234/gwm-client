@@ -90,7 +90,13 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'flex-start',
         alignItems: 'center',
         paddingRight: '20px'
-    }
+    },
+    divider: {
+        border: '3px solid #26DF86',
+        '& .MuiDivider-root': {
+            backgroundColor: '#26DF86'
+        }
+    },
 }));
 
 const Mail = () => {
@@ -209,7 +215,7 @@ const Mail = () => {
                                     }}
                                 />
                             </div>
-                            <Divider style={{border: '3px solid #26DF86', fill: '3px solid #124954'}}/>
+                            <Divider className={classes.divider}/>
                             <CardBody>
                                 <TableComponent
                                     columns={columns}

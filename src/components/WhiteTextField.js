@@ -12,8 +12,8 @@ const useStyles = makeStyles({
             borderColor: '#FFFFFF',
             color: '#FFFFFF'
         },
-        "& .MuiOutlinedInput-input": {
-            color: "#fff",
+        '& .MuiOutlinedInput-input': {
+            color: '#fff',
             fontSize: '13px',
             '&:-webkit-autofill': {
                 WebkitTextFillColor: '#fff',
@@ -22,8 +22,8 @@ const useStyles = makeStyles({
                 backgroundColor: '#124954'
             }
         },
-        "& .MuiInputLabel-outlined.Mui-focused": {
-            color: "#fff"
+        '& .MuiInputLabel-outlined.Mui-focused': {
+            color: '#fff'
         },
     },
 });
@@ -70,7 +70,7 @@ const WhiteTextField = (
         >
             {children}
         </TextField>
-    )
+    );
 };
 
 export default WhiteTextField;

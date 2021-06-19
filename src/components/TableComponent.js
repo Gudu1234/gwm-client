@@ -23,6 +23,11 @@ const useStyles = makeStyles({
         color: '#3A8899',
         cursor: 'pointer'
     },
+    divider: {
+        '& .MuiDivider-root': {
+            backgroundColor: '#124954'
+        }
+    }
 });
 
 const TableComponent = ({columns, rows, notFound, loading, pageLimit}) => {
@@ -46,7 +51,10 @@ const TableComponent = ({columns, rows, notFound, loading, pageLimit}) => {
                             ))}
                         </TableRow>
                     </TableHead>
-                    <Divider style={{border: '1px solid #124954', fill: '1px solid #124954', width: `${columns.length * 100}%`}}/>
+                    <Divider
+                        className={classes.divider}
+                        style={{border: '1px solid #124954', width: `${columns.length * 100}%`}}
+                    />
                     <TableBody>
                         {rows.length > 0 ? (
                             rows.map((row) => {

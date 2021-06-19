@@ -70,7 +70,10 @@ const useStyles = makeStyles(theme => ({
         'text-shadow': '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff',
     },
     divider: {
-        border: '1px solid #7AE3B1'
+        border: '1px solid #7AE3B1',
+        '& .MuiDivider-root': {
+            backgroundColor: '#7AE3B1'
+        }
     },
     marginToolbar: {
         marginLeft: '100px',
