@@ -93,9 +93,10 @@ const useStyles = makeStyles((theme) => ({
     },
     divider: {
         border: '3px solid #26DF86',
-        '& .MuiDivider-root': {
-            backgroundColor: '#26DF86'
-        }
+        backgroundColor: '#26DF86'
+        // '& .MuiDivider-root': {
+        //     backgroundColor: '#26DF86'
+        // }
     },
 }));
 

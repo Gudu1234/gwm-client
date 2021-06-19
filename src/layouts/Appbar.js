@@ -71,9 +71,10 @@ const useStyles = makeStyles(theme => ({
     },
     divider: {
         border: '1px solid #7AE3B1',
-        '& .MuiDivider-root': {
-            backgroundColor: '#7AE3B1'
-        }
+        // '& .MuiDivider-root': {
+        //     backgroundColor: '#7AE3B1'
+        // }
+        backgroundColor: '#7AE3B1'
     },
     marginToolbar: {
         marginLeft: '100px',

@@ -24,9 +24,10 @@ const useStyles = makeStyles({
         cursor: 'pointer'
     },
     divider: {
-        '& .MuiDivider-root': {
-            backgroundColor: '#124954'
-        }
+        // '& .MuiDivider-root': {
+        //     backgroundColor: '#124954'
+        // }
+        backgroundColor: '#124954'
     }
 });
 
