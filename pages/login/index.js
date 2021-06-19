@@ -23,6 +23,7 @@ import Appbar from '../../src/layouts/Appbar';
 import Footer from '../../src/layouts/Footer';
 import { Animated } from 'react-animated-css';
 import GreenTextField from '../../src/components/GreenTextField';
+import ForgetPasswordDialog from '../../src/components/forget-password/ForgetPasswordDialog';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -65,6 +66,7 @@ const Login = () => {
     // const [inputCaptcha, setInputCaptcha] = useState('');
     const [loading, setLoading] = useState(false);
     const [visible, setVisible] = useState(true);
+    const [forgetPasswordOpen, setForgetPasswordOpen] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
     const Router = useRouter();
 
@@ -250,9 +252,15 @@ const Login = () => {
                                 animationOutDelay={100}
                                 isVisible={visible}
                             >
-                                <div>
-                                    <Typography align={'center'} className={classes.forgetPassword}>
-                                        {'Forgot Password ?'}
+                                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                    <Typography
+                                        align={'center'}
+                                        component={Button}
+                                        className={classes.forgetPassword}
+                                        onClick={() => setForgetPasswordOpen(true)}
+                                        style={{textTransform: 'none'}}
+                                    >
+                                        {'Forget Password ?'}
                                     </Typography>
                                 </div>
                             </Animated>
@@ -260,6 +268,7 @@ const Login = () => {
                         </Box>
                     </Grid>
                 </Grid >
+                <ForgetPasswordDialog open={forgetPasswordOpen} setOpen={setForgetPasswordOpen}/>
             </Container>
             <Box my={5}/>
             <Footer />
