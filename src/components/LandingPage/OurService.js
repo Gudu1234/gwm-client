@@ -52,8 +52,7 @@ const OurService = () => {
                         </Typography>
                         <Box my={1}/>
                         <Typography variant={'subtitle1'} style={{color: '#fff'}} align={'left'}>
-                            {'Lorem ipsum dolor sit amet, consec\n' +
-                            'tetur adipiscing elit. Nullam ut augu ultricies, varius odio id, semper ligula. Integer ultricies mattis lectus nec tempor. Nam in enim arcu. Ut sagittis est ut sollicitudin posuere'}
+                            {'This system consists of a request portal through which localites can request for the bins for their localities. Localites request for bins by selecting their city and zone respectively. After inspection by the admin, the required number of child bins are allocated to the respective parent bin.'}
                         </Typography>
                     </Box>
                 </Grid>
@@ -76,8 +75,7 @@ const OurService = () => {
                         </Typography>
                         <Box my={1}/>
                         <Typography variant={'subtitle1'} style={{color: '#fff'}} align={'left'}>
-                            {'Lorem ipsum dolor sit amet, consec\n' +
-                            'tetur adipiscing elit. Nullam ut augu ultricies, varius odio id, semper ligula. Integer ultricies mattis lectus nec tempor. Nam in enim arcu. Ut sagittis est ut sollicitudin posuere'}
+                            {'Cleaner collects the wastes from child bin and transfers into parent bin further those garbage are collected from parent bin by the drivers and taken away to dump yard for disposal.'}
                         </Typography>
                     </Box>
                 </Grid>
@@ -106,8 +104,7 @@ const OurService = () => {
                         </Typography>
                         <Box my={1}/>
                         <Typography variant={'subtitle1'} style={{color: '#fff'}} align={'left'}>
-                            {'Lorem ipsum dolor sit amet, consec\n' +
-                            'tetur adipiscing elit. Nullam ut augu ultricies, varius odio id, semper ligula. Integer ultricies mattis lectus nec tempor. Nam in enim arcu. Ut sagittis est ut sollicitudin posuere'}
+                            {'This feature includes the procedure of Garbage`s separation at the dump-yard into three categories as per the 3 types of bins. Then wastes are sent out to different recycling sectors for disposal.Here ejection of wastes enhances the efficiency of waste management and reduces environmental pollution.'}
                         </Typography>
                     </Box>
                 </Grid>
