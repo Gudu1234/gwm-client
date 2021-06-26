@@ -8,9 +8,6 @@ import {
     Typography
 } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { useStore } from 'laco-react';
-import UserStore from '../../src/store/userStore';
-import { authenticate } from '../../src/apis/authentication';
 import { useSnackbar } from 'notistack';
 import { useRouter } from 'next/router';
 import Appbar from '../../src/layouts/Appbar';
@@ -40,12 +37,23 @@ const useStyles = makeStyles({
         '&::-webkit-scrollbar': {
             display: 'none'
         },
+    },
+    contentStyle: {
+        fontStyle: 'normal',
+        fontSize: '14px',
+        fontWeight: '500',
+        lineHeight: '150.5%',
+        textAlign: 'justify',
+        color: '#124954',
+        letterSpacing: '0.04em',
     }
 });
 
 const Contact = () => {
 
     const classes = useStyles();
+
+    const content = 'We are always available to listen! Let us know if you want to give any suggestion or feedback about our system and working process or if you have any issues regarding bin maintenance and garbage collection.';
 
     const [feedbackType, setFeedBackType] = React.useState(1);
 
@@ -157,9 +165,10 @@ const Contact = () => {
                                     {'CONTACT US.'}
                                 </Typography>
                                 <Box my={2}/>
-                                <Typography variant={'caption'} color={'textSecondary'}>
-                                    {'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in erat at quam egestas facilisis nec eu risus. Sed lorem sem, pellentesque ac nibh ac, tincidunt fermentum dui. Nunc in pretium est, et pretium leo. Aliquam congue sapien massa, quis accumsan nunc malesuada ac.' +
-                                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in erat at quam egestas facilisis nec eu risus. Sed lorem sem, pellentesque ac nibh ac, tincidunt fermentum dui. Nunc in pretium est, et pretium leo. Aliquam congue sapien massa, quis accumsan nunc malesuada ac.'}
+                                <Typography className={classes.contentStyle}>
+                                    {
+                                        content
+                                    }
                                 </Typography>
                                 <Box
                                     display={'flex'}

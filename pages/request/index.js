@@ -43,12 +43,23 @@ const useStyles = makeStyles({
         '&::-webkit-scrollbar': {
             display: 'none'
         },
+    },
+    contentStyle: {
+        fontStyle: 'normal',
+        fontSize: '14px',
+        fontWeight: 'normal',
+        lineHeight: '150.5%',
+        textAlign: 'justify',
+        color: '#000',
+        letterSpacing: '0.04em'
     }
 });
 
 const Request = () => {
 
     const classes = useStyles();
+
+    const content = 'Through this request portal you can request for bins for your locality or for your own house. You can initiate this request by just giving your personal details and address details. After inspection, the child bin is allocated as per your request.';
 
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
@@ -157,9 +168,9 @@ const Request = () => {
                         </Typography>
                     </Hidden>
                     <Box my={2}/>
-                    <Typography variant={'caption'} color={'textSecondary'}>
+                    <Typography className={classes.contentStyle}>
                         {
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in erat at quam egestas facilisis nec eu risus. Sed lorem sem, pellentesque ac nibh ac, tincidunt fermentum dui. Nunc in pretium est, et pretium leo. Aliquam congue sapien massa, quis accumsan nunc malesuada ac. Cras tincidunt metus quis metus volutpat, a ultricies odio dapibus. Integer sollicitudin, eros lacinia blandit dictum, lorem massa scelerisque mauris, sed tincidunt risus ligula id nisi. Ut pharetra est augue, congue dictum nisi dapibus vel. Sed tincidunt lectus nec ex cursus aliquet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in erat at quam egestas facilisis nec eu risus. Sed lorem sem, pellentesque ac nibh ac, tincidunt fermentum dui. Nunc in pretium est, et pretium leo. Aliquam congue sapien massa, quis accumsan nunc malesuada ac. Cras tincidunt metus quis metus volutpat, a ultricies odio dapibus. Integer sollicitudin, eros lacinia blandit dictum, lorem massa scelerisque mauris, sed tincidunt risus ligula id nisi. Ut pharetra est augue, congue dictum nisi dapibus vel. Sed tincidunt lectus nec ex cursus aliquet. '
+                            content
                         }
                     </Typography>
                     <Box my={2}/>

@@ -36,7 +36,7 @@ const wasteRecycle = (viewData) => {
         },
         animation: {
             draw: function (data) {
-                if (data.type === "line" || data.type === "area") {
+                if (data.type === 'line' || data.type === 'area') {
                     data.element.animate({
                         d: {
                             begin: 600,
@@ -49,20 +49,20 @@ const wasteRecycle = (viewData) => {
                             to: data.path.clone().stringify(),
                         },
                     });
-                } else if (data.type === "point") {
+                } else if (data.type === 'point') {
                     data.element.animate({
                         opacity: {
                             begin: (data.index + 1) * delays,
                             dur: durations,
                             from: 0,
                             to: 1,
-                            easing: "ease",
+                            easing: 'ease',
                         },
                     });
                 }
             },
         },
-    }
+    };
 };
 
 // ##############################
@@ -97,7 +97,7 @@ const binAllocation = (viewData) => {
         },
         responsiveOptions: [
             [
-                "screen and (max-width: 640px)",
+                'screen and (max-width: 640px)',
                 {
                     seriesBarDistance: 5,
                     axisX: {
@@ -110,20 +110,20 @@ const binAllocation = (viewData) => {
         ],
         animation: {
             draw: function (data) {
-                if (data.type === "bar") {
+                if (data.type === 'bar') {
                     data.element.animate({
                         opacity: {
                             begin: (data.index + 1) * delays2,
                             dur: durations2,
                             from: 0,
                             to: 1,
-                            easing: "ease",
+                            easing: 'ease',
                         },
                     });
                 }
             },
         },
-    }
+    };
 };
 
 export {

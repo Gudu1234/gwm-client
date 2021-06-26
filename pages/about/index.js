@@ -11,6 +11,15 @@ const useStyles = makeStyles({
         backgroundSize: '100%',
         height: 'calc(100vh-48px)'
     },
+    contentStyle: {
+        fontStyle: 'normal',
+        fontSize: '14px',
+        fontWeight: 'normal',
+        lineHeight: '150.5%',
+        textAlign: 'justify',
+        color: '#000',
+        letterSpacing: '0.04em'
+    }
 });
 
 const About = () => {
@@ -18,6 +27,16 @@ const About = () => {
     const classes = useStyles();
 
     const Router = useRouter();
+
+    const endContent = 'With the increase in Population ,the scenario of cleanliness with respect to garbage  management  is possible  through GWMS. It analyzes data to manage collection routes and the placement of bins more effectively.  People of the localities should prefer GWMS as it provides fastest and efficient methods for dusting the localities. This system includes the classification of the types of garbage e.g. Biodegradable, plastics & non-biodegradable and paper & glass.';
+
+    const content1 = 'In today’s world, millions of products are thrown out each year. The amount of garbage has been steadily increasing due to the increase in human population and urbanization. Garbage pollution has become one of the concerning issues for our locality hence people have to be more conscious about their atmosphere. Almost 60% of the  people are aware of smartphones, online food delivery, smart healthcare and here they have';
+
+    const content2 = 'GWMS has come up with various features  to ensure the  development in according to a hygienic environment and based on the data collected, garbage trucks can be given routes generated through various algorithms and google maps API to efficiently route through all necessary garbage bins and finally reach the dumping site.All the necessary activities done by GWMS goes through a well ordered procedure. ';
+
+    const content3 = 'to come up with one step ahead towards a better future for our environment. This is a serious environmental problem confronting the municipal authorities, here We objectify a procedure of removal and ejection of garbage and waste which is a G2C (Government to Citizen) system, governed by the Municipality corporation and supervised by the Admins of the GWMS.';
+
+    const content4 = 'The whole procedure can be broadly categorized as segregation, collection, and transportation.Localites  request for the bins for their localities by selecting their city and zone. There is a request portal through which localities can request for bins for their locality and can also give feedback, suggestions or complaints using feedback and complaint portal respectively.';
 
     return (
         <Box className={classes.container}>
@@ -31,53 +50,53 @@ const About = () => {
                     py={3}
                 >
                     <Box my={2}/>
-                    <Typography variant={'h1'} color={'textPrimary'} >
+                    <Typography variant={'h1'} color={'textPrimary'} align={'right'} style={{paddingRight: '12px'}}>
                         {'ABOUT.'}
                     </Typography>
                     <Box my={2}/>
                     <Grid container>
-                        <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={6} md={6}>
+                        <Grid item container xs={12} sm={6} md={6}>
                             <Box width={'95%'}>
-                                <Typography variant={'caption'} color={'textSecondary'}>
+                                <Typography className={classes.contentStyle}>
                                     {
-                                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in erat at quam egestas facilisis nec eu risus. Sed lorem sem, pellentesque ac nibh ac, tincidunt fermentum dui. Nunc in pretium est, et pretium leo. Aliquam congue sapien massa, quis accumsan nunc malesuada ac. Cras tincidunt metus quis metus volutpat, a ultricies odio dapibus. Integer sollicitudin, eros lacinia blandit dictum, lorem massa scelerisque mauris, sed tincidunt risus ligula id nisi. Ut pharetra est augue, congue dictum nisi dapibus vel. Sed tincidunt lectus nec ex cursus aliquet. Nam vel diam elementum, efficitur nunc eu, bibendum lectus. Maecenas luctus quam purus, ultricies pharetra sem tempus non. Suspendisse efficitur ac sapien et congue. Aliquam lacinia eleifend orci, scelerisque consequat ex auctor sed. Suspendisse eu lacus tincidunt, sollicitudin ante ac, dignissim nibh. Sed placerat lacinia tellus, quis viverra risus tincidunt nec. Sed feugiat accumsan lorem.'
+                                        content1
                                     }
                                 </Typography>
                                 <Box my={3}/>
                             </Box>
                         </Grid>
-                        <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={6} md={6}>
+                        <Grid item container xs={12} sm={6} md={6}>
                             <Box width={'95%'}>
-                                <Typography variant={'caption'} color={'textSecondary'}>
+                                <Typography className={classes.contentStyle}>
                                     {
-                                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in erat at quam egestas facilisis nec eu risus. Sed lorem sem, pellentesque ac nibh ac, tincidunt fermentum dui. Nunc in pretium est, et pretium leo. Aliquam congue sapien massa, quis accumsan nunc malesuada ac. Cras tincidunt metus quis metus volutpat, a ultricies odio dapibus. Integer sollicitudin, eros lacinia blandit dictum, lorem massa scelerisque mauris, sed tincidunt risus ligula id nisi. Ut pharetra est augue, congue dictum nisi dapibus vel. Sed tincidunt lectus nec ex cursus aliquet. Nam vel diam elementum, efficitur nunc eu, bibendum lectus. Maecenas luctus quam purus, ultricies pharetra sem tempus non. Suspendisse efficitur ac sapien et congue. Aliquam lacinia eleifend orci, scelerisque consequat ex auctor sed. Suspendisse eu lacus tincidunt, sollicitudin ante ac, dignissim nibh. Sed placerat lacinia tellus, quis viverra risus tincidunt nec. Sed feugiat accumsan lorem.'
+                                        content3
                                     }
                                 </Typography>
                                 <Box my={3}/>
                             </Box>
                         </Grid>
-                        <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={6} md={6}>
+                        <Grid item container xs={12} sm={6} md={6}>
                             <Box width={'95%'}>
-                                <Typography variant={'caption'} color={'textSecondary'}>
+                                <Typography className={classes.contentStyle}>
                                     {
-                                        'Cras porttitor, mi et sodales efficitur, nulla nulla luctus libero, non suscipit nisi metus non est. Donec at facilisis sem. Sed in metus at massa interdum ultrices condimentum ornare enim. Donec facilisis eget lorem sed eleifend. In auctor est turpis, et sodales erat tincidunt id. Donec posuere lacus tempor enim maximus suscipit. Sed massa magna, lacinia non ligula ac, tristique placerat mi. Praesent ultrices, nibh nec commodo pellentesque, metus lacus malesuada magna, at porta lorem lectus fermentum erat. Duis at consectetur urna. Sed pretium suscipit venenatis. Ut libero nunc, tincidunt non fermentum quis, mattis vitae sapien. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut et pretium sapien. Duis sed egestas nunc. Nullam dapibus eu nunc sit amet laoreet. Interdum et malesuada fames ac ante ipsum primis in faucibus.'
+                                        content2
                                     }
                                 </Typography>
                                 <Box my={3}/>
                             </Box>
                         </Grid>
-                        <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={6} md={6}>
+                        <Grid item container xs={12} sm={6} md={6}>
                             <Box width={'95%'}>
-                                <Typography variant={'caption'} color={'textSecondary'}>
+                                <Typography className={classes.contentStyle}>
                                     {
-                                        'Cras porttitor, mi et sodales efficitur, nulla nulla luctus libero, non suscipit nisi metus non est. Donec at facilisis sem. Sed in metus at massa interdum ultrices condimentum ornare enim. Donec facilisis eget lorem sed eleifend. In auctor est turpis, et sodales erat tincidunt id. Donec posuere lacus tempor enim maximus suscipit. Sed massa magna, lacinia non ligula ac, tristique placerat mi. Praesent ultrices, nibh nec commodo pellentesque, metus lacus malesuada magna, at porta lorem lectus fermentum erat. Duis at consectetur urna. Sed pretium suscipit venenatis. Ut libero nunc, tincidunt non fermentum quis, mattis vitae sapien. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut et pretium sapien. Duis sed egestas nunc. Nullam dapibus eu nunc sit amet laoreet. Interdum et malesuada fames ac ante ipsum primis in faucibus.'
+                                        content4
                                     }
                                 </Typography>
                                 <Box my={3}/>
                             </Box>
                         </Grid>
                     </Grid>
-                    <Box my={2}/>
+                    <Box my={1}/>
                     <Grid container>
                         <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={12} md={12}>
                             <img src={AboutIcon} alt={'About'} width={'60%'} />
@@ -87,9 +106,9 @@ const About = () => {
                     <Grid container>
                         <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={12} md={12}>
                             <Box width={'95%'} px={{xs: 3, md: 9}}>
-                                <Typography variant={'caption'} color={'textSecondary'}>
+                                <Typography className={classes.contentStyle}>
                                     {
-                                        'Cras porttitor, mi et sodales efficitur, nulla nulla luctus libero, non suscipit nisi metus non est. Donec at facilisis sem. Sed in metus at massa interdum ultrices condimentum ornare enim. Donec facilisis eget lorem sed eleifend. In auctor est turpis, et sodales erat tincidunt id. Donec posuere lacus tempor enim maximus suscipit. Sed massa magna, lacinia non ligula ac, tristique placerat mi. Praesent ultrices, nibh nec commodo pellentesque, metus lacus malesuada magna, at porta lorem lectus fermentum erat. Duis at consectetur urna. Sed pretium suscipit venenatis. Ut libero nunc, tincidunt non fermentum quis, mattis vitae sapien. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut et pretium sapien. Duis sed egestas nunc. Nullam dapibus eu nunc sit amet laoreet. Interdum et malesuada fames ac ante ipsum primis in faucibus.'
+                                        endContent
                                     }
                                 </Typography>
                                 <Box my={3}/>
