@@ -34,15 +34,15 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const AddLocationDialog = ({setActiveStep, binData, setBinData}) => {
+const AddLocationDialog = ({setActiveStep, binData, setBinData, addressData = '', streetData = ''}) => {
 
     const classes = useStyles();
 
     const { enqueueSnackbar } = useSnackbar();
 
-    const [address, setAddress] = useState('');
+    const [address, setAddress] = useState(addressData);
 
-    const [street, setStreet] = useState('');
+    const [street, setStreet] = useState(streetData);
 
     const [latitude, setLatitude] = useState(0);
     const [longitude, setLongitude] = useState(0);
@@ -56,6 +56,10 @@ const AddLocationDialog = ({setActiveStep, binData, setBinData}) => {
         }
         if (street.trim() === '') {
             enqueueSnackbar('Please give a street', { variant: 'warning' });
+            return false;
+        }
+        if (latitude === 0 || longitude === 0) {
+            enqueueSnackbar('Please Enter both latitude and longitude.', { variant: 'warning' });
             return false;
         }
         if (

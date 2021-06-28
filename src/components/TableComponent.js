@@ -31,7 +31,7 @@ const useStyles = makeStyles({
     }
 });
 
-const TableComponent = ({columns, rows, notFound, loading, pageLimit}) => {
+const TableComponent = ({columns, rows, notFound, loading, pageLimit, setRow}) => {
 
     const classes = useStyles();
 
@@ -48,6 +48,7 @@ const TableComponent = ({columns, rows, notFound, loading, pageLimit}) => {
                                     style={{ minWidth: column.minWidth, fontWeight: 'bold', fontSize: '14px' }}
                                 >
                                     {column.label}
+                                    {column.component ? column.component : null}
                                 </TableCell>
                             ))}
                         </TableRow>
@@ -60,7 +61,15 @@ const TableComponent = ({columns, rows, notFound, loading, pageLimit}) => {
                         {rows.length > 0 ? (
                             rows.map((row) => {
                                 return (
-                                    <TableRow hover role="button" tabIndex={-1} key={row.code}>
+                                    <TableRow
+                                        hover
+                                        role="button"
+                                        tabIndex={-1}
+                                        key={row.code}
+                                        onClick={() => {
+                                            setRow(row);
+                                        }}
+                                    >
                                         {columns.map((column) => {
                                             let value = row[column.id];
                                             return (
@@ -108,6 +117,7 @@ TableComponent.propTypes = {
     notFound: PropTypes.string,
     loading: PropTypes.bool,
     pageLimit: PropTypes.number,
+    setRow: PropTypes.func,
 };
 
 export default TableComponent;

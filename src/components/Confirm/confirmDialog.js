@@ -29,16 +29,20 @@ const ConfirmDialog = ({
     return (
         <ThemeProvider theme={theme}>
             <Dialog fullWidth maxWidth="xs" onClose={dismiss} open={show}>
-                <DialogTitle onClose={dismiss}>{title}</DialogTitle>
+                <DialogTitle onClose={dismiss}>
+                    <Typography style={{color: 'rgba(18, 73, 84, 0.75)'}}>
+                        {title}
+                    </Typography>
+                </DialogTitle>
                 <DialogContent>
-                    <DialogContentText>{confirmation}</DialogContentText>
+                    <DialogContentText style={{color: '#124954'}}>{confirmation}</DialogContentText>
                     <Typography>{content && <DialogContentText>{content}</DialogContentText>}</Typography>
                 </DialogContent>
                 <DialogActions>
-                    <Button color="primary" onClick={cancel} style={{fontWeight: '600'}}>
+                    <Button color="secondary" onClick={cancel} style={{fontWeight: '600', textTransform: 'none'}}>
                         {cancelLabel}
                     </Button>
-                    <Button color="primary" onClick={proceed} variant={'contained'} style={{fontWeight: '600'}}>
+                    <Button color="secondary" onClick={proceed} variant={'contained'} style={{fontWeight: '600', textTransform: 'none'}}>
                         {okLabel}
                     </Button>
                 </DialogActions>

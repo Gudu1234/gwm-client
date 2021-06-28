@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Chip, Divider, FormControl, Grid, makeStyles, MenuItem, Select} from '@material-ui/core';
-import CardHeader from '../../../src/components/Card/CardHeader';
+import {Box, Chip, Divider, FormControl, Grid, IconButton, makeStyles, Menu, MenuItem, Select} from '@material-ui/core';
 import GreenSearchField from '../../../src/components/GreenSearchField';
 import CardBody from '../../../src/components/Card/CardBody';
 import TableComponent from '../../../src/components/TableComponent';
@@ -9,77 +8,10 @@ import Card from '../../../src/components/Card/Card';
 import {useSnackbar} from 'notistack';
 import styles from '../../../public/assets/jss/views/dashboardStyle';
 import {getAllRequests} from '../../../src/apis/request';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import moment from 'moment';
-import {withStyles} from '@material-ui/styles';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import WhiteSearchField from '../../../src/components/WhiteSearchField';
-
-const columns = [
-    {
-        id: 'date',
-        label: 'Date',
-        minWidth: 150,
-        align: 'left',
-    },
-    {
-        id: 'reqId',
-        label: 'RequestId',
-        minWidth: 150,
-        align: 'left',
-    },
-    {
-        id: 'name',
-        label: 'Name of Sender',
-        minWidth: 150,
-        align: 'left',
-    },
-    {
-        id: 'phone',
-        label: 'Phone',
-        minWidth: 150,
-        align: 'left',
-    },
-    // {
-    //     id: 'pinCode',
-    //     label: 'PIN',
-    //     minWidth: 150,
-    //     align: 'left',
-    // },
-    {
-        id: 'status',
-        label: 'Status',
-        minWidth: 150,
-        align: 'left'
-    }
-];
-
-const AntTabs = withStyles((theme) => ({
-    indicator: {
-        backgroundColor: theme.palette.primary.dark,
-        color: '#fff'
-    },
-}))(Tabs);
-
-const AntTab = withStyles((theme) => ({
-    root: {
-        background: theme.palette.background.stepper,
-        borderRadius: '5px 5px 0px 0px',
-        color: '#FFFFFF',
-        fontStyle: 'normal',
-        fontWeight: 600,
-        fontSize: '16px',
-        lineHeight: '140.1%',
-        letterSpacing: '0.06em',
-        textTransform: 'none'
-    },
-    selected: {
-        color: '#fff',
-        background: theme.palette.primary.dark,
-    },
-}))((props) => <Tab disableRipple {...props} />);
-
+import RequestBinDetailsDialog from '../../../src/components/request-bin/RequestBinDetailsDialog';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import Typography from '@material-ui/core/Typography';
 
 const BinRequest = () => {
 
@@ -91,23 +23,115 @@ const BinRequest = () => {
     const [rows, setRows] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
     const [search, setSearch] = React.useState('');
-    const [status, setStatus] = React.useState({ $in: [1, 2, 3] });
+    const [status, setStatus] = React.useState({ $in: [1, 2] });
+    const [clickedRow, setClickedRow] = React.useState(null);
+    const [openDetails, setOpenDetails] = React.useState(false);
+    const [statusUpdated, setStatusUpdated] = React.useState(false);
+    const [data, setData] = useState([]);
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
     const { enqueueSnackbar } = useSnackbar();
 
     const headerStyles = makeStyles(styles);
     const headerClasses = headerStyles();
 
+    const handleStatusMenuOpen = (event) => {
+        console.log(event);
+        console.log(event !== undefined);
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const isMenuOpen = Boolean(anchorEl);
+
     const handleStatusChange = (event) => {
-        setStatus(event.target.value);
+        let value = event.target.value;
+        if (value === 0) {
+            setStatus({$in: [1, 2]});
+        } else {
+            setStatus(event.target.value);
+        }
+        setAnchorEl(null);
     };
 
-    const [dialogValue, setDialogValue] = useState(0);
+    const renderMenu = (
+        <Menu
+            anchorEl={anchorEl}
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+            }}
+            id={'user-account'}
+            keepMounted
+            onClose={handleMenuClose}
+            open={isMenuOpen}
+            transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+            }}
+        >
+            <MenuItem value={0} style={{borderBottom: '1px solid #7AE3B1'}} onClick={handleStatusChange}>
+                {'None'}
+            </MenuItem>
+            <MenuItem value={1} style={{borderBottom: '1px solid #7AE3B1'}} onClick={handleStatusChange}>
+                {'Requested'}
+            </MenuItem>
+            <MenuItem value={2} onClick={handleStatusChange}>
+                {'Inspection'}
+            </MenuItem>
+        </Menu>
+    );
 
-    const handleChangeDialogValue = (e, newValue) => {
-        setDialogValue(newValue);
-        setStatus(newValue + 1);
-        setRows([]);
-    };
+    const columns = [
+        {
+            id: 'date',
+            label: 'Date',
+            minWidth: 150,
+            align: 'left',
+        },
+        {
+            id: 'reqId',
+            label: 'RequestId',
+            minWidth: 150,
+            align: 'left',
+        },
+        {
+            id: 'name',
+            label: 'Name of Sender',
+            minWidth: 150,
+            align: 'left',
+        },
+        {
+            id: 'phone',
+            label: 'Phone',
+            minWidth: 150,
+            align: 'left',
+        },
+        // {
+        //     id: 'pinCode',
+        //     label: 'PIN',
+        //     minWidth: 150,
+        //     align: 'left',
+        // },
+        {
+            id: 'status',
+            label: 'Status',
+            component: (
+                <>
+                    <IconButton size={'small'} onClick={handleStatusMenuOpen}>
+                        <FilterListIcon color={'secondary'} />
+                    </IconButton>
+                    {renderMenu}
+                </>
+            ),
+            minWidth: 150,
+            align: 'left'
+        }
+    ];
 
     const loadRequests = (skip) => {
         setLoading(true);
@@ -119,10 +143,12 @@ const BinRequest = () => {
                             ...each,
                             date: moment(each.createdAt).format('DD-MM-YYYY'),
                             status: statusComponent(each.status),
+                            requestStatus: each.status,
                         };
                     });
                     setRows(_allRequests);
                     setRequests([...requests, _allRequests]);
+                    setData([...data, ..._allRequests]);
                 }
             })
             .catch((e) => {
@@ -149,8 +175,8 @@ const BinRequest = () => {
     };
 
     const statusComponent = (status) => {
-        let label = status === 1 ? 'Requested' : (status === 2) ? 'Inspected' : 'Completed';
-        console.log(status);
+        let label = status === 1 ? 'Requested' : (status === 2) ? 'Inspection' : 'Completed';
+        // console.log(status);
         let color = status === 1 ?
             'rgba(59, 196, 131, 0.3)' :
             status === 2 ?
@@ -179,12 +205,14 @@ const BinRequest = () => {
                         ...each,
                         date: moment(each.createdAt).format('DD-MM-YYYY'),
                         status: statusComponent(each.status),
+                        requestStatus: each.status,
                     };
                 });
                 setRequests(_allRequests);
                 setRows(_allRequests);
                 setTotalPages(Math.ceil(res.total / rowsPerPage));
                 setPage(1);
+                setData(_allRequests);
             })
             .catch((e) => {
                 enqueueSnackbar(e && e.message ? e.message : 'Something went wrong!', { variant: 'warning' });
@@ -192,7 +220,7 @@ const BinRequest = () => {
             .finally(() => {
                 setLoading(false);
             });
-    }, [search, status]);
+    }, [search, status, statusUpdated]);
 
     function a11yProps(index) {
         return {
@@ -200,6 +228,12 @@ const BinRequest = () => {
             'aria-controls': `scrollable-auto-tabpanel-${index}`,
         };
     }
+
+    const setRow = (req) => {
+        const index = data.findIndex(e => e.reqId === req.reqId);
+        setClickedRow(data[index]);
+        setOpenDetails(true);
+    };
 
     return (
         <div>
@@ -219,15 +253,6 @@ const BinRequest = () => {
                                     alignItems: 'center'
                                 }}
                             >
-                                {/*<AntTabs*/}
-                                {/*    aria-label="disabled tabs example"*/}
-                                {/*    onChange={handleChangeDialogValue}*/}
-                                {/*    value={dialogValue}*/}
-                                {/*>*/}
-                                {/*    <AntTab label="Requests" {...a11yProps(0)} />*/}
-                                {/*    <AntTab label="Inspections" {...a11yProps(1)} />*/}
-                                {/*    <AntTab label="Completed" {...a11yProps(2)} />*/}
-                                {/*</AntTabs>*/}
                                 <Box display={'flex'} flexDirection={'column'}>
                                     <h4 className={headerClasses.cardTitleWhite}>Bin Requests</h4>
                                     <p className={headerClasses.cardCategoryWhite}>
@@ -251,6 +276,7 @@ const BinRequest = () => {
                                     loading={loading}
                                     notFound={'No data found'}
                                     pageLimit={rowsPerPage}
+                                    setRow={setRow}
                                 />
                                 <Box display="flex" justifyContent="flex-end" m={3}>
                                     <Pagination
@@ -266,6 +292,16 @@ const BinRequest = () => {
                     </Grid>
                 </Grid>
             </Box>
+            {
+                openDetails ? (
+                    <RequestBinDetailsDialog
+                        open={openDetails}
+                        setOpen={setOpenDetails}
+                        reqData={clickedRow}
+                        setStatusUpdated={setStatusUpdated}
+                    />
+                ) : null
+            }
         </div>
     );
 };

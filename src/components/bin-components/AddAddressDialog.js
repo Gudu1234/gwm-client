@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const AddAddressDialog = ({ setActiveStep, setBinData }) => {
+const AddAddressDialog = ({ setActiveStep, setBinData, pin = '' }) => {
 
     const classes = useStyles();
 
@@ -43,7 +43,7 @@ const AddAddressDialog = ({ setActiveStep, setBinData }) => {
     const [zone, setZone] = useState('');
 
     const [pinCodes, setPinCodes] = useState([]);
-    const [pinCode, setPinCode] = useState('');
+    const [pinCode, setPinCode] = useState(pin);
 
     const [landmarks, setLandmarks] = useState([]);
     const [landmark, setLandmark] = useState('');

@@ -40,7 +40,8 @@ const GreenTextField = (
         type = 'text',
         select = false,
         children = null,
-        size = 'large'
+        size = 'large',
+        inputProps = {},
     }
 ) => {
 
@@ -67,6 +68,7 @@ const GreenTextField = (
             select={!!select}
             size={size}
             SelectProps={SelectProps ? SelectProps : null}
+            inputProps={inputProps}
         >
             {children}
         </TextField>

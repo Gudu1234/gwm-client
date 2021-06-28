@@ -2,16 +2,16 @@
  * Created by Soumya (soumya@smarttersstudio.com) on 18/05/21 at 1:52 AM.
  */
 
-import {contactService} from '../config/endpoints';
+import {contactService, requestService} from '../config/endpoints';
 
 export const createContact = (data) => contactService.create(data);
 
-export const getAllFeedbacks = ($skip, $limit, $search, feedbackType) => contactService.find({
+export const getAllFeedbacks = ($skip, $limit, $search, feedbackType, status) => contactService.find({
     query: {
         $skip,
         $limit,
         feedbackType,
-        status: 1,
+        status,
         $sort: { createdAt: -1 },
         $or: [
             { name: { $search } },
@@ -34,4 +34,13 @@ export const getAllComplaints = ($skip, $limit, $search, status) => contactServi
             { phone: { $search } },
         ]
     }
-})
+});
+
+export const updateContactStatus = (id, status) => contactService.patch(
+    id,
+    {
+        status
+    }
+);
+
+export const removeContact = (id) => contactService.remove(id);

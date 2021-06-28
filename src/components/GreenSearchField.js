@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             backgroundColor: '#124954',
         },
-        width: 260,
+        width: '30%',
     },
     searchIcon: {
         padding: theme.spacing(1, 1),

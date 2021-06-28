@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Box, makeStyles} from '@material-ui/core';
 import {Pagination} from '@material-ui/lab';
 import {getAllDrivers} from '../../apis/user';
@@ -47,10 +47,19 @@ const DriverTable = ({newDriverAdded, newDriver}) => {
     const [rows, setRows] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
     const [search, setSearch] = React.useState('');
+    const [clickedRow, setClickedRow] = React.useState(null);
+    const [openDetails, setOpenDetails] = React.useState(false);
+    const [data, setData] = useState([]);
     const { enqueueSnackbar } = useSnackbar();
 
     const headerStyles = makeStyles(styles);
     const headerClasses = headerStyles();
+
+    const setRow = (req) => {
+        const index = drivers.findIndex(e => e._id.toString() === req._id.toString());
+        setClickedRow(drivers[index]);
+        setOpenDetails(true);
+    };
 
     const loadDrivers = (skip) => {
         setLoading(true);
@@ -65,6 +74,7 @@ const DriverTable = ({newDriverAdded, newDriver}) => {
                     });
                     setRows(_allDrivers);
                     setDrivers([...drivers, _allDrivers]);
+                    setData([...data, ..._allDrivers]);
                 }
             })
             .catch((e) => {
@@ -99,12 +109,13 @@ const DriverTable = ({newDriverAdded, newDriver}) => {
                     return {
                         ...each,
                         locality: each.address.street
-                    }
+                    };
                 });
                 setDrivers(_allDrivers);
                 setRows(_allDrivers);
                 setTotalPages(Math.ceil(res.total / rowsPerPage));
                 setPage(1);
+                setData(_allDrivers);
             })
             .catch((e) => {
                 enqueueSnackbar(e && e.message ? e.message : 'Something went wrong!', { variant: 'warning' });
@@ -142,6 +153,7 @@ const DriverTable = ({newDriverAdded, newDriver}) => {
                     loading={loading}
                     notFound={'No Drivers Found'}
                     pageLimit={rowsPerPage}
+                    setRow={setRow}
                 />
                 <Box display="flex" justifyContent="flex-end" m={3}>
                     <Pagination

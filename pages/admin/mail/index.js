@@ -1,58 +1,24 @@
 import React, {useEffect, useState} from 'react';
 import {
-    Box,
-    // Card,
-    CardContent,
-    // CardHeader,
+    Box, Chip,
     Divider,
-    FormControl,
-    Grid,
-    makeStyles,
-    MenuItem,
-    Select
+    Grid, IconButton,
+    makeStyles, Menu, MenuItem,
 } from '@material-ui/core';
-import CardHeader from '../../../src/components/Card/CardHeader';
 import GreenSearchField from '../../../src/components/GreenSearchField';
 import CardBody from '../../../src/components/Card/CardBody';
 import TableComponent from '../../../src/components/TableComponent';
 import {Pagination} from '@material-ui/lab';
 import Card from '../../../src/components/Card/Card';
 import {useSnackbar} from 'notistack';
-import styles from '../../../public/assets/jss/views/dashboardStyle';
 import {getAllFeedbacks} from '../../../src/apis/contact';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import moment from 'moment';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import {withStyles} from '@material-ui/styles';
-import WhiteSearchField from '../../../src/components/WhiteSearchField';
-
-const columns = [
-    {
-        id: 'date',
-        label: 'Date',
-        minWidth: 170,
-        align: 'left',
-    },
-    {
-        id: 'name',
-        label: 'Name of Sender',
-        minWidth: 170,
-        align: 'left',
-    },
-    {
-        id: 'phone',
-        label: 'Phone',
-        minWidth: 170,
-        align: 'left',
-    },
-    {
-        id: 'pinCode',
-        label: 'PIN',
-        minWidth: 170,
-        align: 'left',
-    },
-];
+import FeedbackDetailsDialog from '../../../src/components/contact/FeedbackDetailsDialog';
+import ComplaintDetailsDialog from '../../../src/components/contact/ComplaintDetailsDialog';
+import FilterListIcon from '@material-ui/icons/FilterList';
 
 const AntTabs = withStyles((theme) => ({
     indicator: {
@@ -94,9 +60,6 @@ const useStyles = makeStyles((theme) => ({
     divider: {
         border: '3px solid #26DF86',
         backgroundColor: '#26DF86'
-        // '& .MuiDivider-root': {
-        //     backgroundColor: '#26DF86'
-        // }
     },
 }));
 
@@ -111,32 +74,171 @@ const Mail = () => {
     const [loading, setLoading] = React.useState(false);
     const [search, setSearch] = React.useState('');
     const [feedbackType, setFeedBackType] = React.useState(1);
+    const [clickedRow, setClickedRow] = React.useState(null);
+    const [openDetails, setOpenDetails] = React.useState(false);
+    const [statusUpdated, setStatusUpdated] = React.useState(false);
+    const [data, setData] = useState([]);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [status, setStatus] = useState({ $in: [1, 2, 3] });
+    const [complaintStatus, setComplaintStatus] = useState({ $in: [1, 2, 3] });
     const { enqueueSnackbar } = useSnackbar();
     
     const [dialogValue, setDialogValue] = useState(0);
 
     const classes = useStyles();
-    
+
+    const handleStatusMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const isMenuOpen = Boolean(anchorEl);
+
+    const handleStatusChange = (event) => {
+        let value = event.target.value;
+        if (value === 0) {
+            setStatus({$in: [1, 2, 3]});
+            setComplaintStatus({$in: [1, 2, 3]});
+        } else {
+            setStatus(event.target.value);
+            setComplaintStatus(event.target.value);
+        }
+        setAnchorEl(null);
+    };
+
+    const renderMenu = (
+        <Menu
+            anchorEl={anchorEl}
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+            }}
+            id={'user-account'}
+            keepMounted
+            onClose={handleMenuClose}
+            open={isMenuOpen}
+            transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+            }}
+        >
+            <MenuItem value={0} style={{borderBottom: '1px solid #7AE3B1'}} onClick={handleStatusChange}>
+                {'None'}
+            </MenuItem>
+            <MenuItem value={1} style={{borderBottom: '1px solid #7AE3B1'}} onClick={handleStatusChange}>
+                {'Active'}
+            </MenuItem>
+            <MenuItem value={3} onClick={handleStatusChange} style={{borderBottom: '1px solid #7AE3B1'}}>
+                {'Inspection'}
+            </MenuItem>
+            <MenuItem value={2} onClick={handleStatusChange}>
+                {'Resolved'}
+            </MenuItem>
+        </Menu>
+    );
+
+    const statusComponent = (status) => {
+        let label = status === 1 ? 'Active' : (status === 2) ? 'Resolved' : 'Inspection';
+        // console.log(status);
+        let color = status === 1 ?
+            'rgba(59, 196, 131, 0.3)' :
+            status === 2 ?
+                'rgba(255, 154, 62, 0.3)' :
+                'rgba(153, 152, 226, 0.25)';
+        return (
+            <Chip
+                label={label}
+                style={{
+                    background: color,
+                    color: '#3A8899',
+                    fontWeight: '700',
+                    fontSize: '14px',
+                }}
+            />
+        );
+    };
+
+    const columns = [
+        {
+            id: 'date',
+            label: 'Date',
+            minWidth: 170,
+            align: 'left',
+        },
+        {
+            id: 'name',
+            label: 'Name of Sender',
+            minWidth: 170,
+            align: 'left',
+        },
+        {
+            id: 'phone',
+            label: 'Phone',
+            minWidth: 170,
+            align: 'left',
+        },
+        {
+            id: 'pinCode',
+            label: 'PIN',
+            minWidth: 170,
+            align: 'left',
+        },
+    ];
+
+    const complaintColumns = [
+        ...columns,
+        {
+            id: 'feedbackStatus',
+            label: 'Status',
+            component: (
+                <>
+                    <IconButton size={'small'} onClick={handleStatusMenuOpen}>
+                        <FilterListIcon color={'secondary'} />
+                    </IconButton>
+                    {renderMenu}
+                </>
+            ),
+            minWidth: 170,
+            align: 'left'
+        }
+    ];
+
     const handleChangeDialogValue = (e, newValue) => {
         setDialogValue(newValue);
+        if (newValue + 1 !== 3) {
+            setStatus({ $in: [1] });
+        } else {
+            setStatus({ $in: [1, 2, 3] });
+        }
         setFeedBackType(newValue + 1);
         setRows([]);
     };
 
+    const setRow = (req) => {
+        const index = data.findIndex(e => e._id.toString() === req._id.toString());
+        setClickedRow(data[index]);
+        setOpenDetails(true);
+    };
+
     const loadFeedbacks = (skip) => {
         setLoading(true);
-        getAllFeedbacks(skip, rowsPerPage, search, feedbackType)
+        getAllFeedbacks(skip, rowsPerPage, search, feedbackType, status)
             .then((res) => {
                 if (res.data) {
                     let _allFeedbacks = res.data.map(each => {
                         return {
                             ...each,
                             date: moment(each.createdAt).format('DD-MM-YYYY'),
+                            feedbackStatus: statusComponent(each.status),
                             // feedbackType: each.feedbackType === 1 ? 'Feedback' : 'Suggestion'
                         };
                     });
                     setRows(_allFeedbacks);
                     setFeedbacks([...feedbacks, _allFeedbacks]);
+                    setData([...data, ..._allFeedbacks]);
                 }
             })
             .catch((e) => {
@@ -164,13 +266,15 @@ const Mail = () => {
 
     useEffect(() => {
         setLoading(true);
-        getAllFeedbacks(0, rowsPerPage, search, feedbackType)
+        getAllFeedbacks(0, rowsPerPage, search, feedbackType, status)
             .then((res) => {
                 setTotal(res.total);
                 let _allFeedbacks = res.data.map(each => {
+                    console.log(each.status);
                     return {
                         ...each,
                         date: moment(each.createdAt).format('DD-MM-YYYY'),
+                        feedbackStatus: statusComponent(each.status),
                         // feedbackType: each.feedbackType === 1 ? 'Feedback' : 'Suggestion'
                     };
                 });
@@ -178,6 +282,7 @@ const Mail = () => {
                 setRows(_allFeedbacks);
                 setTotalPages(Math.ceil(res.total / rowsPerPage));
                 setPage(1);
+                setData(_allFeedbacks);
             })
             .catch((e) => {
                 enqueueSnackbar(e && e.message ? e.message : 'Something went wrong!', { variant: 'warning' });
@@ -185,7 +290,7 @@ const Mail = () => {
             .finally(() => {
                 setLoading(false);
             });
-    }, [search, feedbackType]);
+    }, [search, feedbackType, statusUpdated, status]);
 
     function a11yProps(index) {
         return {
@@ -219,7 +324,7 @@ const Mail = () => {
                             <Divider className={classes.divider}/>
                             <CardBody>
                                 <TableComponent
-                                    columns={columns}
+                                    columns={feedbackType === 3 ? complaintColumns : columns}
                                     rows={rows}
                                     loading={loading}
                                     notFound={
@@ -230,6 +335,7 @@ const Mail = () => {
                                                 'No complaints Found'
                                     }
                                     pageLimit={rowsPerPage}
+                                    setRow={setRow}
                                 />
                                 <Box display="flex" justifyContent="flex-end" m={3}>
                                     <Pagination
@@ -245,6 +351,25 @@ const Mail = () => {
                     </Grid>
                 </Grid>
             </Box>
+            {
+                openDetails ? (
+                    clickedRow.feedbackType !== 3 ? (
+                        <FeedbackDetailsDialog
+                            setOpen={setOpenDetails}
+                            open={openDetails}
+                            feedbackData={clickedRow}
+                            setStatusUpdated={setStatusUpdated}
+                        />
+                    ) : (
+                        <ComplaintDetailsDialog
+                            setOpen={setOpenDetails}
+                            open={openDetails}
+                            feedbackData={clickedRow}
+                            setStatusUpdated={setStatusUpdated}
+                        />
+                    )
+                ) : null
+            }
         </div>
     );
 };

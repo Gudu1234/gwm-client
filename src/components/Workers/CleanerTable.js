@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Box, makeStyles} from '@material-ui/core';
 import {Pagination} from '@material-ui/lab';
 import {getAllCleaners} from '../../apis/user';
@@ -47,10 +47,19 @@ const CleanerTable = ({newCleanerAdded, newCleaner}) => {
     const [rows, setRows] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
     const [search, setSearch] = React.useState('');
+    const [clickedRow, setClickedRow] = React.useState(null);
+    const [openDetails, setOpenDetails] = React.useState(false);
+    const [data, setData] = useState([]);
     const { enqueueSnackbar } = useSnackbar();
 
     const headerStyles = makeStyles(styles);
     const headerClasses = headerStyles();
+
+    const setRow = (req) => {
+        const index = data.findIndex(e => e._id.toString() === req._id.toString());
+        setClickedRow(data[index]);
+        setOpenDetails(true);
+    };
 
     const loadCleaners = (skip) => {
         setLoading(true);
@@ -65,6 +74,7 @@ const CleanerTable = ({newCleanerAdded, newCleaner}) => {
                     });
                     setRows(_allCleaners);
                     setCleaners([...cleaners, _allCleaners]);
+                    setData([...data, ..._allCleaners]);
                 }
             })
             .catch((e) => {
@@ -105,6 +115,7 @@ const CleanerTable = ({newCleanerAdded, newCleaner}) => {
                 setRows(_allCleaners);
                 setTotalPages(Math.ceil(res.total / rowsPerPage));
                 setPage(1);
+                setData(_allCleaners);
             })
             .catch((e) => {
                 enqueueSnackbar(e && e.message ? e.message : 'Something went wrong!', { variant: 'warning' });
@@ -142,6 +153,7 @@ const CleanerTable = ({newCleanerAdded, newCleaner}) => {
                     loading={loading}
                     notFound={'No Cleaners Found'}
                     pageLimit={rowsPerPage}
+                    setRow={setRow}
                 />
                 <Box display="flex" justifyContent="flex-end" m={3}>
                     <Pagination

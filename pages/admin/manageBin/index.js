@@ -112,11 +112,20 @@ const ManageBin = () => {
     const [type, setType] = React.useState({ $ne: 'null' });
     const [open, setOpen] = useState(false);
     const [newBinAdded, setNewBinAdded] = useState(false);
+    const [clickedRow, setClickedRow] = React.useState(null);
+    const [openDetails, setOpenDetails] = React.useState(false);
+    const [data, setData] = useState([]);
     const { enqueueSnackbar } = useSnackbar();
 
     const [dialogValue, setDialogValue] = useState(0);
 
     const classes = useStyles();
+
+    const setRow = (req) => {
+        const index = bins.findIndex(e => e._id.toString() === req._id.toString());
+        setClickedRow(bins[index]);
+        setOpenDetails(true);
+    };
 
     const handleChangeDialogValue = (e, newValue) => {
         setDialogValue(newValue);
@@ -147,6 +156,7 @@ const ManageBin = () => {
                     });
                     setRows(_allBins);
                     setBins([...bins, _allBins]);
+                    setData([...data, ..._allBins]);
                 }
             })
             .catch((e) => {
@@ -189,6 +199,7 @@ const ManageBin = () => {
                 setRows(_allBins);
                 setTotalPages(Math.ceil(res.total / rowsPerPage));
                 setPage(1);
+                setData(_allBins);
             })
             .catch((e) => {
                 enqueueSnackbar(e && e.message ? e.message : 'Something went wrong!', { variant: 'warning' });
@@ -247,6 +258,7 @@ const ManageBin = () => {
                                     loading={loading}
                                     notFound={'No bins found'}
                                     pageLimit={rowsPerPage}
+                                    setRow={setRow}
                                 />
                                 <Box display="flex" justifyContent="flex-end" m={3}>
                                     <Pagination

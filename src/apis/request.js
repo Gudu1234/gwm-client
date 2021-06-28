@@ -20,4 +20,13 @@ export const getAllRequests = ($skip, $limit, $search, status) => requestService
             { reqId: { $search } }
         ]
     }
-})
+});
+
+export const updateRequestStatus = (id, status) => requestService.patch(
+    id,
+    {
+        status
+    }
+);
+
+export const removeRequest = (id) => requestService.remove(id);

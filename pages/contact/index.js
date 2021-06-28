@@ -57,6 +57,7 @@ const Contact = () => {
 
     const [feedbackType, setFeedBackType] = React.useState(1);
 
+    const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [link, setLink] = useState(null);
@@ -104,21 +105,31 @@ const Contact = () => {
             setLoading(false);
             return ;
         }
+        if (
+            !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+                email,
+            )
+        ) {
+            enqueueSnackbar('Please provide a valid email!', { variant: 'warning' });
+            setLoading(false);
+            return ;
+        }
         const contactData = {
             name,
             phone,
             pinCode: pin,
             message,
-            feedbackType
+            feedbackType,
+            email,
         };
         if (feedbackType === 1) {
             contactData.ratings = rating;
         } else if (feedbackType === 3) {
-            if (!binCode && !link) {
-                enqueueSnackbar('Please give the bin code or map link!', { variant: 'warning' });
-                setLoading(false);
-                return ;
-            }
+            // if (!binCode && !link) {
+            //     enqueueSnackbar('Please give the bin code or map link!', { variant: 'warning' });
+            //     setLoading(false);
+            //     return ;
+            // }
             contactData.binCode = binCode ? binCode : null;
             contactData.mapLink = link ? link : null;
         }
@@ -241,6 +252,14 @@ const Contact = () => {
                                 />
                                 <Box my={2} />
                                 <WhiteTextField
+                                    label={'Email'}
+                                    name={'email'}
+                                    value={email}
+                                    onChange={event => setEmail(event.target.value)}
+                                    type={'email'}
+                                />
+                                <Box my={2} />
+                                <WhiteTextField
                                     label={'Pin-Code'}
                                     name={'pin'}
                                     select={true}
@@ -332,6 +351,7 @@ const Contact = () => {
                                     multiline={true}
                                     rows={6}
                                     rowsMax={8}
+                                    inputProps={{maxLength: 100}}
                                 />
                                 <Box my={2} />
                                 <Button disabled={loading} onClick={() => handleSubmit()} variant="contained" color={'secondary'} style={{width: '100px'}}>

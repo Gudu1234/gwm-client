@@ -91,7 +91,7 @@ const Request = () => {
                 // console.log(res);
                 res.forEach(each => {
                     each.pinCodes.forEach(e => {
-                        console.log(e);
+                        // console.log(e);
                         pins.push(e);
                     });
                     setSelectMenuLoading(false);
@@ -101,47 +101,65 @@ const Request = () => {
     }, []);
 
 
-    const handleSubmit = () => {
-        setLoading(true);
+    const validate = () => {
+        if (
+            email.trim() === '' ||
+            name.trim() === '' ||
+            phone.trim() === '' ||
+            address.trim() === '' ||
+            street.trim() === '' ||
+            landmark.trim() === '' ||
+            pin === 0
+        ) {
+            enqueueSnackbar('Please check your inputs!', { variant: 'warning' });
+            return false;
+        }
+
         if (!/^[0][1-9]\d{9}$|^[1-9]\d{9}$/.test(phone)) {
             enqueueSnackbar('Please provide a valid phone number!', { variant: 'warning' });
-            setLoading(false);
-            return ;
+            return false;
         }
+
         if (
-            !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+            !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
                 email,
             )
         ) {
             enqueueSnackbar('Please provide a valid email!', { variant: 'warning' });
-            setLoading(false);
-            return;
+            return false;
         }
+        return true;
+    };
 
-        const requestData = {
-            name,
-            phone,
-            pinCode: pin,
-            message,
-            email,
-            link,
-            address,
-            street,
-            landmark,
-            mc: 'Bhubaneswar Municipal Corporation'
-        };
+    const handleSubmit = () => {
+        if (validate()) {
+            setLoading(true);
 
-        createRequest(requestData)
-            .then((each) => {
-                enqueueSnackbar('Our team will contact you shortly.', { variant: 'success' });
-                alert(`Your Request ID is: ${each.reqId}. Store it for future reference.`);
-            })
-            .catch((e) => {
-                enqueueSnackbar(e && e.message ? e.message : 'Something went wrong!', { variant: 'warning' });
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+            const requestData = {
+                name,
+                phone,
+                pinCode: pin,
+                message,
+                email,
+                link,
+                address,
+                street,
+                landmark,
+                mc: 'Bhubaneswar Municipal Corporation'
+            };
+
+            createRequest(requestData)
+                .then((each) => {
+                    enqueueSnackbar('Our team will contact you shortly.', { variant: 'success' });
+                    alert(`Your Request ID is: ${each.reqId}. Store it for future reference.`);
+                })
+                .catch((e) => {
+                    enqueueSnackbar(e && e.message ? e.message : 'Something went wrong!', { variant: 'warning' });
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
+        }
     };
 
     return (
@@ -293,6 +311,8 @@ const Request = () => {
                                     multiline={true}
                                     rows={6}
                                     rowsMax={8}
+                                    required={false}
+                                    inputProps={{maxLength: 100}}
                                 />
                                 <Box my={2}/>
                                 <Grid container>

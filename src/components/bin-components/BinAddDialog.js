@@ -18,10 +18,6 @@ import {
     Typography
 } from '@material-ui/core';
 import clsx from 'clsx';
-import SettingsIcon from '@material-ui/icons/Settings';
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import PermIdentityIcon from '@material-ui/icons/PermIdentity';
-import DeleteIcon from '@material-ui/icons/Delete';
 import AddLocationIcon from '@material-ui/icons/AddLocation';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import BusinessIcon from '@material-ui/icons/Business';
@@ -35,12 +31,15 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const BinAddDialog = ({open, setOpen, updateBin}) => {
+const BinAddDialog = ({open, setOpen, updateBin, pinCode = '', address = '', street = ''}) => {
 
     const classes = useStyles();
 
+    // console.log(pinCode, address, street);
+
     const handleClose = () => {
         setOpen(false);
+        updateBin();
     };
 
     const title = [
@@ -153,6 +152,7 @@ const BinAddDialog = ({open, setOpen, updateBin}) => {
                                     setActiveStep(value);
                                 }}
                                 setBinData={setBinData}
+                                pin={pinCode}
                             />
                         ) : (
                             ''
@@ -161,6 +161,8 @@ const BinAddDialog = ({open, setOpen, updateBin}) => {
                             setActiveStep={setActiveStep}
                             binData={binData}
                             setBinData={setBinData}
+                            addressData={address}
+                            streetData={street}
                         /> : ''
                         }
                         {activeStep === 2 ? (
@@ -185,6 +187,10 @@ const BinAddDialog = ({open, setOpen, updateBin}) => {
 BinAddDialog.propTypes = {
     open: PropTypes.bool.isRequired,
     setOpen: PropTypes.func.isRequired,
+    updateBin: PropTypes.any,
+    pinCode: PropTypes.any,
+    address: PropTypes.any,
+    street: PropTypes.any
 };
 
 export default BinAddDialog;

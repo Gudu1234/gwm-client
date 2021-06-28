@@ -43,6 +43,7 @@ const WhiteTextField = (
         type = 'text',
         select = false,
         children = null,
+        inputProps = {},
     }
 ) => {
 
@@ -67,6 +68,7 @@ const WhiteTextField = (
             InputProps={InputProps ? InputProps : null}
             select={!!select}
             SelectProps={SelectProps ? SelectProps : null}
+            inputProps={inputProps}
         >
             {children}
         </TextField>
