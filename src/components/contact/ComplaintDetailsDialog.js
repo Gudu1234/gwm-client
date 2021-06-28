@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     },
     nameTypo: {
         fontWeight: '500',
-        fontSize: '16px',
+        fontSize: '14px',
         lineHeight: '140.1%',
         letterSpacing: '0.06em',
         overflowWrap: 'break-word',
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     },
     userNameTypo: {
         fontWeight: 'normal',
-        fontSize: '14px',
+        fontSize: '12px',
         lineHeight: '140.1%',
         letterSpacing: '0.06em',
         color: 'rgba(18, 73, 84, 0.75)'
