@@ -114,7 +114,7 @@ const FeedbackDetailsDialog = ({open, setOpen, feedbackData, setStatusUpdated}) 
                         <Grid item md={6} sm={12} xs={12} alignItems={'center'}>
                             <Box>
                                 {
-                                    <Box bgcolor={'#E5E5E5'} p={1} pl={1.5} borderRadius={3} mb={2}>
+                                    <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
                                         <Typography className={classes.userNameTypo}>Name :</Typography>
                                         <Box mt={1}/>
                                         <Typography className={classes.nameTypo}>
@@ -123,7 +123,7 @@ const FeedbackDetailsDialog = ({open, setOpen, feedbackData, setStatusUpdated}) 
                                     </Box>
                                 }
                                 {
-                                    <Box bgcolor={'#E5E5E5'} p={1} pl={1.5} borderRadius={3} mb={2}>
+                                    <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
                                         <Typography className={classes.userNameTypo}>Email :</Typography>
                                         <Box mt={1}/>
                                         <Typography className={classes.nameTypo}>
@@ -136,7 +136,7 @@ const FeedbackDetailsDialog = ({open, setOpen, feedbackData, setStatusUpdated}) 
                         <Grid item md={6} sm={12} xs={12} alignItems={'center'}>
                             <Box>
                                 {
-                                    <Box bgcolor={'#E5E5E5'} p={1} pl={1.5} borderRadius={3} mb={2}>
+                                    <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
                                         <Typography className={classes.userNameTypo}>Phone :</Typography>
                                         <Box mt={1}/>
                                         <Typography className={classes.nameTypo}>
@@ -146,7 +146,7 @@ const FeedbackDetailsDialog = ({open, setOpen, feedbackData, setStatusUpdated}) 
                                 }
                                 {
                                     feedbackData && feedbackData.pinCode &&
-                                    <Box bgcolor={'#E5E5E5'} p={1} pl={1.5} borderRadius={3} mb={2}>
+                                    <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
                                         <Typography className={classes.userNameTypo}>Pin-Code :</Typography>
                                         <Box mt={1}/>
                                         <Typography className={classes.nameTypo}>
@@ -159,7 +159,7 @@ const FeedbackDetailsDialog = ({open, setOpen, feedbackData, setStatusUpdated}) 
                         {
                             feedbackType === 1 ? (
                                 <Grid item md={12} sm={12} xs={12} alignItems={'center'}>
-                                    <Box bgcolor={'#E5E5E5'} p={1} pl={1.5} borderRadius={3} mb={2}>
+                                    <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
                                         <Typography className={classes.userNameTypo}>Ratings :</Typography>
                                         <Box mt={1}/>
                                         <Rating
@@ -174,7 +174,7 @@ const FeedbackDetailsDialog = ({open, setOpen, feedbackData, setStatusUpdated}) 
                             ) : null
                         }
                         <Grid item md={12} sm={12} xs={12} alignItems={'center'}>
-                            <Box bgcolor={'#E5E5E5'} p={1} pl={1.5} borderRadius={3} mb={2}>
+                            <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
                                 <Typography className={classes.userNameTypo}>Message :</Typography>
                                 <Box mt={1}/>
                                 <Typography className={classes.nameTypo}>

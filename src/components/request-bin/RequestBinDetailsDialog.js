@@ -163,7 +163,7 @@ const RequestBinDetailsDialog = ({open, setOpen, reqData, setStatusUpdated}) => 
                             <Box>
                                 {
                                     reqData && reqData.name &&
-                                    <Box bgcolor={'#E5E5E5'} p={1} pl={1.5} borderRadius={3} mb={2}>
+                                    <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
                                         <Typography className={classes.userNameTypo}>Name :</Typography>
                                         <Box mt={1}/>
                                         <Typography className={classes.nameTypo}>
@@ -173,7 +173,7 @@ const RequestBinDetailsDialog = ({open, setOpen, reqData, setStatusUpdated}) => 
                                 }
                                 {
                                     reqData && reqData.email &&
-                                    <Box bgcolor={'#E5E5E5'} p={1} pl={1.5} borderRadius={3} mb={2}>
+                                    <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
                                         <Typography className={classes.userNameTypo}>Email :</Typography>
                                         <Box mt={1}/>
                                         <Typography className={classes.nameTypo}>
@@ -183,7 +183,7 @@ const RequestBinDetailsDialog = ({open, setOpen, reqData, setStatusUpdated}) => 
                                 }
                                 {
                                     reqData && reqData.phone &&
-                                    <Box bgcolor={'#E5E5E5'} p={1} pl={1.5} borderRadius={3} mb={2}>
+                                    <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
                                         <Typography className={classes.userNameTypo}>Phone :</Typography>
                                         <Box mt={1}/>
                                         <Typography className={classes.nameTypo}>
@@ -193,7 +193,7 @@ const RequestBinDetailsDialog = ({open, setOpen, reqData, setStatusUpdated}) => 
                                 }
                                 {
                                     reqData && reqData.pinCode &&
-                                    <Box bgcolor={'#E5E5E5'} p={1} pl={1.5} borderRadius={3} mb={2}>
+                                    <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
                                         <Typography className={classes.userNameTypo}>Pin-Code :</Typography>
                                         <Box mt={1}/>
                                         <Typography className={classes.nameTypo}>
@@ -207,7 +207,7 @@ const RequestBinDetailsDialog = ({open, setOpen, reqData, setStatusUpdated}) => 
                             <Box>
                                 {
                                     reqData && reqData.address &&
-                                    <Box bgcolor={'#E5E5E5'} p={1} pl={1.5} borderRadius={3} mb={2}>
+                                    <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
                                         <Typography className={classes.userNameTypo}>Address :</Typography>
                                         <Box mt={1}/>
                                         <Typography className={classes.nameTypo}>
@@ -217,7 +217,7 @@ const RequestBinDetailsDialog = ({open, setOpen, reqData, setStatusUpdated}) => 
                                 }
                                 {
                                     reqData && reqData.street &&
-                                    <Box bgcolor={'#E5E5E5'} p={1} pl={1.5} borderRadius={3} mb={2}>
+                                    <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
                                         <Typography className={classes.userNameTypo}>Street :</Typography>
                                         <Box mt={1}/>
                                         <Typography className={classes.nameTypo}>
@@ -227,7 +227,7 @@ const RequestBinDetailsDialog = ({open, setOpen, reqData, setStatusUpdated}) => 
                                 }
                                 {
                                     reqData && reqData.landmark &&
-                                    <Box bgcolor={'#E5E5E5'} p={1} pl={1.5} borderRadius={3} mb={2}>
+                                    <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
                                         <Typography className={classes.userNameTypo}>Landmark :</Typography>
                                         <Box mt={1}/>
                                         <Typography className={classes.nameTypo}>
@@ -237,7 +237,7 @@ const RequestBinDetailsDialog = ({open, setOpen, reqData, setStatusUpdated}) => 
                                 }
                                 {
                                     reqData && reqData.mapLink !== undefined &&
-                                    <Box bgcolor={'#E5E5E5'} p={1} pl={1.5} borderRadius={3} mb={2}>
+                                    <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
                                         <Typography className={classes.userNameTypo}>Map-Link :</Typography>
                                         <Box mt={1}/>
                                         <Typography
@@ -250,7 +250,7 @@ const RequestBinDetailsDialog = ({open, setOpen, reqData, setStatusUpdated}) => 
                             </Box>
                         </Grid>
                         <Grid item md={12} sm={12} xs={12} alignItems={'center'}>
-                            <Box bgcolor={'#E5E5E5'} p={1} pl={1.5} borderRadius={3} mb={2}>
+                            <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
                                 <Typography className={classes.userNameTypo}>Message :</Typography>
                                 <Box mt={1}/>
                                 <Typography className={classes.nameTypo}>
