@@ -46,3 +46,10 @@ export const getNearbyCleaners = (coordinates, binType, zone, parent) => nearbyW
         parent
     }
 });
+
+export const getBinsOfWorker = (workerId) => binService.find({
+    query: {
+        worker: workerId,
+        $limit: 30,
+    }
+});

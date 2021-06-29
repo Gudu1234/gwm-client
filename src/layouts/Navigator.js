@@ -151,10 +151,7 @@ function Navigator(props) {
 
                     const handleClick = () => {
                         setOpen(!open);
-                        console.log(href);
                         Router.push(href);
-                        console.log(Router.pathname);
-                        console.log(href === Router.pathname);
                     };
 
                     return (<React.Fragment key={id}>

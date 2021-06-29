@@ -9,6 +9,7 @@ import Card from '../Card/Card';
 import styles from '../../../public/assets/jss/views/dashboardStyle';
 import GreenSearchField from '../GreenSearchField';
 import TableComponent from '../TableComponent';
+import {useRouter} from 'next/router';
 
 const columns = [
     {
@@ -48,8 +49,8 @@ const CleanerTable = ({newCleanerAdded, newCleaner}) => {
     const [loading, setLoading] = React.useState(false);
     const [search, setSearch] = React.useState('');
     const [clickedRow, setClickedRow] = React.useState(null);
-    const [openDetails, setOpenDetails] = React.useState(false);
     const [data, setData] = useState([]);
+    const Router = useRouter();
     const { enqueueSnackbar } = useSnackbar();
 
     const headerStyles = makeStyles(styles);
@@ -58,7 +59,7 @@ const CleanerTable = ({newCleanerAdded, newCleaner}) => {
     const setRow = (req) => {
         const index = data.findIndex(e => e._id.toString() === req._id.toString());
         setClickedRow(data[index]);
-        setOpenDetails(true);
+        Router.push(`/admin/workerDetails/${data[index]._id}`);
     };
 
     const loadCleaners = (skip) => {

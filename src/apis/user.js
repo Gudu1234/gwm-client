@@ -63,3 +63,12 @@ export const editDetails = (id, data) => userService.patch(
         }
     }
 );
+
+export const getUserDetails = (id) => userService.get(
+    id,
+    {
+        query: {
+            $populate: 'zone'
+        }
+    }
+);

@@ -15,7 +15,6 @@ import theme from '../../theme';
 import {removeRequest, updateRequestStatus} from '../../apis/request';
 import {useSnackbar} from 'notistack';
 import BinAddDialog from '../bin-components/BinAddDialog';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Link from '../../Link';
 import Confirm from '../Confirm';

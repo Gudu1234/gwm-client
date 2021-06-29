@@ -9,6 +9,7 @@ import Card from '../Card/Card';
 import styles from '../../../public/assets/jss/views/dashboardStyle';
 import GreenSearchField from '../GreenSearchField';
 import TableComponent from '../TableComponent';
+import {useRouter} from 'next/router';
 
 const columns = [
     {
@@ -51,14 +52,14 @@ const DriverTable = ({newDriverAdded, newDriver}) => {
     const [openDetails, setOpenDetails] = React.useState(false);
     const [data, setData] = useState([]);
     const { enqueueSnackbar } = useSnackbar();
-
+    const Router = useRouter();
     const headerStyles = makeStyles(styles);
     const headerClasses = headerStyles();
 
     const setRow = (req) => {
-        const index = drivers.findIndex(e => e._id.toString() === req._id.toString());
-        setClickedRow(drivers[index]);
-        setOpenDetails(true);
+        const index = data.findIndex(e => e._id.toString() === req._id.toString());
+        setClickedRow(data[index]);
+        Router.push(`/admin/workerDetails/${data[index]._id}`);
     };
 
     const loadDrivers = (skip) => {
