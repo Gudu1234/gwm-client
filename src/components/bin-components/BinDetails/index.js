@@ -6,7 +6,7 @@ import theme from '../../../theme';
 import {makeStyles} from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     caption: {
         fontWeight: 'bold',
         color: 'grey'
@@ -31,18 +31,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Address = ({userData}) => {
+const BinDetails = ({binData}) => {
 
     const classes = useStyles();
-
-    const { zone: { name: zoneName },
-        address: { addressLine, street, landmark, pinCode } } = userData;
 
     return(
         <Grid container spacing={2}>
             <Grid item md={12} sm={12} xs={12}>
                 <Box display={'flex'} mb={1} width={'100%'}
-                    bgcolor={theme.palette.primary.main}pl={1.5} pt={1.5} pb={1.5}
+                    bgcolor={theme.palette.primary.main} pl={1.5} pt={1.5} pb={1.5}
                     borderRadius={3}>
                     <Typography style={{color: '#fff'}}>
                         { 'Address Details' }
@@ -52,32 +49,42 @@ const Address = ({userData}) => {
             <Grid item md={6} sm={12} xs={12}>
                 <Box>
                     {
-                        zoneName &&
+                        binData && binData.zone &&
                         <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
                             <Typography className={classes.userNameTypo}>Zone :</Typography>
                             <Box mt={1}/>
                             <Typography className={classes.nameTypo}>
-                                {zoneName ? zoneName : 'N/A'}
+                                {binData && binData.zone ? binData.zone.name : 'N/A'}
                             </Typography>
                         </Box>
                     }
                     {
-                        addressLine &&
+                        binData && binData.address &&
                         <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
                             <Typography className={classes.userNameTypo}>Address :</Typography>
                             <Box mt={1}/>
                             <Typography className={classes.nameTypo}>
-                                {addressLine ? addressLine : 'N/A'}
+                                {binData && binData.address ? binData.address : 'N/A'}
                             </Typography>
                         </Box>
                     }
                     {
-                        pinCode &&
+                        binData && binData.street &&
                         <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
-                            <Typography className={classes.userNameTypo}>Pin-Code :</Typography>
+                            <Typography className={classes.userNameTypo}>Street :</Typography>
                             <Box mt={1}/>
                             <Typography className={classes.nameTypo}>
-                                {pinCode ? pinCode : 'N/A'}
+                                {binData && binData.street ? binData.street: 'N/A'}
+                            </Typography>
+                        </Box>
+                    }
+                    {
+                        binData && binData.landmark &&
+                        <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
+                            <Typography className={classes.userNameTypo}>Landmark :</Typography>
+                            <Box mt={1}/>
+                            <Typography className={classes.nameTypo}>
+                                {binData && binData.landmark ? binData.landmark: 'N/A'}
                             </Typography>
                         </Box>
                     }
@@ -86,22 +93,41 @@ const Address = ({userData}) => {
             <Grid item md={6} sm={12} xs={12}>
                 <Box>
                     {
-                        street &&
+                        binData && binData.pinCode &&
                         <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
-                            <Typography className={classes.userNameTypo}>Street :</Typography>
+                            <Typography className={classes.userNameTypo}>Pin-Code :</Typography>
                             <Box mt={1}/>
                             <Typography className={classes.nameTypo}>
-                                {street ? street : 'N/A'}
+                                {binData && binData.pinCode ? binData.pinCode : 'N/A'}
                             </Typography>
                         </Box>
                     }
                     {
-                        landmark &&
                         <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
-                            <Typography className={classes.userNameTypo}>Landmark :</Typography>
+                            <Typography className={classes.userNameTypo}>Map-Link :</Typography>
                             <Box mt={1}/>
                             <Typography className={classes.nameTypo}>
-                                {landmark ? landmark : 'N/A'}
+                                {binData && binData.mapLink ? binData.mapLink : 'N/A'}
+                            </Typography>
+                        </Box>
+                    }
+                    {
+                        binData && binData.coordinates &&
+                        <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
+                            <Typography className={classes.userNameTypo}>Latitude :</Typography>
+                            <Box mt={1}/>
+                            <Typography className={classes.nameTypo}>
+                                {binData && binData.coordinates ? binData.coordinates[1] : 'N/A'}
+                            </Typography>
+                        </Box>
+                    }
+                    {
+                        binData && binData.coordinates &&
+                        <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
+                            <Typography className={classes.userNameTypo}>Longitude :</Typography>
+                            <Box mt={1}/>
+                            <Typography className={classes.nameTypo}>
+                                {binData && binData.coordinates ? binData.coordinates[0] : 'N/A'}
                             </Typography>
                         </Box>
                     }
@@ -111,8 +137,8 @@ const Address = ({userData}) => {
     );
 };
 
-Address.propTypes = {
-    userData: PropTypes.any
+BinDetails.propTypes = {
+    binData: PropTypes.any
 };
 
-export default Address;
+export default BinDetails;

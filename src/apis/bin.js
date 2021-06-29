@@ -53,3 +53,12 @@ export const getBinsOfWorker = (workerId) => binService.find({
         $limit: 30,
     }
 });
+
+export const getBinDetails = (id) => binService.get(
+    id,
+    {
+        query: {
+            $populate: ['zone', 'worker', 'parent']
+        }
+    }
+);

@@ -68,6 +68,18 @@ const BasicDetails = ({userData}) => {
                             </Typography>
                         </Box>
                     }
+                    {
+                        userData && userData.gender &&
+                        <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
+                            <Typography className={classes.userNameTypo}>Gender :</Typography>
+                            <Box mt={1}/>
+                            <Typography className={classes.nameTypo}>
+                                {userData &&  userData.gender === 1 ? 'Male'
+                                    : userData && userData.gender === 2 ? 'Female' : 'N/A'
+                                }
+                            </Typography>
+                        </Box>
+                    }
                 </Box>
             </Grid>
             <Grid item md={6} sm={12} xs={12}>
@@ -89,22 +101,6 @@ const BasicDetails = ({userData}) => {
                             <Box mt={1}/>
                             <Typography className={classes.nameTypo}>
                                 {userData && userData.phone ? userData.phone : 'N/A'}
-                            </Typography>
-                        </Box>
-                    }
-                </Box>
-            </Grid>
-            <Grid item md={6} sm={12} xs={12}>
-                <Box>
-                    {
-                        userData && userData.gender &&
-                        <Box bgcolor={'#E8F5F8'} p={1} pl={1.5} borderRadius={3} mb={2}>
-                            <Typography className={classes.userNameTypo}>Gender :</Typography>
-                            <Box mt={1}/>
-                            <Typography className={classes.nameTypo}>
-                                {userData &&  userData.gender === 1 ? 'Male'
-                                    : userData && userData.gender === 2 ? 'Female' : 'N/A'
-                                }
                             </Typography>
                         </Box>
                     }

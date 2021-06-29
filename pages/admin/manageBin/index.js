@@ -14,6 +14,7 @@ import Tab from '@material-ui/core/Tab';
 import {makeStyles} from '@material-ui/core/styles';
 import BinAddDialog from '../../../src/components/bin-components/BinAddDialog';
 import GreenSearchField from '../../../src/components/GreenSearchField';
+import {useRouter} from 'next/router';
 
 const columns = [
     {
@@ -116,15 +117,16 @@ const ManageBin = () => {
     const [openDetails, setOpenDetails] = React.useState(false);
     const [data, setData] = useState([]);
     const { enqueueSnackbar } = useSnackbar();
+    const Router = useRouter();
 
     const [dialogValue, setDialogValue] = useState(0);
 
     const classes = useStyles();
 
     const setRow = (req) => {
-        const index = bins.findIndex(e => e._id.toString() === req._id.toString());
-        setClickedRow(bins[index]);
-        setOpenDetails(true);
+        const index = data.findIndex(e => e._id.toString() === req._id.toString());
+        setClickedRow(data[index]);
+        Router.push('/admin/manageBin/' + data[index]._id);
     };
 
     const handleChangeDialogValue = (e, newValue) => {
