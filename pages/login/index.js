@@ -77,7 +77,7 @@ const Login = () => {
     };
 
     useEffect(() => {
-        if (user && user.role === 3) {
+        if (user && user.role === 3 && user.role === 4) {
             // console.log(user);
             Router.push('/admin/dashboard');
         }
@@ -109,7 +109,7 @@ const Login = () => {
                 UserStore.set(() => ({ token: accessToken, user }), 'login');
                 enqueueSnackbar('Login successful', { variant: 'success' });
                 setVisible(false);
-                if (user.role === 3) {
+                if (user.role === 3 || user.role === 4) {
                     Router.replace('/admin/dashboard');
                 }
                 else {

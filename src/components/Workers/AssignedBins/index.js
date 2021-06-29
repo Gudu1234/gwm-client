@@ -37,7 +37,6 @@ const AssignedBins = ({userId}) => {
 
     const classes = useStyles();
 
-    const [rows, setRows] = useState([]);
     const [loading, setLoading] = useState(false);
     const [clickedRow, setClickedRow] = React.useState(null);
     const [bins, setBins] = useState([]);
@@ -91,7 +90,7 @@ const AssignedBins = ({userId}) => {
                     bgcolor={theme.palette.primary.main}pl={1.5} pt={1.5} pb={1.5}
                     borderRadius={3}>
                     <Typography style={{color: '#fff'}}>
-                        { 'Address Details' }
+                        { 'Assigned Bins' }
                     </Typography>
                 </Box>
             </Grid>

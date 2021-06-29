@@ -115,7 +115,7 @@ const Profile = () => {
         username,
         phone,
         gender,
-        zone: { name: zoneName },
+        zone,
         address: { addressLine, street, landmark, pinCode }
     } = user;
 
@@ -211,7 +211,7 @@ const Profile = () => {
                                     <Table>
                                         <TableBody>
                                             <TableRow>
-                                                <UserAddressTable label={'Zone'} value={zoneName}/>
+                                                <UserAddressTable label={'Zone'} value={zone ? zone.name : 'N/A'}/>
                                             </TableRow>
                                             <TableRow>
                                                 <UserAddressTable label={'Address'} value={addressLine}/>

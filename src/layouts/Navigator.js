@@ -98,42 +98,42 @@ function Navigator(props) {
             icon: DashboardIcon,
             active: Router.asPath === '/admin/dashboard',
             href: '/admin/dashboard',
-            role: 3,
+            roles: [3, 4],
         },
         {
             id: 'Workers',
             icon: WorkerIcon,
             active: Router.asPath === '/admin/worker',
             href: '/admin/worker',
-            role: 3,
+            roles: [3, 4],
         },
         {
             id: 'Bin Requests',
             icon: RequestBinIcon,
             active: Router.asPath === '/admin/binRequest',
             href: '/admin/binRequest',
-            role: 3,
+            roles: [3, 4],
         },
         {
             id: 'Manage Bin',
             icon: ManageBinIcon,
             active: Router.asPath === '/admin/manageBin',
             href: '/admin/manageBin',
-            role: 3,
+            roles: [3, 4],
         },
         {
             id: 'Mails',
             icon: MailIcon,
             active: Router.asPath === '/admin/mail',
             href: '/admin/mail',
-            role: 3,
+            roles: [3, 4],
         },
         {
             id: 'Profile',
             icon: ProfileIcon,
             active: Router.asPath === '/admin/profile',
             href: '/admin/profile',
-            role: 3,
+            roles: [3, 4],
         },
     ];
 
@@ -143,9 +143,9 @@ function Navigator(props) {
                 <div className={classes.main}>
                     <img className={classes.image} src={Logo}  alt="Logo" onClick={()=>Router.push('/')} />
                 </div>
-                {categories.map(({ id, icon, href, role }) => {
+                {categories.map(({ id, icon, href, roles }) => {
 
-                    if (userRole !== role) return ;
+                    if (!roles.includes(userRole)) return ;
 
                     const [open, setOpen] = React.useState(true);
 

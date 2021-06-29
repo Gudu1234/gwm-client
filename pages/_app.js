@@ -45,7 +45,7 @@ export default function MyApp(props) {
                     console.log('app accesstoken',accessToken, user);
                     localStorage.setItem('feathers-jwt', accessToken);
                     UserStore.set(() => ({ token: accessToken, user }), 'login');
-                    if (user.role === 3) {
+                    if (user.role === 3 || user.role === 4) {
                         // Router.replace('/admin/dashboard').then(() => {
                         //     setLoading(false);
                         // });
