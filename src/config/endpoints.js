@@ -20,6 +20,8 @@ export const verifyOtpService = app.service('verify-password-otp');
 
 export const resetPasswordService = app.service('reset-password');
 
+export const taskService = app.service('task');
+
 export const uploadFile = (file) => {
     const formData = new FormData();
     formData.append('uri[]', file);

@@ -1,10 +1,15 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import theme from '../../../theme';
 import {makeStyles} from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import {Button} from '@material-ui/core';
+import EditIcon from '../../../../public/EditIcon.svg';
+import {useStore} from 'laco-react';
+import UserStore from '../../../store/userStore';
+import EditBasicDetailsDialog from '../EditBasicDetailsDialog';
 
 const useStyles = makeStyles(() => ({
     caption: {
@@ -29,21 +34,57 @@ const useStyles = makeStyles(() => ({
         letterSpacing: '0.06em',
         color: 'rgba(18, 73, 84, 0.75)'
     },
+    editButton: {
+        minWidth: 0,
+        borderRadius: '10px',
+        height: '35px',
+        width: '35px',
+    },
 }));
 
-const BasicDetails = ({userData}) => {
+const BasicDetails = ({userDetails, setUserDetails}) => {
 
     const classes = useStyles();
+
+    const [userData, setUserData] = useState(userDetails);
+    const [open, setOpen] = useState(false);
+
+    const { user } = useStore(UserStore);
+
+    const { role } = user;
+
+    useEffect(() => {
+        setUserDetails(userData);
+    }, [userData]);
 
     return(
         <Grid container spacing={2}>
             <Grid item md={12} sm={12} xs={12}>
-                <Box display={'flex'} mb={1} width={'100%'}
+                <Box display={'flex'} flexDirection={'row'} mb={1} width={'100%'}
                     bgcolor={theme.palette.primary.main} pl={1.5} pt={1.5} pb={1.5}
-                    borderRadius={3}>
+                    borderRadius={3}
+                    justifyContent={'center'}
+                    alignItems={'center'}
+                >
                     <Typography style={{color: '#fff'}}>
                         { 'Basic Details' }
                     </Typography>
+                    <Box flex={1} />
+                    {
+                        role === 3 || role === 4 ? (
+                            <Button
+                                className={classes.editButton}
+                                color={'secondary'}
+                                onClick={() => {
+                                    setOpen(true);
+                                }}
+                                style={{ background: '#FF9A3E', paddingRight: '14px', marginRight: '10px' }}
+                                variant={'contained'}
+                            >
+                                <img alt={'Edit Icon'} src={EditIcon} />
+                            </Button>
+                        ) : null
+                    }
                 </Box>
             </Grid>
             <Grid item md={6} sm={12} xs={12}>
@@ -106,12 +147,14 @@ const BasicDetails = ({userData}) => {
                     }
                 </Box>
             </Grid>
+            <EditBasicDetailsDialog setOpen={setOpen} open={open} workerData={userData} setWorkerData={setUserData}/>
         </Grid>
     );
 };
 
 BasicDetails.propTypes = {
-    userData: PropTypes.any
+    userDetails: PropTypes.any,
+    setUserDetails: PropTypes.any,
 };
 
 export default BasicDetails;

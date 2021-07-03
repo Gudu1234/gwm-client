@@ -5,3 +5,5 @@
 import { zoneService } from '../config/endpoints';
 
 export const getAllZones = () => zoneService.find();
+
+export const getZoneDetails = (id) => zoneService.get(id);

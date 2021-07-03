@@ -20,6 +20,7 @@ import RequestBinIcon from '../../public/NavAssets/Request bin white.svg';
 import ManageBinIcon from '../../public/NavAssets/Manage bin.svg';
 import MailIcon from '../../public/NavAssets/Mail white.svg';
 import ProfileIcon from '../../public/NavAssets/Profile.svg';
+import TaskIcon from '../../public/NavAssets/TaskIcon.png';
 
 const styles = (theme) => ({
     categoryHeader: {
@@ -134,6 +135,27 @@ function Navigator(props) {
             active: Router.asPath === '/admin/profile',
             href: '/admin/profile',
             roles: [3, 4],
+        },
+        {
+            id: 'Dashboard',
+            icon: DashboardIcon,
+            active: Router.asPath === '/worker/dashboard',
+            href: '/worker/dashboard',
+            roles: [1, 2],
+        },
+        {
+            id: 'Tasks',
+            icon: TaskIcon,
+            active: Router.asPath === '/worker/task',
+            href: '/worker/task',
+            roles: [1, 2],
+        },
+        {
+            id: 'Profile',
+            icon: ProfileIcon,
+            active: Router.asPath === '/worker/profile',
+            href: '/worker/profile',
+            roles: [1, 2],
         },
     ];
 

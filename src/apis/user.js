@@ -64,6 +64,10 @@ export const editDetails = (id, data) => userService.patch(
     }
 );
 
+export const removeWorker = (id) => userService.remove(
+    id,
+);
+
 export const getUserDetails = (id) => userService.get(
     id,
     {

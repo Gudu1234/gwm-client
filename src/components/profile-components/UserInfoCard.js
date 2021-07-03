@@ -102,6 +102,13 @@ const UserInfoCard = ({label, value, userId}) => {
                                 {`${label}:`}
                             </Typography>
                             <Box flex={1} />
+                            {
+                                label === 'Password' ? (
+                                    <IconButton onClick={() => setOpen(true)}>
+                                        <EditOutlinedIcon fontSize={'small'}/>
+                                    </IconButton>
+                                ) : ''
+                            }
                             {/*<IconButton>*/}
                             {/*    <EditOutlinedIcon fontSize={'small'}/>*/}
                             {/*</IconButton>*/}

@@ -5,8 +5,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../src/theme';
 import { useRouter } from 'next/router';
-import Loader from '../src/components/Loader';
-import app, { cookieStorage } from '../src/apis/index';
+import app from '../src/apis/index';
 import {SnackbarProvider} from 'notistack';
 import AppLoader from '../src/components/loaders/AppLoader';
 import Layout from '../src/layouts/Layout';
@@ -21,7 +20,7 @@ export default function MyApp(props) {
     const [loading, setLoading] = useState(true);
 
     React.useEffect(() => {
-        console.log('app useEffect caleled');
+        console.log('app useEffect called');
         // Remove the server-side injected CSS.
         const jssStyles = document.querySelector('#jss-server-side');
         if (jssStyles) {
@@ -29,23 +28,25 @@ export default function MyApp(props) {
         }
 
         const token = localStorage.getItem('feathers-jwt');
-        console.log('token',token);
+
         if (token) {
+            let query = {
+                $populate: 'zone'
+            };
             app
                 .authenticate({
                     strategy: 'jwt',
                     accessToken: token
                 }, {
-                    query: {
-                        $populate: 'zone'
-                    }
+                    query: query
                 })
                 .then(response => {
                     const { accessToken, user } = response;
-                    console.log('app accesstoken',accessToken, user);
+                    // console.log('app accesstoken',accessToken, user);
                     localStorage.setItem('feathers-jwt', accessToken);
                     UserStore.set(() => ({ token: accessToken, user }), 'login');
-                    if (user.role === 3 || user.role === 4) {
+                    console.log(user.role);
+                    if (user.role === 3 || user.role === 4 || user.role === 1 || user.role === 2) {
                         // Router.replace('/admin/dashboard').then(() => {
                         //     setLoading(false);
                         // });
@@ -53,8 +54,8 @@ export default function MyApp(props) {
                     }
                 })
                 .catch((e) => {
-                    console.log(e);
-                    console.log('catch method called');
+                    // console.log(e);
+                    // console.log('catch method called');
                     app.logout();
                     Router.push('/login');
                     setTimeout(() => {
@@ -73,7 +74,7 @@ export default function MyApp(props) {
             // } else {
             //     setLoading(false);
             // }
-            if (Router.pathname.startsWith('/admin')) {
+            if (Router.pathname.startsWith('/admin') || Router.pathname.startsWith('/worker')) {
                 Router.replace('/').then(() => setLoading(false));
             } else {
                 setLoading(false);
@@ -95,7 +96,7 @@ export default function MyApp(props) {
                         loading ?
                             <AppLoader /> :
                             (
-                                Router.pathname.startsWith('/admin') ?
+                                Router.pathname.startsWith('/admin') || Router.pathname.startsWith('/worker') ?
                                     <Layout title={Component.title ? Component.title : ''}>
                                         <Component {...pageProps} />
                                     </Layout>

@@ -3,13 +3,14 @@
  */
 import {binService, nearbyWorkerService} from '../config/endpoints';
 
-export const getAllBins = ($skip, $limit, $search, type) => binService.find({
+export const getAllBins = ($skip, $limit, $search, type, binType) => binService.find({
     query: {
         $skip,
         $limit,
         status: 1,
         $sort: { createdAt: -1 },
         worker: type,
+        type: binType,
         $or: [
             { binId: { $search } },
             { landmark: { $search } },
@@ -61,4 +62,18 @@ export const getBinDetails = (id) => binService.get(
             $populate: ['zone', 'worker', 'parent']
         }
     }
+);
+
+export const editBinDetails = (id, data) => binService.patch(
+    id,
+    data,
+    {
+        query: {
+            $populate: ['zone', 'worker', 'parent']
+        }
+    }
+);
+
+export const removeBin = (id) => binService.remove(
+    id,
 );

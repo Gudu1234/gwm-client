@@ -111,8 +111,9 @@ const Login = () => {
                 setVisible(false);
                 if (user.role === 3 || user.role === 4) {
                     Router.replace('/admin/dashboard');
-                }
-                else {
+                } else if (user.role === 1 || user.role === 2) {
+                    Router.replace('/worker/dashboard');
+                } else {
                     Router.replace('/');
                 }
             })
@@ -160,19 +161,17 @@ const Login = () => {
                             bgcolor={'#fff'}
                             px={3}
                         >
-                            <Hidden xsDown>
-                                <Typography variant={'h1'} style={{color: '#124954'}} align={'center'}>
-                                    <Animated
-                                        animationIn="zoomIn"
-                                        animationInDelay={100}
-                                        animationOut="zoomOut"
-                                        animationOutDelay={400}
-                                        isVisible={visible}
-                                    >
-                                        {'LOGIN'}
-                                    </Animated>
-                                </Typography>
-                            </Hidden>
+                            <Typography variant={'h1'} style={{color: '#124954'}} align={'center'}>
+                                <Animated
+                                    animationIn="zoomIn"
+                                    animationInDelay={100}
+                                    animationOut="zoomOut"
+                                    animationOutDelay={400}
+                                    isVisible={visible}
+                                >
+                                    {'LOGIN'}
+                                </Animated>
+                            </Typography>
                             <Box my={4} />
                             <Animated
                                 animationIn="zoomIn"

@@ -37,8 +37,6 @@ const BinRequest = () => {
     const headerClasses = headerStyles();
 
     const handleStatusMenuOpen = (event) => {
-        console.log(event);
-        console.log(event !== undefined);
         setAnchorEl(event.currentTarget);
     };
 

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Button, Divider, Grid} from '@material-ui/core';
+import {Box, Button, Chip, Divider, Grid, IconButton, Menu, MenuItem} from '@material-ui/core';
 import {useSnackbar} from 'notistack';
 import {getAllBins} from '../../../src/apis/bin';
 import moment from 'moment';
@@ -15,6 +15,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import BinAddDialog from '../../../src/components/bin-components/BinAddDialog';
 import GreenSearchField from '../../../src/components/GreenSearchField';
 import {useRouter} from 'next/router';
+import FilterListIcon from '@material-ui/icons/FilterList';
 
 const columns = [
     {
@@ -111,6 +112,7 @@ const ManageBin = () => {
     const [loading, setLoading] = React.useState(false);
     const [search, setSearch] = React.useState('');
     const [type, setType] = React.useState({ $ne: 'null' });
+    const [binType, setBinType] = React.useState({ $in: [1, 2] });
     const [open, setOpen] = useState(false);
     const [newBinAdded, setNewBinAdded] = useState(false);
     const [clickedRow, setClickedRow] = React.useState(null);
@@ -120,6 +122,117 @@ const ManageBin = () => {
     const Router = useRouter();
 
     const [dialogValue, setDialogValue] = useState(0);
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleStatusMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const isMenuOpen = Boolean(anchorEl);
+
+    const handleStatusChange = (event) => {
+        let value = event.target.value;
+        if (value === 0) {
+            setBinType({$in: [1, 2]});
+        } else {
+            console.log(value);
+            setBinType(event.target.value);
+        }
+        setAnchorEl(null);
+    };
+
+    const renderMenu = (
+        <Menu
+            anchorEl={anchorEl}
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+            }}
+            id={'user-account'}
+            keepMounted
+            onClose={handleMenuClose}
+            open={isMenuOpen}
+            transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+            }}
+        >
+            <MenuItem value={0} style={{borderBottom: '1px solid #7AE3B1'}} onClick={handleStatusChange}>
+                {'None'}
+            </MenuItem>
+            <MenuItem value={1} style={{borderBottom: '1px solid #7AE3B1'}} onClick={handleStatusChange}>
+                {'Parent'}
+            </MenuItem>
+            <MenuItem value={2} onClick={handleStatusChange}>
+                {'Child'}
+            </MenuItem>
+        </Menu>
+    );
+
+    const columns = [
+        {
+            id: 'date',
+            label: 'Date',
+            minWidth: 170,
+            align: 'left',
+        },
+        {
+            id: 'binId',
+            label: 'ID',
+            minWidth: 170,
+            align: 'left',
+        },
+        {
+            id: 'landmark',
+            label: 'Landmark',
+            minWidth: 170,
+            align: 'left',
+        },
+        {
+            id: 'pinCode',
+            label: 'PIN',
+            minWidth: 170,
+            align: 'left',
+        },
+        {
+            id: 'binType',
+            label: 'Type',
+            component: (
+                <>
+                    <IconButton size={'small'} onClick={handleStatusMenuOpen}>
+                        <FilterListIcon color={'secondary'} />
+                    </IconButton>
+                    {renderMenu}
+                </>
+            ),
+            minWidth: 170,
+            align: 'left',
+        },
+    ];
+
+    const typeComponent = (binType) => {
+        let label = binType === 1 ? 'Parent' : 'Child';
+        // console.log(status);
+        let color = binType === 1 ?
+            'rgba(59, 196, 131, 0.3)' :
+            'rgba(255, 154, 62, 0.3)';
+        return (
+            <Chip
+                label={label}
+                style={{
+                    background: color,
+                    color: '#3A8899',
+                    fontWeight: '700',
+                    fontSize: '14px',
+                }}
+            />
+        );
+    };
 
     const classes = useStyles();
 
@@ -145,14 +258,14 @@ const ManageBin = () => {
 
     const loadBins = (skip) => {
         setLoading(true);
-        getAllBins(skip, rowsPerPage, search, type)
+        getAllBins(skip, rowsPerPage, search, type, binType)
             .then((res) => {
                 if (res.data) {
                     let _allBins = res.data.map(each => {
                         return {
                             ...each,
                             date: moment(each.createdAt).format('DD-MM-YYYY'),
-                            binType: each.type === 1 ? 'Parent' : 'Child',
+                            binType: typeComponent(each.type),
                             // feedbackType: each.feedbackType === 1 ? 'Feedback' : 'Suggestion'
                         };
                     });
@@ -186,14 +299,14 @@ const ManageBin = () => {
 
     useEffect(() => {
         setLoading(true);
-        getAllBins(0, rowsPerPage, search, type)
+        getAllBins(0, rowsPerPage, search, type, binType)
             .then((res) => {
                 setTotal(res.total);
                 let _allBins = res.data.map(each => {
                     return {
                         ...each,
                         date: moment(each.createdAt).format('DD-MM-YYYY'),
-                        binType: each.type === 1 ? 'Parent' : 'Child',
+                        binType: typeComponent(each.type),
                         // feedbackType: each.feedbackType === 1 ? 'Feedback' : 'Suggestion'
                     };
                 });
@@ -209,7 +322,7 @@ const ManageBin = () => {
             .finally(() => {
                 setLoading(false);
             });
-    }, [search, type, newBinAdded]);
+    }, [search, type, newBinAdded, binType]);
 
     function a11yProps(index) {
         return {

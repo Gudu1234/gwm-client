@@ -3,8 +3,8 @@
  */
 
 import {
-    Box,
-    Grid,
+    Box, Button, CircularProgress,
+    Grid, IconButton,
     List,
     ListItem,
     ListItemIcon,
@@ -18,13 +18,20 @@ import {useRouter} from 'next/router';
 import TableLoader from '../../../../src/components/Skeleton/TableLoader';
 import Card from '../../../../src/components/Card/Card';
 import BinAvatar from '../../../../public/BinStaticImage.svg';
-import {getBinDetails} from '../../../../src/apis/bin';
+import {getBinDetails, removeBin} from '../../../../src/apis/bin';
 import BinDetails from '../../../../src/components/bin-components/BinDetails';
 import PinDropIcon from '@material-ui/icons/PinDrop';
 import NaturePeopleIcon from '@material-ui/icons/NaturePeople';
 import MapIcon from '@material-ui/icons/Map';
 import BinWorkerDetails from '../../../../src/components/bin-components/BinWorkerDetails';
 import MapView from '../../../../src/components/bin-components/MapView';
+import GotoIcon from '../../../../public/Goto.png';
+import Link from '../../../../src/components/Link';
+import {useStore} from 'laco-react';
+import UserStore from '../../../../src/store/userStore';
+import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
+import Confirm from '../../../../src/components/Confirm';
+import {removeWorker} from '../../../../src/apis/user';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -76,6 +83,9 @@ const useStyles = makeStyles((theme) => ({
         width: 14,
         color: 'white',
     },
+    editIcon: {
+        borderRadius: '50px'
+    }
 }));
 
 const ManageBinDetails = () => {
@@ -88,25 +98,27 @@ const ManageBinDetails = () => {
     const [binData, setBinData] = useState();
     const [workerData, setWorkerData] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [openDialog, setOpenDialog] = useState(false);
-    const [addressEdited, setAddressEdited] = useState(false);
-    const [workerEdited, setWorkerEdited] = useState(false);
+    const [deleteLoading, setDeleteLoading] = useState(false);
     const type = useMemo(()=> binData?.type,[binData]);
     const [parentBinId, setParentBinId] = useState(null);
+
+    const { user } = useStore(UserStore);
 
     const test = [
         {
             icon: <PinDropIcon color={'primary'}/>,
             selectedIcon: <PinDropIcon color={'secondary'}/>,
             title: "Address Details",
-            component: <BinDetails binData={binData} />,
+            component: <BinDetails binDetails={binData} setBinDetails={setBinData}/>,
+            roles: [1, 2, 3, 4],
             option: 2
         },
         {
             icon: <NaturePeopleIcon color={'primary'}/>,
             selectedIcon: <NaturePeopleIcon color={'secondary'}/>,
             title: "Worker Details",
-            component: <BinWorkerDetails userData={workerData} binData={binData}/>,
+            component: <BinWorkerDetails workerDetails={workerData} binDetails={binData} setBinDetails={setBinData} setWorkerData={setWorkerData}/>,
+            roles: [3, 4],
             option: 3
         },
         {
@@ -114,6 +126,7 @@ const ManageBinDetails = () => {
             selectedIcon: <MapIcon color={'secondary'}/>,
             title: "Map View",
             component: <MapView binData={binData} />,
+            roles: [1, 2, 3, 4],
             option: 4
         },
     ];
@@ -121,7 +134,7 @@ const ManageBinDetails = () => {
     useEffect(() => {
         setLoading(true);
         getBinDetails(id)
-            .then((res)=>{
+            .then((res) => {
                 setBinData(res);
                 if (res.type === 2) {
                     setParentBinId(res.parent.binId);
@@ -136,7 +149,7 @@ const ManageBinDetails = () => {
             .finally(()=>{
                 setLoading(false);
             });
-    },[]);
+    },[id]);
 
     const getBinType = () => {
         // console.log(parentBinId);
@@ -146,6 +159,23 @@ const ManageBinDetails = () => {
             case 2:
                 return `Child (Parent: ${parentBinId})`;
         }
+    }
+
+    const handleDeleteBin = () => {
+        Confirm('Are you Sure ?', 'Do you really want to Delete ?', 'Ok').then(() => {
+            setDeleteLoading(true);
+            removeBin(id)
+                .then(() => {
+                    enqueueSnackbar('Bin removed.', { variant: 'success' });
+                    Router.push('/admin/manageBin');
+                })
+                .catch((e) => {
+                    enqueueSnackbar(e.message, { variant: 'warning' });
+                })
+                .finally(() => {
+                    setDeleteLoading(false);
+                });
+        });
     }
 
     return (
@@ -163,18 +193,51 @@ const ManageBinDetails = () => {
                                         {binData && binData.binId ? binData.binId : 'N/A'}
                                     </Typography>
                                     <Box my={0.5} />
-                                    <Typography style={{fontSize: '14px', color: 'rgba(18, 73, 84, 0.75)'}}>
+                                    <Box display={'flex'} flexDirection={'row'} justifyContent={'center'} alignItems={'center'}>
                                         {
-                                            getBinType()
+                                            type === 2 ? (
+                                                <Typography
+                                                    style={{
+                                                        fontSize: '14px',
+                                                        color: 'rgba(18, 73, 84, 0.75)',
+                                                        textTransform: 'none',
+                                                        fontWeight: '600',
+                                                        letterSpacing: '0.06em'
+                                                    }}
+                                                    component={Button}
+                                                    onClick={() => Router.push(`/admin/manageBin/${binData.parent._id}`)}
+                                                >
+                                                    {
+                                                        getBinType()
+                                                    }
+                                                </Typography>
+                                            ) : (
+                                                <Typography
+                                                    style={{fontSize: '14px', color: 'rgba(18, 73, 84, 0.75)'}}
+                                                >
+                                                    {
+                                                        getBinType()
+                                                    }
+                                                </Typography>
+                                            )
                                         }
-                                    </Typography>
+                                        {/*{*/}
+                                        {/*    type && type === 2 ? (*/}
+                                        {/*        <IconButton>*/}
+                                        {/*            <img src={GotoIcon} alt={'GotoIcon'} width={'50%'}/>*/}
+                                        {/*        </IconButton>*/}
+                                        {/*    ) : null*/}
+                                        {/*}*/}
+                                    </Box>
                                 </Box>
                             </Card>
                             <Box mt={2}/>
                             <Card style={{marginTop: '0px', width: '100%', borderRadius: '6px'}} >
                                 <List component="nav">
                                     {
-                                        test.map((each,position)=>
+                                        test.filter(
+                                            each => each.roles.indexOf(user?.role) !== -1
+                                        ).map((each,position)=>
                                             <ListItem
                                                 button
                                                 selected={option === position + 1}
@@ -199,11 +262,37 @@ const ManageBinDetails = () => {
                             <Card style={{width: '100%', marginTop: '0px'}}>
                                 <Box display={'flex'} justifyContent={'center'} p={2} flexDirection={'column'} bgcolor={'#fff'}>
                                     {
-                                        test?.[option-1].component
+                                        test.filter(
+                                            each => each.roles.indexOf(user?.role) !== -1
+                                        )?.[option-1].component
                                     }
                                 </Box>
                             </Card>
                         </Grid>
+                        {
+                            user.role === 3 || user.role === 4 ? (
+                                <Grid item md={12} sm={12} xs={12} justify={'center'} alignItems={'center'}>
+                                    <Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
+                                        <Button
+                                            variant={'contained'}
+                                            color={'secondary'}
+                                            startIcon={<DeleteForeverRoundedIcon />}
+                                            style={{textTransform: 'none'}}
+                                            disabled={deleteLoading}
+                                            onClick={handleDeleteBin}
+                                        >
+                                            {
+                                                deleteLoading ? (
+                                                    <CircularProgress size={24} color={'secondary'}/>
+                                                ) : (
+                                                    'Delete Bin'
+                                                )
+                                            }
+                                        </Button>
+                                    </Box>
+                                </Grid>
+                            ) : null
+                        }
                     </>
                     : <Box
                         display={'flex'}

@@ -114,7 +114,7 @@ const Profile = () => {
         phone,
         gender,
         zone,
-        address: { addressLine, street, landmark, pinCode }
+        address: { addressLine, street, landmark = 'N/A', pinCode }
     } = user;
 
     let userGender = gender === 1 ? 'Male' : gender === 2 ? 'Female' : 'Others';
@@ -216,6 +216,9 @@ const Profile = () => {
                                             </TableRow>
                                             <TableRow>
                                                 <UserAddressTable label={'Locality'} value={street}/>
+                                            </TableRow>
+                                            <TableRow>
+                                                <UserAddressTable label={'Landmark'} value={landmark}/>
                                             </TableRow>
                                             <TableRow>
                                                 <UserAddressTable label={'Pin-Code'} value={pinCode}/>

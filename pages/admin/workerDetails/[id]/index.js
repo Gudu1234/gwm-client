@@ -4,7 +4,7 @@
 
 import {
     Avatar, Badge,
-    Box,
+    Box, Button, CircularProgress,
     Grid,
     List,
     ListItem,
@@ -16,11 +16,12 @@ import {makeStyles} from '@material-ui/styles';
 import React, {useEffect, useMemo, useState} from 'react';
 import {useSnackbar} from 'notistack';
 import {useRouter} from 'next/router';
-import {editDetails, getUserDetails} from '../../../../src/apis/user';
+import {editDetails, getUserDetails, removeWorker} from '../../../../src/apis/user';
 import TableLoader from '../../../../src/components/Skeleton/TableLoader';
 import DetailsIcon from '@material-ui/icons/Details';
 import HomeIcon from '@material-ui/icons/Home';
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteSweepRoundedIcon from '@material-ui/icons/DeleteSweepRounded';
+import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 import BasicDetails from '../../../../src/components/Workers/BasicDetails';
 import Address from '../../../../src/components/Workers/Address';
 import Card from '../../../../src/components/Card/Card';
@@ -28,6 +29,10 @@ import AssignedBins from '../../../../src/components/Workers/AssignedBins';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import ImageUploadDialog from '../../../../src/components/ImageUploadDialog';
 import UserStore from '../../../../src/store/userStore';
+import {useStore} from 'laco-react';
+import {createConfirmation} from 'react-confirm';
+import ConfirmDialog from '../../../../src/components/Confirm/confirmDialog';
+import Confirm from '../../../../src/components/Confirm';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -90,81 +95,41 @@ const WorkerDetails = () => {
     const { id } = Router.query;
     const [userData, setUserData] = useState();
     const [loading, setLoading] = useState(true);
+    const [deleteLoading, setDeleteLoading] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
     const [avatar, setAvatar] = useState(userData?.avatar);
     const [avatarEdited, setAvatarEdited] = useState(false);
     const role = useMemo(()=> userData?.role,[userData]);
+
+    const { user } = useStore(UserStore);
+
+    const confirm = createConfirmation(ConfirmDialog);
 
     const test = [
         {
             icon: <DetailsIcon color={'primary'}/>,
             selectedIcon: <DetailsIcon color={'secondary'}/>,
             title: "Basic Details",
-            component: <BasicDetails userData={userData} />,
-            roles: [1, 2, 3],
+            component: <BasicDetails userDetails={userData} setUserDetails={setUserData} />,
+            roles: [1, 2, 3, 4],
             option: 2
         },
         {
             icon: <HomeIcon color={'primary'}/>,
             selectedIcon: <HomeIcon color={'secondary'}/>,
             title: "Address",
-            component: <Address userData={userData}/>,
-            roles: [1, 2, 3],
+            component: <Address userDetails={userData} setUserDetails={setUserData}/>,
+            roles: [1, 2, 3, 4],
             option: 3
         },
         {
-            icon: <DeleteIcon color={'primary'}/>,
-            selectedIcon: <DeleteIcon color={'secondary'}/>,
+            icon: <DeleteSweepRoundedIcon color={'primary'}/>,
+            selectedIcon: <DeleteSweepRoundedIcon color={'secondary'}/>,
             title: "Assigned Bins",
             component: <AssignedBins userId={id} />,
-            roles: [1, 2],
+            roles: [1, 2, 3, 4],
             option: 4
         },
-        // {
-        //     icon: <AddShoppingCartIcon />,
-        //     title: "Personal Orders",
-        //     component: <AllOrders option={option} userId={id}/>,
-        //     roles: [1,2,3],
-        //     option: 5
-        // },
-        // {
-        //     icon: <DriveEtaIcon />,
-        //     title: "Delivery",
-        //     component: <React.Fragment>
-        //         <AllDeliveryBoyOrders userId={id}/>
-        //         <AllDeliveryBoyCompletedOrders userId={id}/>
-        //     </React.Fragment>,
-        //     roles: [3],
-        //     option: 6
-        // },
-        // {
-        //     icon: <DetailsIcon />,
-        //     title: "Appointment Slots",
-        //     component: <AppointmentSlots id={userData?.doctorDetails ? {doctor: id} : {user: id}} />,
-        //     roles: [1,2],
-        //     option: 7
-        // },
-        // {
-        //     icon: <DetailsIcon />,
-        //     title: "Consultation History",
-        //     component: <Consultation id={userData?.doctorDetails ? {doctor: id} : {user: id}} />,
-        //     roles: [1,2],
-        //     option: 7
-        // },
-        // {
-        //     icon: <LocalHospitalIcon />,
-        //     title: "Professional Details",
-        //     component: <DoctorProfessionalDetails userData={userData} />,
-        //     roles: [2],
-        //     option: 8
-        // },
-        // {
-        //     icon: <GamesIcon />,
-        //     title: "Others",
-        //     component: <DoctorCertificates certificates={userData?.doctorDetails?.certificates} />,
-        //     roles: [2],
-        //     option: 9
-        // },
     ];
 
     useEffect(() => {
@@ -206,6 +171,23 @@ const WorkerDetails = () => {
         default:
             return 'Super Admin';
         }
+    }
+
+    const handleDeleteWorker = () => {
+        Confirm('Are you Sure ?', 'Do you really want to Delete ?', 'Ok').then(() => {
+            setDeleteLoading(true);
+            removeWorker(id)
+                .then(() => {
+                    enqueueSnackbar('Worker removed.', { variant: 'success' });
+                    Router.push('/admin/worker');
+                })
+                .catch((e) => {
+                    enqueueSnackbar(e.message, { variant: 'warning' });
+                })
+                .finally(() => {
+                    setDeleteLoading(false);
+                });
+        });
     }
 
     return (
@@ -255,7 +237,7 @@ const WorkerDetails = () => {
                                 <List component="nav">
                                     {
                                         test.filter(
-                                            each => each.roles.indexOf(userData?.role) !== -1
+                                            each => each.roles.indexOf(user?.role) !== -1
                                         ).map((each,position)=>
                                             <ListItem
                                                 button
@@ -282,12 +264,36 @@ const WorkerDetails = () => {
                                 <Box display={'flex'} justifyContent={'center'} p={2} flexDirection={'column'} bgcolor={'#fff'}>
                                     {
                                         test.filter(
-                                            each => each.roles.indexOf(userData?.role) !== -1
+                                            each => each.roles.indexOf(user?.role) !== -1
                                         )?.[option-1].component
                                     }
                                 </Box>
                             </Card>
                         </Grid>
+                        {
+                            user.role === 4 ? (
+                                <Grid item md={12} sm={12} xs={12} justify={'center'} alignItems={'center'}>
+                                    <Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
+                                        <Button
+                                            variant={'contained'}
+                                            color={'secondary'}
+                                            startIcon={<DeleteForeverRoundedIcon />}
+                                            style={{textTransform: 'none'}}
+                                            disabled={deleteLoading}
+                                            onClick={handleDeleteWorker}
+                                        >
+                                            {
+                                                deleteLoading ? (
+                                                    <CircularProgress size={24} color={'secondary'}/>
+                                                ) : (
+                                                    'Delete Worker'
+                                                )
+                                            }
+                                        </Button>
+                                    </Box>
+                                </Grid>
+                            ) : null
+                        }
                         <ImageUploadDialog
                             openDialog={openDialog}
                             setOpenDialog={setOpenDialog}

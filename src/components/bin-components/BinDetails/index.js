@@ -1,10 +1,15 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import theme from '../../../theme';
 import {makeStyles} from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import {Button} from '@material-ui/core';
+import EditIcon from '../../../../public/EditIcon.svg';
+import {useStore} from 'laco-react';
+import UserStore from '../../../store/userStore';
+import EditBinAddressDialog from '../EditBinAddressDialog';
 
 const useStyles = makeStyles(() => ({
     caption: {
@@ -29,21 +34,58 @@ const useStyles = makeStyles(() => ({
         letterSpacing: '0.06em',
         color: 'rgba(18, 73, 84, 0.75)'
     },
+    editButton: {
+        minWidth: 0,
+        borderRadius: '10px',
+        height: '35px',
+        width: '35px',
+    },
 }));
 
-const BinDetails = ({binData}) => {
+const BinDetails = ({binDetails, setBinDetails}) => {
 
     const classes = useStyles();
+
+    const { user } = useStore(UserStore);
+
+    const [open, setOpen] = useState(false);
+
+    const [binData, setBinData] = useState(binDetails);
+
+    const { role } = user;
+
+    useEffect(() => {
+        setBinDetails(binData);
+    }, [binData]);
 
     return(
         <Grid container spacing={2}>
             <Grid item md={12} sm={12} xs={12}>
-                <Box display={'flex'} mb={1} width={'100%'}
+                <Box display={'flex'} flexDirection={'row'} mb={1} width={'100%'}
                     bgcolor={theme.palette.primary.main} pl={1.5} pt={1.5} pb={1.5}
-                    borderRadius={3}>
+                    borderRadius={3}
+                    justifyContent={'center'}
+                    alignItems={'center'}
+                >
                     <Typography style={{color: '#fff'}}>
                         { 'Address Details' }
                     </Typography>
+                    <Box flex={1} />
+                    {
+                        role === 3 || role === 4 ? (
+                            <Button
+                                className={classes.editButton}
+                                color={'secondary'}
+                                onClick={() => {
+                                    setOpen(true);
+                                }}
+                                style={{ background: '#FF9A3E', paddingRight: '14px', marginRight: '10px' }}
+                                variant={'contained'}
+                            >
+                                <img alt={'Edit Icon'} src={EditIcon} />
+                            </Button>
+                        ) : null
+                    }
                 </Box>
             </Grid>
             <Grid item md={6} sm={12} xs={12}>
@@ -133,12 +175,14 @@ const BinDetails = ({binData}) => {
                     }
                 </Box>
             </Grid>
+            <EditBinAddressDialog setOpen={setOpen} open={open} binData={binData} setBinData={setBinData}/>
         </Grid>
     );
 };
 
 BinDetails.propTypes = {
-    binData: PropTypes.any
+    binDetails: PropTypes.any,
+    setBinDetails: PropTypes.any
 };
 
 export default BinDetails;
