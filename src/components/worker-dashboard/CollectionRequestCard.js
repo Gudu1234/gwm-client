@@ -2,10 +2,12 @@
  * Created by Soumya (soumya@smarttersstudio.com) on 03/07/21 at 1:54 AM.
  */
 import {makeStyles} from '@material-ui/styles';
-import {Box, Button, InputBase, Typography} from '@material-ui/core';
+import {Box, Button, CircularProgress, InputBase, Typography} from '@material-ui/core';
 import CardBody from '../Card/CardBody';
 import Card from '../Card/Card';
 import React, {useState} from 'react';
+import {useSnackbar} from 'notistack';
+import {requestTask} from '../../apis/task';
 
 const useStyle = makeStyles((theme) => ({
     collectionRequestDiv: {
@@ -22,6 +24,27 @@ const CollectionRequestCard = () => {
     const classes = useStyle();
 
     const [parentBinId, setParentBinId] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const { enqueueSnackbar } = useSnackbar();
+
+    const handleRequest = () => {
+        if (parentBinId.trim() === '') {
+            enqueueSnackbar('Please Enter Bin ID.', { variant: 'warning' });
+            return ;
+        }
+        setLoading(true);
+        requestTask(parentBinId)
+            .then(() => {
+                enqueueSnackbar('Successfully request for collection.', { variant: 'success' });
+            })
+            .catch((e) => {
+                enqueueSnackbar(e.message, { variant: 'warning' })
+            })
+            .finally(() => {
+                setLoading(false);
+            })
+    };
 
     return (
         <Card style={{marginLeft: '0px', marginRight: '0px', width: '100%'}}>
@@ -59,11 +82,15 @@ const CollectionRequestCard = () => {
                     <Button
                         variant={'contained'}
                         color={'secondary'}
+                        disabled={loading}
                         style={{
                             textTransform: 'none',
                         }}
+                        onClick={handleRequest}
                     >
-                        {'Request'}
+                        {loading ? <CircularProgress
+                            size={24} color={'secondary'}
+                        /> : 'Request'}
                     </Button>
                 </Box>
             </CardBody>
