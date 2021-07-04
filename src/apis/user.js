@@ -2,6 +2,7 @@
  * Created by Soumya (soumya@smarttersstudio.com) on 29/05/21 at 6:35 PM.
  */
 import {userService} from '../config/endpoints';
+import moment from 'moment';
 
 export const getAllCleaners = ($skip, $limit, $search) => userService.find({
     query: {
@@ -76,3 +77,17 @@ export const getUserDetails = (id) => userService.get(
         }
     }
 );
+
+export const monitorDrivers = () => userService.find({
+    query: {
+        role: 2,
+        status: 1,
+        // coordinatesUpdated: {
+        //     $gte: moment().subtract(5, 'minutes'),
+        //     $lte: moment().add(5, 'minutes'),
+        // },
+        coordinatesUpdatedAt: { $ne: null },
+        $limit: -1,
+        $populate: 'zone',
+    }
+});

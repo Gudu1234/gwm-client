@@ -130,6 +130,13 @@ function Navigator(props) {
             roles: [3, 4],
         },
         {
+            id: 'Monitor Drivers',
+            icon: MailIcon,
+            active: Router.asPath === '/admin/monitorDrivers',
+            href: '/admin/monitorDrivers',
+            roles: [3, 4],
+        },
+        {
             id: 'Profile',
             icon: ProfileIcon,
             active: Router.asPath === '/admin/profile',

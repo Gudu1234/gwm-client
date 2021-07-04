@@ -120,7 +120,7 @@ const HomeAppbar = () => {
                 if ( window.innerWidth < 450 && window.pageYOffset > 5) {
                     setOnTop(false);
                 } else {
-                    console.log(window.pageYOffset);
+                    // console.log(window.pageYOffset);
                     setOnTop(true);
                 }
             }

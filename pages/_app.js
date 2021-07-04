@@ -11,6 +11,7 @@ import AppLoader from '../src/components/loaders/AppLoader';
 import Layout from '../src/layouts/Layout';
 import UserStore from '../src/store/userStore';
 import 'cropperjs/dist/cropper.css';
+import {editDetails} from '../src/apis/user';
 
 
 export default function MyApp(props) {
@@ -51,6 +52,25 @@ export default function MyApp(props) {
                         //     setLoading(false);
                         // });
                         setLoading(false);
+                        setInterval(() => {
+                            const { role } = user;
+                            if (role === 2) {
+                                console.log('I am driver.');
+                                console.log(new Date().getHours() > 6 && new Date().getHours() < 18);
+                                if (new Date().getHours() > 6 && new Date().getHours() < 18) {
+                                    if (navigator.geolocation) {
+                                        navigator.geolocation.getCurrentPosition((position) => {
+                                            const currentLatitude = position.coords.latitude;
+                                            const currentLongitude = position.coords.longitude;
+
+                                            editDetails(user._id, {
+                                                coordinates: [currentLongitude, currentLatitude]
+                                            });
+                                        });
+                                    }
+                                }
+                            }
+                        }, 60000);
                     }
                 })
                 .catch((e) => {
