@@ -6,9 +6,9 @@ import Axios from 'axios';
 
 export const cookieStorage = new CookieStorage();
 
-const restClient = rest('http://192.168.15.40:3030');
+// const restClient = rest('http://192.168.15.40:3030');
 
-// const restClient = rest('https://gwm-backend.herokuapp.com');
+const restClient = rest('https://gwm-backend.herokuapp.com');
 
 const app = feathers();
 
