@@ -52,21 +52,19 @@ export default function MyApp(props) {
                         //     setLoading(false);
                         // });
                         setLoading(false);
+                        if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition((position) => {
+                                const currentLatitude = position.coords.latitude;
+                                const currentLongitude = position.coords.longitude;
+
+                                editDetails(user._id, {
+                                    coordinates: [currentLongitude, currentLatitude]
+                                });
+                            });
+                        }
                         setInterval(() => {
                             const { role } = user;
                             if (role === 2) {
-                                // if (new Date().getHours() > 6 && new Date().getHours() < 18) {
-                                //     if (navigator.geolocation) {
-                                //         navigator.geolocation.getCurrentPosition((position) => {
-                                //             const currentLatitude = position.coords.latitude;
-                                //             const currentLongitude = position.coords.longitude;
-                                //
-                                //             editDetails(user._id, {
-                                //                 coordinates: [currentLongitude, currentLatitude]
-                                //             });
-                                //         });
-                                //     }
-                                // }
                                 if (navigator.geolocation) {
                                     navigator.geolocation.getCurrentPosition((position) => {
                                         const currentLatitude = position.coords.latitude;
