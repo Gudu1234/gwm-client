@@ -11,6 +11,7 @@ import PendingTaskCard from '../../../src/components/worker-dashboard/PendingTas
 import CollectionRequestCard from '../../../src/components/worker-dashboard/CollectionRequestCard';
 import TableLoader from '../../../src/components/Skeleton/TableLoader';
 import {getAllTasks} from '../../../src/apis/task';
+import {editDetails} from '../../../src/apis/user';
 
 const useStyle = makeStyles((theme) => ({
     gridItemStyle: {
@@ -37,6 +38,12 @@ const Dashboard = () => {
 
     useEffect(() => {
         setLoading(true);
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const currentLatitude = position.coords.latitude;
+                const currentLongitude = position.coords.longitude;
+            });
+        }
         getAllTasks(1)
             .then((res) => {
                 setTask(res.length);
