@@ -135,7 +135,7 @@ const MapView = ({google, binData}) => {
                         icon={{
                             url: Locator,
                             // anchor: new google.maps.Point(32,32),
-                            scaledSize: new google.maps.Size(60, 60)
+                            scaledSize: new google.maps.Size(30, 40)
                         }}
                     />
                     <InfoWindow
