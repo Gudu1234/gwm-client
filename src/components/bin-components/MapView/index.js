@@ -5,10 +5,9 @@ import Typography from '@material-ui/core/Typography';
 import theme from '../../../theme';
 import {makeStyles} from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Map, Marker, GoogleApiWrapper, InfoWindow} from 'google-maps-react';
 import {Button} from '@material-ui/core';
-import Link from '../../Link';
-import {useRouter} from 'next/router';
+import Locator from '../../../../public/Locator.svg';
 
 const useStyles = makeStyles(() => ({
     caption: {
@@ -39,39 +38,45 @@ const MapView = ({google, binData}) => {
 
     const classes = useStyles();
 
-    const { coordinates, address, street, landmark, pinCode, binId } = binData;
+    const { coordinates, address, street, landmark, pinCode, binId, currentAddress } = binData;
 
     const latitude = coordinates[1];
     const longitude = coordinates[0];
 
     const [loading, setLoading] = useState(false);
-
-    const Router = useRouter();
-
-    // console.log(latitude, longitude);
+    const [visibleInfoWindow, setVisibleInfoWindow] = useState(true);
+    const [activeMarker, setActiveMarker] = useState(null);
+    const [binLatitude, setBinLatitude] = useState(null);
+    const [binLongitude, setBinLongitude] = useState(null);
+    const [binAddress, setBinAddress] = useState(currentAddress);
 
     const getLocation = () => {
-        // alert('Button is clicked.');
         setLoading(true);
         if (navigator.geolocation) {
-            // alert('Geo location check.');
             navigator.geolocation.getCurrentPosition((position) => {
                 const currentLatitude = position.coords.latitude;
                 const currentLongitude = position.coords.longitude;
-                // console.log(currentLatitude, currentLongitude);
-                // alert(`${currentLatitude}, ${currentLongitude}`);
                 setLoading(false);
 
                 let link = `https://www.google.com/maps/dir/${currentLatitude},%20${currentLongitude}/${latitude},%20${longitude}`;
 
-                // Router.push(link);
                 window.open(link, '_blank');
             });
         } else {
             setLoading(false);
-            // alert('Geo location not supported.');
         }
     };
+
+    const handleMarkerClick = (props, marker) => {
+        const { coordinates, currentAddress } = binData;
+        const latitude = coordinates[1];
+        const longitude = coordinates[0];
+        setBinAddress(currentAddress);
+        setBinLatitude(latitude);
+        setBinLongitude(longitude);
+        setActiveMarker(marker);
+        setVisibleInfoWindow(true);
+    }
 
     return(
         <Grid container spacing={2}>
@@ -107,8 +112,6 @@ const MapView = ({google, binData}) => {
                     initialCenter={{
                         lat: latitude.toString(),
                         lng: longitude.toString()
-                        // lat: orderData.pickupLocation[0],
-                        // lng: orderData.pickupLocation[1]
                     }}
                     containerStyle={{
                         width: '100%',
@@ -119,16 +122,33 @@ const MapView = ({google, binData}) => {
                     center={{
                         lat: latitude.toString(),
                         lng: longitude.toString()
-                        // lat: orderData.pickupLocation[0],
-                        // lng: orderData.pickupLocation[1]
                     }}
-
                 >
                     <Marker
                         title={`${address}, ${street}, ${landmark} - ${pinCode}`}
                         name={`${binId}`}
                         position={{lat: latitude.toString(), lng: longitude.toString()}}
+                        onClick = {
+                            (props, marker) =>
+                                handleMarkerClick(props, marker)
+                        }
+                        icon={{
+                            url: Locator,
+                            // anchor: new google.maps.Point(32,32),
+                            scaledSize: new google.maps.Size(60, 60)
+                        }}
                     />
+                    <InfoWindow
+                        visible={visibleInfoWindow}
+                        marker={activeMarker}
+                        onClose={() => setVisibleInfoWindow(false)}
+                    >
+                        <div style={{maxWidth: '400px', borderRadius: '10px', background: '#E8F5F8'}}>
+                            <b>Latitude: </b>{binLatitude}<br/>
+                            <b>Longitude: </b>{binLongitude}<br/>
+                            <b>Address: </b>{binAddress}
+                        </div>
+                    </InfoWindow>
                 </Map>
             </Grid>
         </Grid>

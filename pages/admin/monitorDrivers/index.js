@@ -3,7 +3,7 @@
  */
 
 import {Box, Button} from '@material-ui/core';
-import {GoogleApiWrapper, Map, Marker} from 'google-maps-react';
+import {GoogleApiWrapper, InfoWindow, Map, Marker} from 'google-maps-react';
 import Grid from '@material-ui/core/Grid';
 import theme from '../../../src/theme';
 import Typography from '@material-ui/core/Typography';
@@ -12,6 +12,7 @@ import {monitorDrivers} from '../../../src/apis/user';
 import TableLoader from '../../../src/components/Skeleton/TableLoader';
 import axios from 'axios';
 import InfoDialog from '../../../src/components/monitor-driver/InfoDialog';
+import Locator from '../../../public/Locator.svg';
 
 const MonitorDrivers = ({google}) => {
 
@@ -23,27 +24,20 @@ const MonitorDrivers = ({google}) => {
     const [user, setUser] = useState(null);
     const [address, setAddress] = useState('');
     const [refresh, setRefresh] = useState(false);
+    const [visibleInfoWindow, setVisibleInfoWindow] = useState(true);
+    const [activeMarker, setActiveMarker] = useState(null);
+    const [driverLatitude, setDriverLatitude] = useState(null);
+    const [driverLongitude, setDriverLongitude] = useState(null);
 
-    const handleMarkerClick = (each) => {
-        const { coordinates } = each;
+    const handleMarkerClick = (props, marker, e, each) => {
+        const { coordinates, currentAddress } = each;
         const latitude = coordinates[1];
         const longitude = coordinates[0];
-        const apiKey = process.env.NEXT_PUBLIC_PLACES_KEY;
-        const url = `https://us1.locationiq.com/v1/reverse.php?key=${apiKey}&lat=${latitude}&lon=${longitude}&format=json`;
-        const config = {
-            method: 'get',
-            url,
-            headers: { }
-        };
-        axios(config)
-            .then((res) => {
-                setAddress(res.data.display_name);
-                setUser(each);
-                setOpen(true);
-            })
-            .catch((e) => {
-                console.log(e);
-            })
+        setAddress(currentAddress);
+        setDriverLatitude(latitude);
+        setDriverLongitude(longitude);
+        setActiveMarker(marker);
+        setVisibleInfoWindow(true);
     }
 
     useEffect(() => {
@@ -119,28 +113,36 @@ const MonitorDrivers = ({google}) => {
                                 {
                                     users.map((each) => {
                                         const { name, username, phone, coordinates } = each;
-                                        console.log('http://maps.google.com/mapfiles/kml/shapes/truck.png');
                                         return (
                                             <Marker
                                                 title={`${username}, +91-${phone}`}
                                                 name={`${name}`}
                                                 position={{lat: coordinates[1], lng: coordinates[0]}}
-                                                onClick={() => handleMarkerClick(each)}
-                                                // icon={{
-                                                //     url: "http://maps.google.com/mapfiles/kml/shapes/truck.png",
-                                                //     // anchor: new google.maps.Point(32,32),
-                                                //     scaledSize: new google.maps.Size(35,35)
-                                                // }}
-                                                // position={{lat: 37.778519, lng: -122.405640}}
-                                            />
+                                                onClick={
+                                                    (props, marker, e) =>
+                                                        handleMarkerClick(props, marker, e, each)
+                                                }
+                                                icon={{
+                                                    url: Locator,
+                                                    // anchor: new google.maps.Point(32,32),
+                                                    scaledSize: new google.maps.Size(60, 60)
+                                                }}
+                                            >
+                                            </Marker>
                                         )
                                     })
                                 }
-                                {/*<Marker*/}
-                                {/*    title={`${address}, ${street}, ${landmark} - ${pinCode}`}*/}
-                                {/*    name={`${binId}`}*/}
-                                {/*    position={{lat: latitude.toString(), lng: longitude.toString()}}*/}
-                                {/*/>*/}
+                                <InfoWindow
+                                    visible={visibleInfoWindow}
+                                    marker={activeMarker}
+                                    onClose={() => setVisibleInfoWindow(false)}
+                                >
+                                    <div style={{maxWidth: '400px', borderRadius: '10px', background: '#E8F5F8'}}>
+                                        <b>Latitude: </b>{driverLatitude}<br/>
+                                        <b>Longitude: </b>{driverLongitude}<br/>
+                                        <b>Address: </b>{address}
+                                    </div>
+                                </InfoWindow>
                             </Map>
                         </Grid>
                         <InfoDialog open={open} setOpen={setOpen} user={user} address={address}/>

@@ -82,11 +82,11 @@ export const monitorDrivers = () => userService.find({
     query: {
         role: 2,
         status: 1,
-        // coordinatesUpdated: {
-        //     $gte: moment().subtract(5, 'minutes'),
-        //     $lte: moment().add(5, 'minutes'),
-        // },
-        coordinatesUpdatedAt: { $ne: null },
+        coordinatesUpdatedAt: {
+            $gte: moment().subtract(60, 'minutes').toDate(),
+            $lte: moment().add(60, 'minutes').toDate(),
+        },
+        // coordinatesUpdatedAt: { $ne: null },
         $limit: -1,
         $populate: 'zone',
     }
