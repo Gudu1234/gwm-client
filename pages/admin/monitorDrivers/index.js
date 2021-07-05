@@ -29,11 +29,27 @@ const MonitorDrivers = ({google}) => {
     const [driverLatitude, setDriverLatitude] = useState(null);
     const [driverLongitude, setDriverLongitude] = useState(null);
 
-    const handleMarkerClick = (props, marker, e, each) => {
-        const { coordinates, currentAddress } = each;
+    const handleMarkerClick = async (props, marker, e, each) => {
+        const { coordinates } = each;
         const latitude = coordinates[1];
         const longitude = coordinates[0];
-        setAddress(currentAddress);
+
+        const apiKey = process.env.NEXT_PUBLIC_PLACES_KEY;
+
+        const url = `https://us1.locationiq.com/v1/reverse.php?key=${apiKey}&lat=${latitude}&lon=${longitude}&format=json`;
+
+        const config = {
+            method: 'get',
+            url,
+            headers: {},
+        };
+        // eslint-disable-next-line no-unused-vars
+        const res = await axios(config).catch((e) => {
+            console.log(e);
+            return null;
+        });
+
+        setAddress(res ? res.data.display_name : 'Wrong Coordinates');
         setDriverLatitude(latitude);
         setDriverLongitude(longitude);
         setActiveMarker(marker);
