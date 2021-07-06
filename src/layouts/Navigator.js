@@ -21,6 +21,7 @@ import ManageBinIcon from '../../public/NavAssets/Manage bin.svg';
 import MailIcon from '../../public/NavAssets/Mail white.svg';
 import ProfileIcon from '../../public/NavAssets/Profile.svg';
 import TaskIcon from '../../public/NavAssets/TaskIcon.png';
+import MonitorDriverIcon from '../../public/Monitor_drivers.svg';
 
 const styles = (theme) => ({
     categoryHeader: {
@@ -131,7 +132,7 @@ function Navigator(props) {
         },
         {
             id: 'Monitor Drivers',
-            icon: MailIcon,
+            icon: MonitorDriverIcon,
             active: Router.asPath === '/admin/monitorDrivers',
             href: '/admin/monitorDrivers',
             roles: [3, 4],

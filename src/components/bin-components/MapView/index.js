@@ -7,7 +7,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import {Map, Marker, GoogleApiWrapper, InfoWindow} from 'google-maps-react';
 import {Button} from '@material-ui/core';
-import Locator from '../../../../public/Locator.svg';
+import Locator from '../../../../public/Locator_Icon.svg';
 
 const useStyles = makeStyles(() => ({
     caption: {
@@ -135,7 +135,7 @@ const MapView = ({google, binData}) => {
                         icon={{
                             url: Locator,
                             // anchor: new google.maps.Point(32,32),
-                            scaledSize: new google.maps.Size(30, 40)
+                            scaledSize: new google.maps.Size(25, 45)
                         }}
                     />
                     <InfoWindow

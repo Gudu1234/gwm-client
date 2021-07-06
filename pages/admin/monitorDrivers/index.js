@@ -11,8 +11,7 @@ import React, {useEffect, useState} from 'react';
 import {monitorDrivers} from '../../../src/apis/user';
 import TableLoader from '../../../src/components/Skeleton/TableLoader';
 import axios from 'axios';
-import InfoDialog from '../../../src/components/monitor-driver/InfoDialog';
-import Locator from '../../../public/Locator.svg';
+import Locator from '../../../public/Locator_Icon.svg';
 
 const MonitorDrivers = ({google}) => {
 
@@ -141,7 +140,7 @@ const MonitorDrivers = ({google}) => {
                                                 icon={{
                                                     url: Locator,
                                                     // anchor: new google.maps.Point(32,32),
-                                                    scaledSize: new google.maps.Size(30, 40)
+                                                    scaledSize: new google.maps.Size(25, 45)
                                                 }}
                                             >
                                             </Marker>
@@ -161,7 +160,6 @@ const MonitorDrivers = ({google}) => {
                                 </InfoWindow>
                             </Map>
                         </Grid>
-                        <InfoDialog open={open} setOpen={setOpen} user={user} address={address}/>
                     </Grid>
                 ) : (
                     <Box
