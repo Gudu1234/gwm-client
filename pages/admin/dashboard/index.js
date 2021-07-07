@@ -45,7 +45,7 @@ const Dashboard = () => {
                         <Grid item container xs={12} sm={6} md={3} justify={'center'} alignItems={'center'}>
                             <DashboardButtonCard
                                 icon={RequestBinIcon}
-                                typo1={'Manage Bin'}
+                                typo1={'Request Collection'}
                             />
                         </Grid>
                         <Grid item container xs={12} sm={6} md={3} justify={'center'} alignItems={'center'}>

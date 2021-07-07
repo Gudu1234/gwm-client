@@ -10,7 +10,7 @@ import {
     Box,
     Dialog,
     DialogContent,
-    DialogTitle,
+    DialogTitle, IconButton,
     Step,
     StepConnector,
     StepLabel,
@@ -24,10 +24,17 @@ import BusinessIcon from '@material-ui/icons/Business';
 import AddAddressDialog from './AddAddressDialog';
 import AddLocationDialog from './AddLocationDialog';
 import AddWorkerDialog from './AddWorkerDialog';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles(() => ({
     button: {
         marginTop: theme.spacing(2),
+    },
+    closeButton: {
+        position: 'absolute',
+        right: theme.spacing(1),
+        top: theme.spacing(1),
+        color: theme.palette.grey[500],
     },
 }));
 
@@ -38,6 +45,8 @@ const BinAddDialog = ({open, setOpen, updateBin, pinCode = '', address = '', str
     // console.log(pinCode, address, street);
 
     const handleClose = () => {
+        // console.log(open);
+        setActiveStep(0);
         setOpen(false);
         updateBin();
     };
@@ -127,11 +136,14 @@ const BinAddDialog = ({open, setOpen, updateBin, pinCode = '', address = '', str
     }
 
     return (
-        <Dialog fullWidth maxWidth={'sm'} onClose={handleClose} open={open}>
+        <Dialog aria-labelledby="form-dialog-title" fullWidth maxWidth={'sm'} onClose={handleClose} open={open}>
             <DialogTitle onClose={handleClose}>
                 <Typography>
                     {title[activeStep]}
                 </Typography>
+                <IconButton aria-label="close" className={classes.closeButton} onClick={handleClose}>
+                    <CloseIcon />
+                </IconButton>
             </DialogTitle>
             <DialogContent>
                 <div className={classes.root}>

@@ -5,11 +5,11 @@
 import {
     Avatar, Badge,
     Box, Button, CircularProgress,
-    Grid,
+    Grid, Icon,
     List,
     ListItem,
     ListItemIcon,
-    ListItemText,
+    ListItemText, SvgIcon,
     Typography
 } from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
@@ -33,6 +33,8 @@ import {useStore} from 'laco-react';
 import {createConfirmation} from 'react-confirm';
 import ConfirmDialog from '../../../../src/components/Confirm/confirmDialog';
 import Confirm from '../../../../src/components/Confirm';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import Tasks from '../../../../src/components/Workers/Tasks';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -129,6 +131,14 @@ const WorkerDetails = () => {
             component: <AssignedBins userId={id} />,
             roles: [1, 2, 3, 4],
             option: 4
+        },
+        {
+            icon: <AssignmentIcon color={'primary'}/>,
+            selectedIcon: <AssignmentIcon color={'secondary'}/>,
+            title: "Today's Tasks",
+            component: <Tasks userId={id} />,
+            roles: [1, 2, 3, 4],
+            option: 5
         },
     ];
 

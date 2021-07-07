@@ -83,6 +83,7 @@ function Layout({children, title}) {
                         variant="temporary"
                         open={mobileOpen}
                         onClose={handleDrawerToggle}
+                        setMobileOpen={setMobileOpen}
                     />
                 </Hidden>
                 <Hidden xsDown implementation="css">

@@ -20,7 +20,7 @@ import RequestBinIcon from '../../public/NavAssets/Request bin white.svg';
 import ManageBinIcon from '../../public/NavAssets/Manage bin.svg';
 import MailIcon from '../../public/NavAssets/Mail white.svg';
 import ProfileIcon from '../../public/NavAssets/Profile.svg';
-import TaskIcon from '../../public/NavAssets/TaskIcon.png';
+import TaskIcon from '../../public/NavAssets/TaskIcon.svg';
 import MonitorDriverIcon from '../../public/Monitor_drivers.svg';
 
 const styles = (theme) => ({
@@ -86,7 +86,7 @@ const styles = (theme) => ({
 });
 
 function Navigator(props) {
-    const { classes, ...other } = props;
+    const { classes, variant = 'permanent', PaperProps, open, onClose, setMobileOpen } = props;
 
     const Router = useRouter();
 
@@ -168,7 +168,7 @@ function Navigator(props) {
     ];
 
     return (
-        <Drawer variant="permanent" {...other} >
+        <Drawer variant={variant} open={open} PaperProps={PaperProps} onClose={onClose}>
             <List disablePadding style={{backgroundColor: '#124954'}}>
                 <div className={classes.main}>
                     <img className={classes.image} src={Logo}  alt="Logo" onClick={()=>Router.push('/')} />
@@ -177,10 +177,14 @@ function Navigator(props) {
 
                     if (!roles.includes(userRole)) return ;
 
-                    const [open, setOpen] = React.useState(true);
+                    // const [open, setOpen] = React.useState(true);
 
                     const handleClick = () => {
-                        setOpen(!open);
+                        console.log(open);
+                        // setOpen(!open);
+                        if (setMobileOpen) {
+                            setMobileOpen(false);
+                        }
                         Router.push(href);
                     };
 

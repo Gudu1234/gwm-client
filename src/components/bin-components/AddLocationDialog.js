@@ -62,18 +62,19 @@ const AddLocationDialog = ({setActiveStep, binData, setBinData, addressData = ''
             enqueueSnackbar('Please Enter both latitude and longitude.', { variant: 'warning' });
             return false;
         }
-        if (
-            !/^([+-])?((\d((\.)|\.\d{1,6})?)|(0*?[0-8]\d((\.)|\.\d{1,6})?)|(0*?90((\.)|\.0{1,6})?))$/.test(latitude.toString())
-        ) {
-            enqueueSnackbar('Please provide a valid latitude', { variant: 'warning' });
-            return false;
-        }
-        if (
-            !/^([+-])?((\d((\.)|\.\d{1,6})?)|(0*?\d\d((\.)|\.\d{1,6})?)|(0*?1[0-7]\d((\.)|\.\d{1,6})?)|(0*?180((\.)|\.0{1,6})?))$/.test(longitude.toString())
-        ) {
-            enqueueSnackbar('Please provide a valid longitude', { variant: 'warning' });
-            return false;
-        }
+        // if (
+        //     !/^([-+]?\d{1,2}([.]\d+)?),\s*([-+]?\d{1,3}([.]\d+)?)$/.test(latitude)
+        // ) {
+        //     console.log(latitude);
+        //     enqueueSnackbar('Please provide a valid latitude', { variant: 'warning' });
+        //     return false;
+        // }
+        // if (
+        //     !/^([-+]?\d{1,2}([.]\d+)?),\s*([-+]?\d{1,3}([.]\d+)?)$/.test(longitude)
+        // ) {
+        //     enqueueSnackbar('Please provide a valid longitude', { variant: 'warning' });
+        //     return false;
+        // }
         return true;
     };
 
