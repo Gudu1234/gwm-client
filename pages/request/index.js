@@ -317,7 +317,13 @@ const Request = () => {
                                 <Box my={2}/>
                                 <Grid container>
                                     <Grid item container justify={'center'} alignItems={'center'}>
-                                        <Button disabled={loading} onClick={() => handleSubmit()} variant="contained" color={'secondary'} style={{width: '200px'}}>
+                                        <Button
+                                            disabled={loading}
+                                            onClick={() => handleSubmit()}
+                                            variant="contained"
+                                            color={'secondary'}
+                                            style={{width: '200px', textTransform: 'none'}}
+                                        >
                                             {loading ? <CircularProgress
                                                 size={24} color={'secondary'}
                                             /> : 'Submit'}

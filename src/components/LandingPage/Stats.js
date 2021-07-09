@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
         fontSize: '24px',
         fontWeight: 'bold',
         lineHeight: '29px',
-        textAlign: 'right',
+        textAlign: 'center',
     },
     subHeadingText: {
         color: '#fff',
@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
         fontSize: '14px',
         fontWeight: '500',
         lineHeight: '17px',
-        textAlign: 'right',
+        textAlign: 'center',
         overflowWrap: 'break-word',
     },
     marginForStats: {
@@ -87,7 +87,7 @@ const Stats = () => {
                         px={3}
                     >
                         <Box>
-                            <img src={Worker} alt={'Worker'} width={'90%'} align={'left'}/>
+                            <img src={Worker} alt={'Worker'} width={'70%'} align={'left'}/>
                         </Box>
                         <Box flex={1} />
                         <Box width={'80%'} display={'flex'} flexDirection={'column'} py={5}>
@@ -106,7 +106,7 @@ const Stats = () => {
                         px={3}
                     >
                         <Box>
-                            <img src={Recycle} alt={'Recycle'} width={'80%'} align={'left'}/>
+                            <img src={Recycle} alt={'Recycle'} width={'70%'} align={'left'}/>
                         </Box>
                         <Box flex={1} />
                         <Box width={'80%'} display={'flex'} flexDirection={'column'} py={5}>
@@ -125,7 +125,7 @@ const Stats = () => {
                         px={3}
                     >
                         <Box>
-                            <img src={Energy} alt={'Energy'} width={'80%'} align={'left'}/>
+                            <img src={Energy} alt={'Energy'} width={'70%'} align={'left'}/>
                         </Box>
                         <Box flex={1} />
                         <Box width={'80%'} display={'flex'} flexDirection={'column'} py={5}>

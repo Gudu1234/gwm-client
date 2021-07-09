@@ -46,6 +46,15 @@ const useStyles = makeStyles({
         textAlign: 'justify',
         color: '#124954',
         letterSpacing: '0.04em',
+    },
+    contactUs: {
+        fontStyle: 'normal',
+        fontSize: '14px',
+        fontWeight: 'bold',
+        lineHeight: '150.5%',
+        textAlign: 'justify',
+        color: '#124954',
+        letterSpacing: '0.04em',
     }
 });
 
@@ -100,6 +109,17 @@ const Contact = () => {
 
     const handleSubmit = () => {
         setLoading(true);
+        if (
+            email.trim() === '' ||
+            name.trim() === '' ||
+            phone.trim() === '' ||
+            pin === 0 ||
+            message.trim() === ''
+        ) {
+            enqueueSnackbar('Please check your inputs!', { variant: 'warning' });
+            setLoading(false);
+            return ;
+        }
         if (!/^[0][1-9]\d{9}$|^[1-9]\d{9}$/.test(phone)) {
             enqueueSnackbar('Please provide a valid phone number!', { variant: 'warning' });
             setLoading(false);
@@ -125,11 +145,6 @@ const Contact = () => {
         if (feedbackType === 1) {
             contactData.ratings = rating;
         } else if (feedbackType === 3) {
-            // if (!binCode && !link) {
-            //     enqueueSnackbar('Please give the bin code or map link!', { variant: 'warning' });
-            //     setLoading(false);
-            //     return ;
-            // }
             contactData.binCode = binCode ? binCode : null;
             contactData.mapLink = link ? link : null;
         }
@@ -354,7 +369,13 @@ const Contact = () => {
                                     inputProps={{maxLength: 100}}
                                 />
                                 <Box my={2} />
-                                <Button disabled={loading} onClick={() => handleSubmit()} variant="contained" color={'secondary'} style={{width: '100px'}}>
+                                <Button
+                                    disabled={loading}
+                                    onClick={() => handleSubmit()}
+                                    variant="contained"
+                                    color={'secondary'}
+                                    style={{width: '100px', textTransform: 'none'}}
+                                >
                                     {loading ? <CircularProgress
                                         size={24} color={'secondary'}
                                     /> : 'Submit'}

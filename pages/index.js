@@ -16,15 +16,6 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: '#124954',
         width: '100%'
     },
-    homeTitle: {
-        fontSize: '45px',
-        fontWeight: 'bold',
-        lineHeight: '90px',
-        letterSpacing: '0.03em',
-        marginTop: '80px',
-        marginLeft: '125px',
-        'text-shadow': '-3px -3px 0 #fff, 3px -3px 0 #fff, -3px 3px 0 #fff, 3px 3px 0 #fff',
-    },
 
 }));
 
@@ -39,7 +30,6 @@ export default function Home() {
             <Box my={{md: 12, sm: 6, xs: 6}}/>
             <Stats />
             <OurService />
-            <Box my={3}/>
             <Footer />
         </Box>
     );

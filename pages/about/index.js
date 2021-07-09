@@ -117,7 +117,12 @@ const About = () => {
                     </Grid>
                     <Grid container>
                         <Grid item container justify={'center'} alignItems={'center'}>
-                            <Button variant="contained" color={'secondary'} onClick={() => {Router.push('/contact', '/contact')}}>
+                            <Button
+                                variant="contained"
+                                color={'secondary'}
+                                onClick={() => {Router.push('/contact', '/contact')}}
+                                style={{textTransform: 'none'}}
+                            >
                                 {'Contact'}
                             </Button>
                         </Grid>

@@ -9,6 +9,7 @@ import Disposal from '../../../public/Disposal.svg';
 import GetInTouch from '../../../public/GetInTouch.svg';
 import React from 'react';
 import Link from '../../Link';
+import {Animated} from 'react-animated-css';
 
 const useStyles = makeStyles(theme => ({
     imageVector: {
@@ -62,6 +63,11 @@ const useStyles = makeStyles(theme => ({
         fontSize: '36px',
         fontWeight: 'bold',
         lineHeight: '43px',
+        '@media (max-width:500px)': {
+            fontSize: 25,
+            lineHeight: '43px',
+            marginLeft: '20px'
+        },
     },
     getInTouchText: {
         color: '#fff',
@@ -70,12 +76,18 @@ const useStyles = makeStyles(theme => ({
         fontWeight: '500',
         lineHeight: '150.5%',
         letterSpacing: '0.04em',
+        '@media (max-width:500px)': {
+            fontSize: '14px',
+            marginLeft: '20px'
+        },
     }
 }));
 
 const OurService = () => {
 
     const classes = useStyles();
+
+    const content = 'We are always available to listen! Let us know if you want to give any suggestion or feedback about our system and working process or if you have any issues regarding bin maintenance and garbage collection.';
 
     return (
         <Box
@@ -99,7 +111,7 @@ const OurService = () => {
                 </Grid>
                 <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={6} md={6}>
                     <Box width={'100%'} display={'flex'} flexDirection={'column'} py={3} px={3}>
-                        <Typography className={classes.headingText} align={'center'}>
+                        <Typography className={classes.headingText} align={'left'}>
                             {'REQUEST'}
                         </Typography>
                         <Box my={1}/>
@@ -122,7 +134,7 @@ const OurService = () => {
             <Grid container>
                 <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={6} md={6}>
                     <Box width={'100%'} display={'flex'} flexDirection={'column'} py={3} px={3}>
-                        <Typography className={classes.headingText} align={'center'}>
+                        <Typography className={classes.headingText} align={'left'}>
                             {'COLLECTION'}
                         </Typography>
                         <Box my={1}/>
@@ -155,7 +167,7 @@ const OurService = () => {
                 </Grid>
                 <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={6} md={6}>
                     <Box width={'100%'} display={'flex'} flexDirection={'column'} py={3} px={3}>
-                        <Typography className={classes.headingText} align={'center'}>
+                        <Typography className={classes.headingText} align={'left'}>
                             {'DISPOSAL'}
                         </Typography>
                         <Box my={1}/>
@@ -166,7 +178,7 @@ const OurService = () => {
                 </Grid>
             </Grid>
             <Hidden xsDown>
-                <Box my={4} />
+                <Box my={6} />
                 <Grid container>
                     <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={6} md={6}>
                         <Box width={'100%'} display={'flex'} flexDirection={'column'} py={3} px={10}>
@@ -175,18 +187,7 @@ const OurService = () => {
                             </Typography>
                             <Box my={1}/>
                             <Typography className={classes.getInTouchText} align={'left'}>
-                                {'gwm@mc.gov.in'}
-                            </Typography>
-                            <Box my={1}/>
-                            <Typography className={classes.getInTouchText} align={'left'}>
-                                {'+91-9438000000'}
-                            </Typography>
-                            <Box my={1}/>
-                            <Typography className={classes.getInTouchText} align={'left'}>
-                                {'547, Saheed Nagar'}
-                            </Typography>
-                            <Typography className={classes.getInTouchText} align={'left'}>
-                                {'Bhubaneswar- 751007'}
+                                {content}
                             </Typography>
                             <Box my={2} />
                             <Box display={'flex'} flexDirection={'row'} className={classes.marginForButton}>
@@ -213,9 +214,52 @@ const OurService = () => {
                             </Box>
                         </Box>
                     </Grid>
-                    <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={6} md={6}>
-                        <Box display={'flex'} justifyContent={'center'}>
-                            <img src={GetInTouch} alt={'Collection'} width={'80%'} align={'center'}/>
+                    <Hidden xsDown>
+                        <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={6} md={6}>
+                            <Box display={'flex'} justifyContent={'center'}>
+                                <img src={GetInTouch} alt={'Collection'} width={'80%'} align={'center'}/>
+                            </Box>
+                        </Grid>
+                    </Hidden>
+                </Grid>
+            </Hidden>
+            <Hidden smUp>
+                <Box my={2} />
+                <Grid container>
+                    <Grid item container xs={12} sm={6} md={6}>
+                        <Box width={'95%'} display={'flex'} flexDirection={'column'} py={{xs: 6, sm: 12, md: 15}} >
+                            <Typography variant={'h1'} align={'left'} className={classes.getInTouch}>
+                                {
+                                    'GET IN TOUCH'
+                                }
+                            </Typography>
+                            <Box my={1} />
+                            <Typography align={'left'} className={classes.getInTouchText}>
+                                {content}
+                            </Typography>
+                            <Box my={2} />
+                            <Box display={'flex'} flexDirection={'row'} justifyContent={'center'} alignItems={'center'} px={1}>
+                                <Button
+                                    variant={'outlined'}
+                                    component={Link}
+                                    href={'/contact'}
+                                    as={'/contact'}
+                                    style={{color: '#fff', borderColor: '#fff', textTransform: 'none', textDecoration: 'none'}}
+                                >
+                                    {'Contact Us'}
+                                </Button>
+                                <Box px={2.5} />
+                                <Button
+                                    variant={'contained'}
+                                    color={'secondary'}
+                                    component={Link}
+                                    href={'/request'}
+                                    as={'/request'}
+                                    style={{textTransform: 'none', textDecoration: 'none'}}
+                                >
+                                    {'Request Bin'}
+                                </Button>
+                            </Box>
                         </Box>
                     </Grid>
                 </Grid>

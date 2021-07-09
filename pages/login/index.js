@@ -233,7 +233,7 @@ const Login = () => {
                                         size="small"
                                         variant="contained"
                                         // fullWidth
-                                        style={{width: '120px'}}
+                                        style={{width: '120px', textTransform: 'none'}}
                                     >
                                         {loading ? (
                                             <CircularProgress size={24} color={'secondary'}/>
