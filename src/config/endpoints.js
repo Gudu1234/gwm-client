@@ -22,6 +22,8 @@ export const resetPasswordService = app.service('reset-password');
 
 export const taskService = app.service('task');
 
+export const dashboardService = app.service('dashboard');
+
 export const uploadFile = (file) => {
     const formData = new FormData();
     formData.append('uri[]', file);

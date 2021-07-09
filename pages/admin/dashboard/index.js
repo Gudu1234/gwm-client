@@ -13,6 +13,7 @@ import EnergyIcon from '../../../public/CardAssets/Green Energy.svg';
 import RecycleIcon from '../../../public/CardAssets/Recycle.svg';
 import BinIcon from '../../../public/CardAssets/Green bin.svg';
 import DashboardChartCard from '../../../src/components/Dashboard/DashboardChartCard';
+import {getDashboardData} from '../../../src/apis/dashboard';
 
 const Dashboard = () => {
 
@@ -20,13 +21,25 @@ const Dashboard = () => {
     const [binAllocationData, setBinAllocationData] = useState({});
     const [loading, setLoading] = useState(true);
 
+    const [noMails, setNoMails] = useState(0);
+    const [mailLastUpdated, setMailLastUpdated] = useState('');
+    const [noRequests, setNoRequests] = useState(0);
+    const [requestLastUpdated, setRequestLastUpdated] = useState('');
+
     useEffect(() => {
         setLoading(true);
         const recycleData = [2, 5, 8, 12, 15, 20, 24, 30, 35, 45, 65, 80];
         const binData = [80, 90, 60, 40, 65, 75, 85, 150, 100, 55, 75, 200];
         setBinAllocationData(binAllocation(binData));
         setWasteRecycleData(wasteRecycle(recycleData));
-        console.log(loading);
+        getDashboardData()
+            .then((res) => {
+                let { mails, requests } = res;
+                setNoMails(mails.number);
+                setMailLastUpdated(mails.updateAtString);
+                setNoRequests(requests.number);
+                setRequestLastUpdated(requests.updateAtString);
+            })
         setLoading(false);
     }, [])
 
@@ -49,10 +62,10 @@ const Dashboard = () => {
                             />
                         </Grid>
                         <Grid item container xs={12} sm={6} md={3} justify={'center'} alignItems={'center'}>
-                            <DashboardCard icon={RequestBinIcon} text={'Bin Requests'} more={'4'}/>
+                            <DashboardCard icon={RequestBinIcon} text={'Bin Requests'} more={noRequests} lastUpdated={requestLastUpdated}/>
                         </Grid>
                         <Grid item container xs={12} sm={6} md={3} justify={'center'} alignItems={'center'}>
-                            <DashboardCard icon={MailIcon} text={'Mails'} more={'4'}/>
+                            <DashboardCard icon={MailIcon} text={'Mails'} more={noMails} lastUpdated={mailLastUpdated}/>
                         </Grid>
                     </Grid>
                     <Box my={8}/>

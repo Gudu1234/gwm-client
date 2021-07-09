@@ -45,9 +45,19 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const DashboardCard = ({icon, text, more}) => {
+const DashboardCard = ({icon, text, more, lastUpdated = 'Last updated 4 minutes ago'}) => {
 
     const classes = useStyles();
+
+    let number = '+' + more;
+
+    if (more === 0 || more === 1) {
+        number = more;
+    } else if (more > 1 && more <= 5) {
+        number = `+1`;
+    } else if (more > 5 && more <= 10) {
+        number = '+5';
+    }
 
     return (
         <Card
@@ -69,9 +79,9 @@ const DashboardCard = ({icon, text, more}) => {
             }}
         >
             <CardHeader color="warning" stats icon>
-                <CardIcon color="warning">
-                    <Typography align={'center'} style={{fontWeight: '500', fontSize: '24px', lineHeight: '140.1%'}}>
-                        {'+'+more}
+                <CardIcon color="warning" style={{paddingLeft: '0px', paddingRight: '0px'}}>
+                    <Typography align={'center'} style={{fontWeight: 'normal', fontSize: '20px', lineHeight: '140.1%', paddingLeft: '0px'}}>
+                        {number}
                     </Typography>
                 </CardIcon>
                 <Box my={3} />
@@ -87,7 +97,7 @@ const DashboardCard = ({icon, text, more}) => {
                 <Box my={1}/>
                 <Box px={3}>
                     <Typography className={classes.typo3Font}>
-                        {'Last updated 4 minutes ago'}
+                        {lastUpdated}
                     </Typography>
                 </Box>
             </CardContent>
