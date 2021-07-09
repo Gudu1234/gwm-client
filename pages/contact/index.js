@@ -379,7 +379,7 @@ const Contact = () => {
                                 </Typography>
                                 <Box my={1}/>
                                 <Typography variant={'subtitle1'} color={'textPrimary'}>
-                                    {'+91 9438000000'}
+                                    {'+91-9438000000'}
                                 </Typography>
                                 <Box my={1}/>
                                 <Typography variant={'subtitle1'} color={'textPrimary'}>

@@ -36,12 +36,9 @@ export default function Home() {
         <Box className={classes.container}>
             <HomeAppbar />
             <WorkingTowards />
-            <Box my={3}/>
-            <HomeMenu />
+            <Box my={{md: 12, sm: 6, xs: 6}}/>
             <Stats />
-            <Container maxWidth={'xl'} color={'#124954'} >
-                <OurService />
-            </Container>
+            <OurService />
             <Box my={3}/>
             <Footer />
         </Box>

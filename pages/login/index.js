@@ -137,9 +137,9 @@ const Login = () => {
                     <Grid item container xs={12} sm={6} justify={'flex-start'} alignItems={'center'}>
                         <Animated
                             animationIn='slideInLeft'
-                            animationInDelay={100}
+                            animationInDelay={50}
                             animationOut='slideOutLeft'
-                            animationOutDelay={400}
+                            animationOutDelay={300}
                             isVisible={visible}
                         >
                             <img width={'116%'} src={Vector} alt={'vector'} />

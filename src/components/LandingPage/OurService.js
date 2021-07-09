@@ -1,12 +1,14 @@
 /**
  * Created by Soumya (soumya@smarttersstudio.com) on 18/05/21 at 8:57 PM.
  */
-import {Box, Grid, Hidden, makeStyles, Typography} from '@material-ui/core';
+import {Box, Button, Grid, Hidden, makeStyles, Typography} from '@material-ui/core';
 import RequestIcon from '../../../public/Request.svg';
 import WhiteArrow from '../../../public/WhiteArrow.svg';
 import Collection from '../../../public/Collection.svg';
 import Disposal from '../../../public/Disposal.svg';
+import GetInTouch from '../../../public/GetInTouch.svg';
 import React from 'react';
+import Link from '../../Link';
 
 const useStyles = makeStyles(theme => ({
     imageVector: {
@@ -20,6 +22,54 @@ const useStyles = makeStyles(theme => ({
         '@media (max-width:500px)': {
             width: '20%'
         },
+    },
+    howItWorks: {
+        color: '#fff',
+        fontStyle: 'normal',
+        fontWeight: 'bold',
+        fontSize: '36px',
+        lineHeight: '43px',
+        letterSpacing: '0.1em',
+        '@media (max-width:900px)': {
+            fontSize: '34px',
+            lineHeight: '43px'
+        },
+        '@media (max-width:500px)': {
+            fontSize: '25px',
+            lineHeight: '43px'
+        },
+    },
+    headingText: {
+        color: '#fff',
+        fontStyle: 'normal',
+        fontSize: '24px',
+        fontWeight: 'bold',
+        lineHeight: '29px',
+        letterSpacing: '0.06em',
+    },
+    subHeadingText: {
+        color: '#fff',
+        fontStyle: 'normal',
+        fontSize: '14px',
+        fontWeight: 'normal',
+        lineHeight: '160.1%',
+        letterSpacing: '0.08em',
+        overflowWrap: 'break-word',
+    },
+    getInTouch: {
+        color: '#fff',
+        fontStyle: 'normal',
+        fontSize: '36px',
+        fontWeight: 'bold',
+        lineHeight: '43px',
+    },
+    getInTouchText: {
+        color: '#fff',
+        fontStyle: 'normal',
+        fontSize: '14px',
+        fontWeight: '500',
+        lineHeight: '150.5%',
+        letterSpacing: '0.04em',
     }
 }));
 
@@ -37,21 +87,23 @@ const OurService = () => {
             px={{xs: 2, md: 12}}
             py={{xs: 5, md: 12}}
         >
-            <Typography variant={'h1'} style={{color: '#fff'}} >
+            <Typography className={classes.howItWorks} >
                 {'HOW IT WORKS'}
             </Typography>
             <Box my={3}/>
             <Grid container>
                 <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={6} md={6}>
-                    <img src={RequestIcon} alt={'Request'} width={'60%'}/>
+                    <Box display={'flex'} justifyContent={'center'}>
+                        <img src={RequestIcon} alt={'Request'} width={'80%'} align={'center'}/>
+                    </Box>
                 </Grid>
                 <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={6} md={6}>
-                    <Box width={'95%'} display={'flex'} flexDirection={'column'} py={3} px={3}>
-                        <Typography variant={'h2'} style={{color: '#fff'}} align={'center'}>
+                    <Box width={'100%'} display={'flex'} flexDirection={'column'} py={3} px={3}>
+                        <Typography className={classes.headingText} align={'center'}>
                             {'REQUEST'}
                         </Typography>
                         <Box my={1}/>
-                        <Typography variant={'subtitle1'} style={{color: '#fff'}} align={'left'}>
+                        <Typography className={classes.subHeadingText} align={'left'}>
                             {'This system consists of a request portal through which localites can request for the bins for their localities. Localites request for bins by selecting their city and zone respectively. After inspection by the admin, the required number of child bins are allocated to the respective parent bin.'}
                         </Typography>
                     </Box>
@@ -69,18 +121,20 @@ const OurService = () => {
             </Hidden>
             <Grid container>
                 <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={6} md={6}>
-                    <Box width={'95%'} display={'flex'} flexDirection={'column'} py={{xs: 2, md: 3}} px={3}>
-                        <Typography variant={'h2'} style={{color: '#fff'}} align={'center'}>
+                    <Box width={'100%'} display={'flex'} flexDirection={'column'} py={3} px={3}>
+                        <Typography className={classes.headingText} align={'center'}>
                             {'COLLECTION'}
                         </Typography>
                         <Box my={1}/>
-                        <Typography variant={'subtitle1'} style={{color: '#fff'}} align={'left'}>
+                        <Typography className={classes.subHeadingText} align={'left'}>
                             {'Cleaner collects the wastes from child bin and transfers into parent bin further those garbage are collected from parent bin by the drivers and taken away to dump yard for disposal.'}
                         </Typography>
                     </Box>
                 </Grid>
                 <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={6} md={6}>
-                    <img src={Collection} alt={'Request'} width={'60%'}/>
+                    <Box display={'flex'} justifyContent={'center'}>
+                        <img src={Collection} alt={'Collection'} width={'80%'} align={'center'}/>
+                    </Box>
                 </Grid>
             </Grid>
             <Hidden mdUp>
@@ -95,20 +149,77 @@ const OurService = () => {
             </Hidden>
             <Grid container>
                 <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={6} md={6}>
-                    <img src={Disposal} alt={'Request'} width={'60%'}/>
+                    <Box display={'flex'} justifyContent={'center'}>
+                        <img src={Disposal} alt={'Disposal'} width={'80%'} align={'center'}/>
+                    </Box>
                 </Grid>
                 <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={6} md={6}>
-                    <Box width={'95%'} display={'flex'} flexDirection={'column'} py={3} px={3}>
-                        <Typography variant={'h2'} style={{color: '#fff'}} align={'center'}>
+                    <Box width={'100%'} display={'flex'} flexDirection={'column'} py={3} px={3}>
+                        <Typography className={classes.headingText} align={'center'}>
                             {'DISPOSAL'}
                         </Typography>
                         <Box my={1}/>
-                        <Typography variant={'subtitle1'} style={{color: '#fff'}} align={'left'}>
-                            {'This feature includes the procedure of Garbage`s separation at the dump-yard into three categories as per the 3 types of bins. Then wastes are sent out to different recycling sectors for disposal.Here ejection of wastes enhances the efficiency of waste management and reduces environmental pollution.'}
+                        <Typography className={classes.subHeadingText} align={'left'}>
+                            {'This feature includes the procedure of Garbage\' s separation at the dump-yard into three categories as per the 3 types of bins. Then wastes are sent out to different recycling sectors for disposal.Here ejection of wastes enhances the efficiency of waste management and reduces environmental pollution.'}
                         </Typography>
                     </Box>
                 </Grid>
             </Grid>
+            <Hidden xsDown>
+                <Box my={4} />
+                <Grid container>
+                    <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={6} md={6}>
+                        <Box width={'100%'} display={'flex'} flexDirection={'column'} py={3} px={10}>
+                            <Typography className={classes.getInTouch} align={'left'}>
+                                {'GET IN TOUCH'}
+                            </Typography>
+                            <Box my={1}/>
+                            <Typography className={classes.getInTouchText} align={'left'}>
+                                {'gwm@mc.gov.in'}
+                            </Typography>
+                            <Box my={1}/>
+                            <Typography className={classes.getInTouchText} align={'left'}>
+                                {'+91-9438000000'}
+                            </Typography>
+                            <Box my={1}/>
+                            <Typography className={classes.getInTouchText} align={'left'}>
+                                {'547, Saheed Nagar'}
+                            </Typography>
+                            <Typography className={classes.getInTouchText} align={'left'}>
+                                {'Bhubaneswar- 751007'}
+                            </Typography>
+                            <Box my={2} />
+                            <Box display={'flex'} flexDirection={'row'} className={classes.marginForButton}>
+                                <Button
+                                    variant={'outlined'}
+                                    component={Link}
+                                    href={'/contact'}
+                                    as={'/contact'}
+                                    style={{color: '#fff', borderColor: '#fff', textTransform: 'none', textDecoration: 'none'}}
+                                >
+                                    {'Contact Us'}
+                                </Button>
+                                <Box px={2.5} />
+                                <Button
+                                    variant={'contained'}
+                                    color={'secondary'}
+                                    component={Link}
+                                    href={'/request'}
+                                    as={'/request'}
+                                    style={{textTransform: 'none', textDecoration: 'none'}}
+                                >
+                                    {'Request Bin'}
+                                </Button>
+                            </Box>
+                        </Box>
+                    </Grid>
+                    <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={6} md={6}>
+                        <Box display={'flex'} justifyContent={'center'}>
+                            <img src={GetInTouch} alt={'Collection'} width={'80%'} align={'center'}/>
+                        </Box>
+                    </Grid>
+                </Grid>
+            </Hidden>
         </Box>
     );
 

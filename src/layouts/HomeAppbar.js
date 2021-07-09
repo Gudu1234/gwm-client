@@ -135,6 +135,25 @@ const HomeAppbar = () => {
                     <img width={'100%'} src={Gwm} alt={'vector'}/>
                 </Box>
                 <Box flex={1}/>
+                <Hidden smDown>
+                    <Box display={'flex'} width={'45%'} justifyContent={'space-around'}>
+                        <Typography component={Link} href={'/'} as={'/'} style={{textDecoration: 'none', color: '#FF9A3E'}}>
+                            {'Home'}
+                        </Typography>
+                        <Typography component={Link} href={'/about'} as={'/about'} style={{textDecoration: 'none', color: '#FFFFFF'}}>
+                            {'About'}
+                        </Typography>
+                        <Typography component={Link} href={'/request'} as={'/request'} style={{textDecoration: 'none', color: '#FFFFFF'}}>
+                            {'Request'}
+                        </Typography>
+                        <Typography component={Link} href={'/contact'} as={'/contact'} style={{textDecoration: 'none', color: '#FFFFFF'}}>
+                            {'Contact'}
+                        </Typography>
+                        <Typography component={Link} href={'/login'} as={'/login'} style={{textDecoration: 'none', color: '#FFFFFF'}}>
+                            {'Login'}
+                        </Typography>
+                    </Box>
+                </Hidden>
                 <Hidden mdUp>
                     <IconButton onClick={() => setOpen(true)}>
                         <img width={'100%'} src={Drawer2} alt={'Drawer'}/>

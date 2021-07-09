@@ -5,20 +5,56 @@ import {Box, Grid, makeStyles, Typography} from '@material-ui/core';
 import Worker from '../../../public/worker.svg';
 import Recycle from '../../../public/Recycle.svg';
 import Energy from '../../../public/Energy.svg';
-import WeMake from '../../../public/WeMake.svg';
+import WeMake from '../../../public/we.svg';
 import React from 'react';
 
 const useStyles = makeStyles(theme => ({
-    imageVector: {
-        width: '20%',
-        '@media (max-width:1050px)': {
-            width: '25%'
-        },
+    weWidth: {
+        width: '85%',
+        marginLeft: '-12px',
         '@media (max-width:900px)': {
-            width: '25%'
+            width: '90%',
         },
         '@media (max-width:500px)': {
-            width: '20%'
+            width: '100%',
+        },
+    },
+    imageVector: {
+        width: '100%',
+        // '@media (max-width:1050px)': {
+        //     width: '25%'
+        // },
+        // '@media (max-width:900px)': {
+        //     width: '25%'
+        // },
+        // '@media (max-width:500px)': {
+        //     width: '20%'
+        // },
+    },
+    headingText: {
+        color: '#fff',
+        fontStyle: 'normal',
+        fontSize: '24px',
+        fontWeight: 'bold',
+        lineHeight: '29px',
+        textAlign: 'right',
+    },
+    subHeadingText: {
+        color: '#fff',
+        fontStyle: 'normal',
+        fontSize: '14px',
+        fontWeight: '500',
+        lineHeight: '17px',
+        textAlign: 'right',
+        overflowWrap: 'break-word',
+    },
+    marginForStats: {
+        marginRight: '100px',
+        '@media (max-width:900px)': {
+            marginRight: '80px',
+        },
+        '@media (max-width:500px)': {
+            marginRight: '0px',
         },
     }
 }));
@@ -29,74 +65,78 @@ const Stats = () => {
 
     return (
         <Grid container>
-            <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={5} md={5}>
+            <Grid item container justify={'flex-start'} alignItems={'center'} xs={12} sm={7} md={8}>
+                <Box
+                    width={'90%'}
+                >
+                    <img src={WeMake} alt={'WeMake'} width={'85%'} align={'left'} className={classes.weWidth}/>
+                </Box>
+            </Grid>
+            <Grid item container justify={'center'} alignItems={'center'} xs={12} sm={5} md={4}>
                 <Box
                     display={'flex'}
                     flexDirection={'column'}
-                    width={'100%'}
-                    px={{xs: 10, md: 12}}
+                    // alignItems={'center'}
+                    fullWidth
+                    className={classes.marginForStats}
                 >
                     <Box
                         display={'flex'}
-                        py={{xs: 2, md: 3}}
-                        justifyContent={'center'}
+                        // justifyContent={'center'}
                         alignItems={'center'}
+                        px={3}
                     >
-                        <img src={Worker} alt={'Worker'} className={classes.imageVector}/>
-                        <Box width={'95%'} display={'flex'} flexDirection={'column'} py={3} px={3}>
-                            <Typography variant={'h1'} style={{color: '#fff'}} align={'center'}>
-                                {'767+'}
+                        <Box>
+                            <img src={Worker} alt={'Worker'} width={'90%'} align={'left'}/>
+                        </Box>
+                        <Box flex={1} />
+                        <Box width={'80%'} display={'flex'} flexDirection={'column'} py={5}>
+                            <Typography className={classes.headingText}>
+                                {'20+'}
                             </Typography>
-                            <Typography variant={'subtitle2'} style={{color: '#fff'}} align={'center'}>
+                            <Typography className={classes.subHeadingText}>
                                 {'Workers'}
                             </Typography>
                         </Box>
                     </Box>
                     <Box
                         display={'flex'}
-                        py={{xs: 2, md: 3}}
-                        justifyContent={'center'}
+                        // justifyContent={'center'}
                         alignItems={'center'}
+                        px={3}
                     >
-                        <img src={Recycle} alt={'Recycle'} className={classes.imageVector}/>
-                        <Box width={'95%'} display={'flex'} flexDirection={'column'} py={3} px={3}>
-                            <Typography variant={'h1'} style={{color: '#fff'}} align={'center'}>
-                                {'20+'}
+                        <Box>
+                            <img src={Recycle} alt={'Recycle'} width={'80%'} align={'left'}/>
+                        </Box>
+                        <Box flex={1} />
+                        <Box width={'80%'} display={'flex'} flexDirection={'column'} py={5}>
+                            <Typography className={classes.headingText}>
+                                {'6+'}
                             </Typography>
-                            <Typography variant={'subtitle2'} style={{color: '#fff'}} align={'center'}>
+                            <Typography className={classes.subHeadingText}>
                                 {'Tons of Waste'}
-                            </Typography>
-                            <Typography variant={'subtitle2'} style={{color: '#fff'}} align={'center'}>
-                                {'Recycled'}
                             </Typography>
                         </Box>
                     </Box>
                     <Box
                         display={'flex'}
-                        py={{xs: 2, md: 3}}
-                        justifyContent={'center'}
+                        // justifyContent={'center'}
                         alignItems={'center'}
+                        px={3}
                     >
-                        <img src={Energy} alt={'Recycle'} className={classes.imageVector}/>
-                        <Box width={'95%'} display={'flex'} flexDirection={'column'} py={3} px={3}>
-                            <Typography variant={'h1'} style={{color: '#fff'}} align={'center'}>
-                                {'6000+'}
+                        <Box>
+                            <img src={Energy} alt={'Energy'} width={'80%'} align={'left'}/>
+                        </Box>
+                        <Box flex={1} />
+                        <Box width={'80%'} display={'flex'} flexDirection={'column'} py={5}>
+                            <Typography className={classes.headingText}>
+                                {'5000+'}
                             </Typography>
-                            <Typography variant={'subtitle2'} style={{color: '#fff'}} align={'center'}>
-                                {'KWh of Energy'}
-                            </Typography>
-                            <Typography variant={'subtitle2'} style={{color: '#fff'}} align={'center'}>
-                                {'Produced'}
+                            <Typography className={classes.subHeadingText}>
+                                {'KWh of Energy Produced'}
                             </Typography>
                         </Box>
                     </Box>
-                </Box>
-            </Grid>
-            <Grid item container justify={'flex-end'} alignItems={'center'} xs={12} sm={7} md={7}>
-                <Box
-                    width={'100%'}
-                >
-                    <img src={WeMake} alt={'WeMake'} width={'90%'} align={'right'}/>
                 </Box>
             </Grid>
         </Grid>
