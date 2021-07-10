@@ -128,6 +128,8 @@ const Login = () => {
                         } else {
                             Router.replace('/worker/dashboard');
                         }
+                    } else {
+                        Router.replace('/worker/dashboard');
                     }
                 } else {
                     Router.replace('/');
