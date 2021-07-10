@@ -24,6 +24,7 @@ import Footer from '../../src/layouts/Footer';
 import { Animated } from 'react-animated-css';
 import GreenTextField from '../../src/components/GreenTextField';
 import ForgetPasswordDialog from '../../src/components/forget-password/ForgetPasswordDialog';
+import {editDetails} from '../../src/apis/user';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -112,7 +113,22 @@ const Login = () => {
                 if (user.role === 3 || user.role === 4) {
                     Router.replace('/admin/dashboard');
                 } else if (user.role === 1 || user.role === 2) {
-                    Router.replace('/worker/dashboard');
+                    if (user.role === 2) {
+                        if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition((position) => {
+                                const currentLatitude = position.coords.latitude;
+                                const currentLongitude = position.coords.longitude;
+
+                                editDetails(user._id, {
+                                    coordinates: [currentLongitude, currentLatitude]
+                                }).then(() => {
+                                    Router.replace('/worker/dashboard');
+                                });
+                            });
+                        } else {
+                            Router.replace('/worker/dashboard');
+                        }
+                    }
                 } else {
                     Router.replace('/');
                 }
