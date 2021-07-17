@@ -74,7 +74,7 @@ const Dashboard = () => {
                             <DashboardStatsCard
                                 icon={WorkerIcon}
                                 typo1={'Workers'}
-                                typo2={'700+'}
+                                typo2={'20+'}
                                 typo3={'Last updated 2 days ago'}
                             />
                         </Grid>
@@ -82,7 +82,7 @@ const Dashboard = () => {
                             <DashboardStatsCard
                                 icon={EnergyIcon}
                                 typo1={'Energy Produced'}
-                                typo2={'6000+ kWh'}
+                                typo2={'200+ kWh'}
                                 typo3={'Last updated 2 days ago'}
                             />
                         </Grid>
@@ -90,7 +90,7 @@ const Dashboard = () => {
                             <DashboardStatsCard
                                 icon={RecycleIcon}
                                 typo1={'Waste Recycled'}
-                                typo2={'20+ Tons'}
+                                typo2={'3+ Tons'}
                                 typo3={'Last updated 2 days ago'}
                             />
                         </Grid>
@@ -98,7 +98,7 @@ const Dashboard = () => {
                             <DashboardStatsCard
                                 icon={BinIcon}
                                 typo1={'Bins Allocated'}
-                                typo2={'200+'}
+                                typo2={'20+'}
                                 typo3={'Last updated 2 days ago'}
                             />
                         </Grid>
